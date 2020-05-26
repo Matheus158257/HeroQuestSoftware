@@ -1,6 +1,6 @@
-package br.unicamp.MapElements;
+package br.unicamp.Map;
 
-public class MapElement {
+public abstract class MapElement {
 
 	private int x;
 	private int y;

@@ -1,6 +1,6 @@
-package br.unicamp.MapElements.StaticElements;
+package br.unicamp.Map.StaticElements;
 
-import br.unicamp.MapElements.MapElement;
+import br.unicamp.Map.MapElement;
 
 public abstract class StaticElement extends MapElement {
 
