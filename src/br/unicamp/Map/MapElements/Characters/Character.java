@@ -1,6 +1,6 @@
-package br.unicamp.Map.Characters;
+package br.unicamp.Map.MapElements.Characters;
 
-import br.unicamp.Map.MapElement;
+import br.unicamp.Map.MapElements.MapElement;
 
 public  class Character extends MapElement {
 

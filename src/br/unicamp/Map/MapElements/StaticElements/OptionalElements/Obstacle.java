@@ -1,4 +1,4 @@
-package br.unicamp.Map.StaticElements.OptionalElements;
+package br.unicamp.Map.MapElements.StaticElements.OptionalElements;
 
 public class Obstacle extends OptionalElement {
 

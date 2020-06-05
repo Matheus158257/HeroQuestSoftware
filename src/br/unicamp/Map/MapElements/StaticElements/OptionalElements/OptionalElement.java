@@ -1,6 +1,6 @@
-package br.unicamp.Map.StaticElements.OptionalElements;
+package br.unicamp.Map.MapElements.StaticElements.OptionalElements;
 
-import br.unicamp.Map.StaticElements.StaticElement;
+import br.unicamp.Map.MapElements.StaticElements.StaticElement;
 
 public class OptionalElement extends StaticElement {
 
