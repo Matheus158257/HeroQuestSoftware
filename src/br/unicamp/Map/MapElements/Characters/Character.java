@@ -1,7 +1,8 @@
 package br.unicamp.Map.MapElements.Characters;
 
-import br.unicamp.Map.MapElements.Armor.Armor;
-import br.unicamp.Map.MapElements.Weapons.Weapon;
+import br.unicamp.Items.Armor.*;
+import br.unicamp.Items.Weapons.*;
+import br.unicamp.Dices.*;
 
 public abstract class Character {
 	private String name;
@@ -33,9 +34,9 @@ public abstract class Character {
 	}
 	 
 	protected void defenseAgainstMagic(Dice combatDice){
-		//para se defender podem ser lançados dados de combate
-		//tentos quanto os pontos de mana
-		//implementar
+		//TODO
+		//para se defender podem ser lancados dados de combate
+		//tantos quanto os pontos de mana
 	}
 	
 	protected void receiveDamage(int damage){

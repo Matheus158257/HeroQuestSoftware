@@ -32,11 +32,11 @@ public class Map {
 		this.board = new StaticElement[xMax][yMax];
 		this.characterMask = new Characters[xMax][yMax];
 		
-		for (int i = 0; i < nRooms; i++) { 
-			rooms[i].generateRoom(); 
-        } 
-		this.wall.generateWalls();
-		this.hall.generateHall();
+//		for (int i = 0; i < nRooms; i++) { 
+//			rooms[i].generateRoom(); 
+//        } 
+//		this.wall.generateWalls();
+//		this.hall.generateHall();
 		
 		generateBoard();
 		generateCharacterMask();
@@ -66,7 +66,7 @@ public class Map {
 	private void generateCharacterMask(){
 		for(int j = this.yMax-1; j>=0; j-- ){
 			for(int i = this.xMax-1; i>=0; i-- ){
-				this.activeMask[i][j] = new EmptyMask(i,j);
+//				this.activeMask[i][j] = new EmptyMask(i,j);
 			}
 		}
 	}

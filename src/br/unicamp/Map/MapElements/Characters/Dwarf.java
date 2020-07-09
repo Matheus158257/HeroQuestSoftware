@@ -1,7 +1,7 @@
 package br.unicamp.Map.MapElements.Characters;
 
-import br.unicamp.Map.MapElements.Weapons.ShortSword;
-import br.unicamp.Map.MapElements.Weapons.Weapon;
+import br.unicamp.Items.Weapons.ShortSword;
+import br.unicamp.Items.Weapons.Weapon;
 
 public class Dwarf extends Hero{
 	

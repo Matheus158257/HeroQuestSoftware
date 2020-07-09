@@ -1,8 +1,10 @@
 package br.unicamp.Map.MapElements.Characters;
 
 import br.unicamp.Map.*;
-import br.unicamp.Map.MapElements.Armor.Armor;
-import br.unicamp.Map.MapElements.Weapons.Weapon;
+import br.unicamp.Map.MapElements.StaticElements.OptionalElements.Trap;
+import br.unicamp.Dices.Dice;
+import br.unicamp.Items.Armor.*;
+import br.unicamp.Items.Weapons.*;
 
 public class Hero extends Character {
 	
@@ -12,8 +14,8 @@ public class Hero extends Character {
 	}
 	protected void equipArmor(Armor newArmor){}
 	
-	protected void equipWeapon(Weapon newWeapon){//rever esta funcao para poder ser chamada sempre, não so na instanciação do heroi
-		//quantas armas cada personagem pode ter? Até duas, uma em cada mão, se  não for a espada longa
+	protected void equipWeapon(Weapon newWeapon){//rever esta funcao para poder ser chamada sempre, nï¿½o so na instanciaï¿½ï¿½o do heroi
+		//quantas armas cada personagem pode ter? Atï¿½ duas, uma em cada mï¿½o, se  nï¿½o for a espada longa
 		weapons[0]= newWeapon;
 	}
 	
