@@ -1,4 +1,4 @@
-package br.unicamp.Map.MapElements.Weapons;
+package br.unicamp.Items.Weapons;
 
 
 public class LongSword extends Weapon {

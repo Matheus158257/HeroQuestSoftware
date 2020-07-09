@@ -1,11 +1,11 @@
 package br.unicamp.Map.MapElements.Characters;
 
-import br.unicamp.Map.MapElements.Spell.Fireball;
-import br.unicamp.Map.MapElements.Spell.MagicMissile;
-import br.unicamp.Map.MapElements.Spell.Spell;
-import br.unicamp.Map.MapElements.Spell.Teleport;
-import br.unicamp.Map.MapElements.Weapons.Dagger;
-import br.unicamp.Map.MapElements.Weapons.Weapon;
+import br.unicamp.Items.Spells.Fireball;
+import br.unicamp.Items.Spells.MagicMissile;
+import br.unicamp.Items.Spells.Spell;
+import br.unicamp.Items.Spells.Teleport;
+import br.unicamp.Items.Weapons.Dagger;
+import br.unicamp.Items.Weapons.Weapon;
 
 
 public class Wizard extends Hero {

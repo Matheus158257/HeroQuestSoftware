@@ -1,9 +1,10 @@
 package br.unicamp.Map.MapElements.Characters;
 
-import br.unicamp.Map.MapElements.Spell.SimpleHeal;
-import br.unicamp.Map.MapElements.Spell.Spell;
-import br.unicamp.Map.MapElements.Weapons.ShortSword;
-import br.unicamp.Map.MapElements.Weapons.Weapon;
+import br.unicamp.Dices.Dice;
+import br.unicamp.Items.Spells.SimpleHeal;
+import br.unicamp.Items.Spells.Spell;
+import br.unicamp.Items.Weapons.ShortSword;
+import br.unicamp.Items.Weapons.Weapon;
 
 public class Elf extends Hero{
 	public static final int MAX_ELF_SPELLS = 4;
@@ -24,13 +25,13 @@ public class Elf extends Hero{
 		elfSpells[actualSpellsNo]= newSpell;
 		actualSpellsNo++;
 	}
-	
+
 	protected void castSpell(Monster targetMontser, Dice redDice1, Dice redDice2, Dice combatDice){
-		int result = redDice1.roll()+ redDice2.roll();
-		if(result<targetMontser.getMana()){
-			//verifica se o alvo tem defesa
-			targetMontser.defenseAgainstMagic(combatDice);
-			
-		}
+		//		int result = redDice1.roll()+ redDice2.roll();
+		//		if(result<targetMontser.getMana()){
+		//			//verifica se o alvo tem defesa
+		//			targetMontser.defenseAgainstMagic(combatDice);
+
 	}
 }
+

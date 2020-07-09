@@ -1,6 +1,7 @@
 package br.unicamp.Map.MapElements.Characters;
 
-import br.unicamp.Map.MapElements.Weapons.Dagger;
+import br.unicamp.Items.Weapons.Dagger;
+import br.unicamp.Items.Weapons.Weapon;
 
 public class Goblin extends Monster {
 
@@ -10,9 +11,9 @@ public class Goblin extends Monster {
 		Dagger dagger2 = new Dagger();
 		Dagger dagger3 = new Dagger();
 		Dagger dagger4 = new Dagger();
-		this.equipWeapon(dagger1);
-		this.equipWeapon(dagger2);
-		this.equipWeapon(dagger3);
-		this.equipWeapon(dagger4);
+//		this.equipWeapon(dagger1);
+//		this.equipWeapon(dagger2);
+//		this.equipWeapon(dagger3);
+//		this.equipWeapon(dagger4);
 	}
 }
