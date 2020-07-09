@@ -1,4 +1,4 @@
-package br.unicamp.Map.MapElements.StaticElements.OptionalElements;
+package br.unicamp.Map.MapElements.StaticElements.VariableElements;
 
 import br.unicamp.Map.MapElements.StaticElements.StaticElement;
 

@@ -1,4 +1,4 @@
-package br.unicamp.Map.MapElements.StaticElements.OptionalElements;
+package br.unicamp.Map.MapElements.StaticElements.VariableElements;
 
 public class Obstacle extends OptionalElement {
 
@@ -7,4 +7,9 @@ public class Obstacle extends OptionalElement {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString() {
+		return "O";
+	}
+	
 }

@@ -6,5 +6,10 @@ public class WallElement extends StaticElement {
 		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public String toString() {
+		return "X";
+	}
 
 }

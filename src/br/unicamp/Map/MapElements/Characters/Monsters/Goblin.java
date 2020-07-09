@@ -1,4 +1,4 @@
-package br.unicamp.Map.MapElements.Characters;
+package br.unicamp.Map.MapElements.Characters.Monsters;
 
 import br.unicamp.Items.Weapons.Dagger;
 import br.unicamp.Items.Weapons.Weapon;
@@ -16,4 +16,10 @@ public class Goblin extends Monster {
 //		this.equipWeapon(dagger3);
 //		this.equipWeapon(dagger4);
 	}
+	
+	@Override
+	public String toString() {
+		return "G";
+	}
+	
 }

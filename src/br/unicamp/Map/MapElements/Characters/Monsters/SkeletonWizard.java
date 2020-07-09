@@ -1,4 +1,4 @@
-package br.unicamp.Map.MapElements.Characters;
+package br.unicamp.Map.MapElements.Characters.Monsters;
 
 public class SkeletonWizard extends Monster {
 
@@ -7,4 +7,9 @@ public class SkeletonWizard extends Monster {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString() {
+		return "K";
+	}
+	
 }

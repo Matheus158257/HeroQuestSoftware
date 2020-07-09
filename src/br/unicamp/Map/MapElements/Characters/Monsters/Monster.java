@@ -1,4 +1,6 @@
-package br.unicamp.Map.MapElements.Characters;
+package br.unicamp.Map.MapElements.Characters.Monsters;
+
+import br.unicamp.Map.MapElements.Characters.Character;
 
 public class Monster extends Character {
 	

@@ -7,4 +7,9 @@ public class FloorElement extends StaticElement {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString() {
+		return "-";
+	}
+
 }
