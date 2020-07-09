@@ -1,10 +1,11 @@
-package br.unicamp.Map.MapElements.Characters;
+package br.unicamp.Map.MapElements.Characters.Heroes;
 
 import br.unicamp.Dices.Dice;
 import br.unicamp.Items.Spells.SimpleHeal;
 import br.unicamp.Items.Spells.Spell;
 import br.unicamp.Items.Weapons.ShortSword;
 import br.unicamp.Items.Weapons.Weapon;
+import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
 
 public class Elf extends Hero{
 	public static final int MAX_ELF_SPELLS = 4;
@@ -33,5 +34,11 @@ public class Elf extends Hero{
 		//			targetMontser.defenseAgainstMagic(combatDice);
 
 	}
+	
+	@Override
+	public String toString() {
+		return "E";
+	}
+	
 }
 

@@ -1,7 +1,7 @@
 package br.unicamp.Items.Spells;
 
 import br.unicamp.Map.MapElements.Characters.Character;
-import br.unicamp.Map.MapElements.Characters.Hero;
+import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 public class Fireball extends Spell {
 	//o alvo leva dado de 6 pontos

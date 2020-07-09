@@ -2,18 +2,32 @@ package br.unicamp.Map.MapElements;
 
 public abstract class MapElement {
 
-	private int x;
-	private int y;
-	private char symbol;
+//	private int x;
+//	private int y;
+//	private char symbol;
+
+	
+	private Coordinate coord;
 	
 	public MapElement(int x, int y) {
-		this.x = x;
-		this.y = y;
+		this.coord = new Coordinate(x,y);
 	}
 	
-	public char getSymbol() {
-		return this.symbol;
+	public int getX() {
+		return this.coord.getX();
 	}
+	
+	public int getY() {
+		return this.coord.getY();
+	}
+	
+	
+	
+	
+	
+//	public char getSymbol() {
+//		return this.symbol;
+//	}
 	
 	
 }

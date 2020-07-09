@@ -1,4 +1,4 @@
-package br.unicamp.Map.MapElements.Characters;
+package br.unicamp.Map.MapElements.Characters.Heroes;
 
 import br.unicamp.Items.Spells.Fireball;
 import br.unicamp.Items.Spells.MagicMissile;
@@ -34,5 +34,10 @@ public class Wizard extends Hero {
 		actualSpellsNo++;
 	}
 
+	@Override
+	public String toString() {
+		return "W";
+	}
+	
 }
  

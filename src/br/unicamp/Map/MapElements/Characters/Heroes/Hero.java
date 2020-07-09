@@ -1,7 +1,8 @@
-package br.unicamp.Map.MapElements.Characters;
+package br.unicamp.Map.MapElements.Characters.Heroes;
 
 import br.unicamp.Map.*;
-import br.unicamp.Map.MapElements.StaticElements.OptionalElements.Trap;
+import br.unicamp.Map.MapElements.Characters.Character;
+import br.unicamp.Map.MapElements.StaticElements.VariableElements.Trap;
 import br.unicamp.Dices.Dice;
 import br.unicamp.Items.Armor.*;
 import br.unicamp.Items.Weapons.*;
