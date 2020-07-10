@@ -23,6 +23,7 @@ public class Coordinate {
 		this.y = y;
 	}
 	
+	
 	public boolean isSameCoordinates(int x, int y) {
 		if (this.x != x) {
 			return false;

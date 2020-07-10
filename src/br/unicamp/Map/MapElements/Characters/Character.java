@@ -2,9 +2,11 @@ package br.unicamp.Map.MapElements.Characters;
 
 import br.unicamp.Items.Armor.*;
 import br.unicamp.Items.Weapons.*;
+import br.unicamp.Map.MapElements.Command;
+import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Dices.*;
 
-public abstract class Character {
+public abstract class Character extends MapElement{
 	private String name;
 	private int attackPoints;
 	private int defensePoints;
@@ -13,7 +15,8 @@ public abstract class Character {
 	protected Armor armor;
 	protected Weapon weapons[];
 	
-	public Character(String name,int attackPoints,int defensePoints, int lifePoints, int mana){
+	public Character(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
+		super(x0,y0);
 		this.name = name;
 		this.attackPoints = attackPoints;
 		this.defensePoints = defensePoints;
@@ -21,13 +24,26 @@ public abstract class Character {
 		this.mana = mana;
 	}
 	
-	public void moveUp(){}
-	
-	public void moveDown(){}
-	
-	public void moveRight(){}
-	
-	public void moveLeft(){}
+	public void changePosition(Command direction) {
+		
+		switch (direction) {
+		case UP:
+			this.incrementCoordinates(0,-1);
+			break;
+		case RIGHT:
+			this.incrementCoordinates(1,0);
+			break;
+		case DOWN:
+			this.incrementCoordinates(0,1);
+			break;
+		case LEFT:
+			this.incrementCoordinates(-1,0);
+			break;
+		default:
+			break;
+				
+		}
+	}
 	
 	protected int getMana(){
 		return mana;

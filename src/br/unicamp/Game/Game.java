@@ -5,6 +5,9 @@ import java.util.Scanner;
 import br.unicamp.Exceptions.*;
 import br.unicamp.Map.Map;
 import br.unicamp.Map.MapElements.Command;
+import br.unicamp.Map.MapElements.Characters.Character;
+import br.unicamp.Map.MapElements.Characters.Heroes.*;
+import br.unicamp.Map.MapElements.Characters.Monsters.*;
 
 public class Game {
 
@@ -14,10 +17,14 @@ public class Game {
 
 	public Game() {
 		gameMap = new Map();
+		
 	}
 
 	public void start() {
 
+		Barbarian barb = new Barbarian(0,0);
+		gameMap.addElement(barb);
+		
 		System.out.println("Game started!");
 
 		boolean running = true;
@@ -34,6 +41,12 @@ public class Game {
 				break;
 
 			default:
+				try {
+					gameMap.moveCharacter(input, barb);
+				} catch (OccupiedTileException | OutOfBoundsException e) {
+					// TODO Auto-generated catch block
+					System.out.println (e.getMessage());
+				}
 				//				move(input); //?
 				//				updateBoard(input); //?
 				break;
@@ -56,19 +69,19 @@ public class Game {
 			return Command.QUIT;
 
 		} else if ( command.compareTo("w") == 0 ) {
-			//System.out.println ("Moving UP \n");
+			System.out.println ("Moving UP \n");
 			return Command.UP;
 
 		} else if ( command.compareTo("a") == 0 ) {
-			//System.out.println ("Moving LEFT \n");	
+			System.out.println ("Moving LEFT \n");	
 			return Command.LEFT;
 
 		} else if ( command.compareTo("s") == 0 ) {
-			//System.out.println ("Moving DOWN \n");
+			System.out.println ("Moving DOWN \n");
 			return Command.DOWN;
 
 		} else if ( command.compareTo("d") == 0 ) {
-			//System.out.println ("Moving RIGHT \n");
+			System.out.println ("Moving RIGHT \n");
 			return Command.RIGHT;
 
 			//		} else if ( command.compareTo("u") == 0 ) {

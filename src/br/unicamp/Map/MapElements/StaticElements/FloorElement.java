@@ -12,4 +12,10 @@ public class FloorElement extends StaticElement {
 		return "-";
 	}
 
+	@Override
+	public boolean isFree() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }
