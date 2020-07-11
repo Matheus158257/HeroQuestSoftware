@@ -4,8 +4,13 @@ import br.unicamp.Map.MapElements.Characters.Character;
 
 public class Monster extends Character {
 	
-	public Monster(String name,int attackPoints,int defensePoints, int lifePoints, int mana){
-		super(name,attackPoints,defensePoints,lifePoints,mana);
+	public Monster(int x0, int y0,String name,int attackPoints,int defensePoints, int lifePoints, int mana){
+		super(x0,y0,name,attackPoints,defensePoints,lifePoints,mana);
+	}
+
+	@Override
+	public boolean isFree() {
+		return false;
 	}
 
 }

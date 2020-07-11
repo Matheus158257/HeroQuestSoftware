@@ -12,4 +12,9 @@ public class Trap extends OptionalElement {
 		return "T";
 	}
 	
+	@Override
+	public boolean isFree() {
+		return true;
+	}
+	
 }

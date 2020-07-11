@@ -9,15 +9,18 @@ import br.unicamp.Items.Weapons.*;
 
 public class Hero extends Character {
 	
-	public Hero(String name,int attackPoints,int defensePoints, int lifePoints, int mana){
-		super(name,attackPoints,defensePoints,lifePoints,mana);
+	public Hero(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
+		super(x0,y0,name,attackPoints,defensePoints,lifePoints,mana);
 		weapons = new Weapon[2];		
+		
 	}
 	protected void equipArmor(Armor newArmor){}
 	
-	protected void equipWeapon(Weapon newWeapon){//rever esta funcao para poder ser chamada sempre, n�o so na instancia��o do heroi
+	protected void equipWeapon(Weapon newWeapon){
+		//rever esta funcao para poder ser chamada sempre, n�o so na instancia��o do heroi
 		//quantas armas cada personagem pode ter? At� duas, uma em cada m�o, se  n�o for a espada longa
-		weapons[0]= newWeapon;
+
+		//		weapons[0]= newWeapon;
 	}
 	
 	protected void unequipArmor(Armor removArmor){}
@@ -27,6 +30,11 @@ public class Hero extends Character {
 	
 	protected void play(Dice gameDice){
 		//implementar chamando o metodo gameDice.roll()
+	}
+	
+	@Override
+	public boolean isFree() {
+		return false;
 	}
 	
 }

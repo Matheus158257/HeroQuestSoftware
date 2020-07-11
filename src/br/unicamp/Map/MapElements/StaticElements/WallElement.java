@@ -12,4 +12,9 @@ public class WallElement extends StaticElement {
 		return "X";
 	}
 
+	@Override
+	public boolean isFree() {
+		return false;
+	}
+
 }
