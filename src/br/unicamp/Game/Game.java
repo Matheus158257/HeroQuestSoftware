@@ -44,11 +44,8 @@ public class Game {
 				try {
 					gameMap.moveCharacter(input, barb);
 				} catch (OccupiedTileException | OutOfBoundsException e) {
-					// TODO Auto-generated catch block
 					System.out.println (e.getMessage());
 				}
-				//				move(input); //?
-				//				updateBoard(input); //?
 				break;
 			}
 
