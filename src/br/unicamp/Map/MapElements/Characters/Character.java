@@ -23,7 +23,7 @@ public abstract class Character extends MapElement{
 		this.lifePoints = lifePoints;
 		this.mana = mana;
 	}
-	
+
 	public void changePosition(Command direction) {
 		
 		switch (direction) {

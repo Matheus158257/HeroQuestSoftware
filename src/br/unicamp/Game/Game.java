@@ -16,6 +16,8 @@ public class Game {
 	private Map gameMap;
 
 	public Game() {
+		//door1 = new Door();
+		
 		gameMap = new Map();
 		
 	}
