@@ -9,5 +9,10 @@ public class Corner extends GroupMapElement {
 		// TODO Auto-generated constructor stub
 		this.adjacentIDs = adjacentIDs;
 	}
+	
+	
+	public int[] getAdjacentIDs() {
+		return adjacentIDs;
+	}
 
 }
