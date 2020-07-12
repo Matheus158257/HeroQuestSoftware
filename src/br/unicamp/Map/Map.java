@@ -2,7 +2,6 @@ package br.unicamp.Map;
 
 import br.unicamp.Map.GroupElements.Hall;
 import br.unicamp.Map.GroupElements.Room;
-import br.unicamp.Map.GroupElements.Wall;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.StaticElements.FloorElement;
 import br.unicamp.Map.MapElements.StaticElements.WallElement;
