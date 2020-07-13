@@ -1,5 +1,7 @@
 package br.unicamp.Map.MapElements.StaticElements;
 
+import br.unicamp.Map.MapElements.Characters.Character;
+
 public class WallElement extends StaticElement {
 
 	public WallElement(int x, int y) {
@@ -14,6 +16,12 @@ public class WallElement extends StaticElement {
 
 	@Override
 	public boolean isFree() {
+		return false;
+	}
+
+	@Override
+	public boolean interact(Character character) {
+		// Do nothing
 		return false;
 	}
 

@@ -1,6 +1,8 @@
 package br.unicamp.Map.MapElements.StaticElements.VariableElements;
 
-public class Trap extends OptionalElement {
+import br.unicamp.Map.MapElements.Characters.Character;
+
+public class Trap extends VariableElement {
 
 	public Trap(int x, int y) {
 		super(x, y);
@@ -15,6 +17,12 @@ public class Trap extends OptionalElement {
 	@Override
 	public boolean isFree() {
 		return true;
+	}
+
+	@Override
+	public boolean interact(Character character) {
+		// Do nothing? Maybe disarm?
+		return false;
 	}
 	
 }

@@ -1,6 +1,11 @@
 package br.unicamp.Map.MapElements.StaticElements.VariableElements;
 
-public class Chest extends OptionalElement {
+import br.unicamp.Exceptions.OccupiedTileException;
+import br.unicamp.Exceptions.OutOfBoundsException;
+import br.unicamp.Map.Map;
+import br.unicamp.Map.MapElements.Characters.Character;
+
+public class Chest extends VariableElement {
 
 	public Chest(int x, int y) {
 		super(x, y);
@@ -11,5 +16,17 @@ public class Chest extends OptionalElement {
 	public String toString() {
 		return "C";
 	}
+
+	@Override
+	public boolean interact(Character character) {
+		// TODO Open Chest
+		open(character);
+		return true;
+	}
+	
+	private void open(Character character) {
+		// TODO Open Chest
+	}
+
 
 }

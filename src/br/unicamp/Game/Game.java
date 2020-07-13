@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import br.unicamp.Exceptions.*;
 import br.unicamp.Map.Map;
-import br.unicamp.Map.MapElements.Command;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.*;
 import br.unicamp.Map.MapElements.Characters.Monsters.*;
@@ -17,37 +16,45 @@ public class Game {
 
 	public Game() {
 		gameMap = new Map();
-		
+
 	}
 
 	public void start() {
 
-		Barbarian barb = new Barbarian(0,0);
-		gameMap.addElement(barb);
-		
+		Barbarian player = new Barbarian(0,0);
+		gameMap.addElement(player);
+
 		System.out.println("Game started!");
 
 		boolean running = true;
 		Command input;
 
+		gameMap.updateMap(player);
+		gameMap.print();
+
 		while (running) {
 
-			gameMap.print();
+			
 			input = readInput();
+			try {
+				switch(input) {
+				case QUIT:
+					running = false;
+					break;
+				case INTERACT:
+					gameMap.interactAround(player);
+					break;
+				default:
 
-			switch(input) {
-			case QUIT:
-				running = false;
-				break;
-
-			default:
-				try {
-					gameMap.moveCharacter(input, barb);
-				} catch (OccupiedTileException | OutOfBoundsException e) {
-					System.out.println (e.getMessage());
+					gameMap.moveCharacter(input, player);
+					break;
 				}
-				break;
+			} catch (OccupiedTileException | OutOfBoundsException e) {
+				System.out.println (e.getMessage());
 			}
+
+			gameMap.updateMap(player);
+			gameMap.print();
 
 		}
 
@@ -60,7 +67,7 @@ public class Game {
 		System.out.print ("Enter the command:") ;
 		String command = keyboard.nextLine();
 
-		//			try {
+
 		if ( command.compareTo("quit") == 0) {
 			System.out.println("Game terminated. Bye!");
 			return Command.QUIT;
@@ -81,21 +88,11 @@ public class Game {
 			System.out.println ("Moving RIGHT \n");
 			return Command.RIGHT;
 
-			//		} else if ( command.compareTo("u") == 0 ) {
-			//			// TODO Interact 
-			//		}
-
-			//			}
-			//			catch (OccupiedTileException e) {
-			//				System.out.println (e.getMessage());
-			//
-			//			} catch (OutOfBoundsException e) {
-			//				System.out.println (e.getMessage());
-			//
-			//			}
-
-
+		} else if ( command.compareTo("u") == 0 ) {
+			System.out.println ("INTERACTING \n");
+			return Command.INTERACT;
 		}
+
 		return Command.NONE;
 
 

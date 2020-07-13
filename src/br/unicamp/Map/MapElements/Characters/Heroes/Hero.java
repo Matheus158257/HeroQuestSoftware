@@ -37,4 +37,9 @@ public class Hero extends Character {
 		return false;
 	}
 	
+	@Override
+	public boolean interact(Character character) {
+		return false;
+	}
+	
 }
