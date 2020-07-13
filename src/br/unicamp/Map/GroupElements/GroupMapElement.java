@@ -4,41 +4,33 @@ import br.unicamp.Map.MapElements.MapElement;
 
 public class GroupMapElement {
 	
-	protected int sizeX;
-	protected int sizeY;
-	protected int x0;
-	protected int y0;
-	protected MapElement mapElements[][];
-	protected int ID;
+	private int x0;
+	private int y0;
+	private int dimX;
+	private int dimY;
 	
-	public GroupMapElement ( int sizeX, int sizeY, int x0,int y0,int ID) {
-		this.sizeX = sizeX;
-		this.sizeY = sizeY;
-		this.x0 = x0;
-		this.y0 = y0;
-		this.mapElements = new MapElement[this.sizeX][this.sizeY];
-		this.ID = ID;
+	public GroupMapElement(int x0, int y0, int dimX, int dimY) {
+		this.x0=x0;
+		this.y0=y0;
+		this.dimX=dimX;
+		this.dimY=dimY;
 	}
 	
-	protected void strucSpace() {}
 	
 	public int getX0() {
 		return this.x0;
 	}
-	
+
 	public int getY0() {
 		return this.y0;
 	}
 	
-	public int getSizeX() {
-		return this.sizeX;
+	public int getDimX() {
+		return this.dimX;
 	}
 	
-	public int getSizeY() {
-		return this.sizeY;
+	public int getDimY() {
+		return this.dimY;
 	}
-	
-	public int getID() {
-		return this.sizeY;
-	}
+
 }

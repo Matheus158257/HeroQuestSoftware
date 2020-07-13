@@ -2,9 +2,9 @@ package br.unicamp.Map.MapElements.Characters;
 
 import br.unicamp.Items.Armor.*;
 import br.unicamp.Items.Weapons.*;
-import br.unicamp.Map.MapElements.Command;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Dices.*;
+import br.unicamp.Game.Command;
 
 public abstract class Character extends MapElement{
 	private String name;
@@ -43,6 +43,10 @@ public abstract class Character extends MapElement{
 			break;
 				
 		}
+	}
+	
+	public void changePosition(int newX, int newY) {
+		this.changeCoordinates(newX, newY);
 	}
 	
 	protected int getMana(){

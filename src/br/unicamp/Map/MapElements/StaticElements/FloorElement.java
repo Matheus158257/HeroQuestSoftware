@@ -1,39 +1,33 @@
 package br.unicamp.Map.MapElements.StaticElements;
 
+import br.unicamp.Map.MapElements.Characters.Character;
+
 public class FloorElement extends StaticElement {
 
-	private int ID;
-
-	public FloorElement(int x, int y, int ID) {
+	public FloorElement(int x, int y, boolean seen) {
 		super(x, y);
+		this.beSeen();
 		// TODO Auto-generated constructor stub
-		isVisible = false;
-		this.ID = ID;
-		
 	}
-	
-
-	private boolean isVisible;
-
-	
 
 	@Override
 	public String toString() {
-		String symbol = "-";
-		if (this.isVisible) {
-			symbol = "+";
+		if(this.isVisible()) {
+			return " ";
+		} else {
+			return "-";
 		}
-		return symbol;
-	}
-	
-	public int getID() {
-		return this.ID;
 	}
 
 	@Override
 	public boolean isFree() {
-		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public boolean interact(Character character) {
+		// Do nothing
+		return false;
 	}
 
 }
