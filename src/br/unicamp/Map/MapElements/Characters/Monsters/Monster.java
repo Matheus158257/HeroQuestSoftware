@@ -13,4 +13,10 @@ public class Monster extends Character {
 		return false;
 	}
 
+	@Override
+	public boolean interact(Character character) {
+		// TODO Attack? Or should attack be implemented differently? Maybe implement close attack?
+		return false;
+	}
+
 }

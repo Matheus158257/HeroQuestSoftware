@@ -1,6 +1,8 @@
 package br.unicamp.Map.MapElements.StaticElements.VariableElements;
 
-public class Obstacle extends OptionalElement {
+import br.unicamp.Map.MapElements.Characters.Character;
+
+public class Obstacle extends VariableElement {
 
 	public Obstacle(int x, int y) {
 		super(x, y);
@@ -10,6 +12,12 @@ public class Obstacle extends OptionalElement {
 	@Override
 	public String toString() {
 		return "O";
+	}
+
+	@Override
+	public boolean interact(Character character) {
+		// Do nothing
+		return false;
 	}
 	
 }
