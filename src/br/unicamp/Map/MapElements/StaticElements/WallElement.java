@@ -22,10 +22,5 @@ public class WallElement extends StaticElement {
 		return false;
 	}
 	
-	@Override
-	public boolean interact(Character character) {
-		// Do nothing
-		return false;
-	}
 
 }

@@ -1,6 +1,7 @@
 package br.unicamp.Map.MapElements;
 
 import br.unicamp.Interfaces.Interactable;
+import br.unicamp.Map.MapElements.Characters.Character;
 
 public abstract class MapElement implements Interactable{
 
@@ -46,6 +47,11 @@ public abstract class MapElement implements Interactable{
 	
 	public int getY() {
 		return this.coord.getY();
+	}
+	
+	@Override
+	public boolean interact(Character character,String Iteration) {
+		return false;
 	}
 	
 	

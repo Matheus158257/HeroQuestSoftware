@@ -2,8 +2,8 @@ package br.unicamp.Interfaces;
 
 import br.unicamp.Map.MapElements.Characters.Character;
 
-public interface Collectable extends Interactable {
+public interface Collectable{
 
-	public void getCollected( Character character );
+	public void report();
 	
 }

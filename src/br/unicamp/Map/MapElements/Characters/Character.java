@@ -5,6 +5,7 @@ import br.unicamp.Items.Weapons.*;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Dices.*;
 import br.unicamp.Game.Command;
+import br.unicamp.Interfaces.Collectable;
 
 public abstract class Character extends MapElement{
 	private String name;
@@ -62,5 +63,6 @@ public abstract class Character extends MapElement{
 	protected void receiveDamage(int damage){
 		lifePoints = lifePoints-damage;
 	}
+
 	
 }

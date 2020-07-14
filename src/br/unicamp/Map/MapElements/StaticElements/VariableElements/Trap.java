@@ -18,11 +18,12 @@ public class Trap extends VariableElement {
 	public boolean isFree() {
 		return true;
 	}
-
-	@Override
-	public boolean interact(Character character) {
-		// Do nothing? Maybe disarm?
-		return false;
-	}
 	
+	// Tem que poder desarmar
+	@Override
+	public boolean interact(Character character, String iteration) {
+		Boolean result = false;
+		return result;
+	}
+
 }

@@ -4,6 +4,11 @@ import br.unicamp.Map.MapElements.Characters.Character;
 
 public class FloorElement extends StaticElement {
 
+	public FloorElement(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
+	
 	public FloorElement(int x, int y, boolean seen) {
 		super(x, y);
 		this.beSeen();
@@ -24,10 +29,6 @@ public class FloorElement extends StaticElement {
 		return true;
 	}
 
-	@Override
-	public boolean interact(Character character) {
-		// Do nothing
-		return false;
-	}
+
 
 }

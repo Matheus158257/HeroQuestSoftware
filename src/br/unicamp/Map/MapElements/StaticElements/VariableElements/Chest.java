@@ -3,9 +3,10 @@ package br.unicamp.Map.MapElements.StaticElements.VariableElements;
 import br.unicamp.Exceptions.OccupiedTileException;
 import br.unicamp.Exceptions.OutOfBoundsException;
 import br.unicamp.Map.Map;
+import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 
-public class Chest extends VariableElement {
+public abstract class Chest extends VariableElement{
 
 	public Chest(int x, int y) {
 		super(x, y);
@@ -18,15 +19,15 @@ public class Chest extends VariableElement {
 	}
 
 	@Override
-	public boolean interact(Character character) {
-		// TODO Open Chest
-		open(character);
-		return true;
+	public boolean interact(Character character, String iteration) {
+		Boolean result = false;
+		if (iteration == "OC") {
+			result = true;
+		}
+		return result;
 	}
-	
-	private void open(Character character) {
-		// TODO Open Chest
-	}
+
+	public abstract void updateChestOnMap(MapElement[][] map);
 
 
 }
