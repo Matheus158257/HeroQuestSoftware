@@ -1,6 +1,6 @@
+
 package br.unicamp.Map.MapElements.StaticElements.VariableElements;
 
-import br.unicamp.Map.Map;
 import br.unicamp.Map.GroupElements.Room;
 import br.unicamp.Map.MapElements.Coordinate;
 import br.unicamp.Map.MapElements.Characters.Character;
@@ -73,14 +73,17 @@ public class Door extends VariableElement {
 	}
 	
 	@Override
-	public boolean interact(Character character){
-		open(character);
-		this.roomA.lightsOn();
-		this.roomB.lightsOn();
-//		if(roomB!=null) {
-//			this.roomB.lightsOn();
-//		}
-		return true;
+	public boolean interact(Character character,String iteration){
+		Boolean result = false;
+		
+		if (iteration == "OD") {
+			open(character);
+			this.roomA.lightsOn();
+			this.roomB.lightsOn();
+			result = true;
+		}
+
+		return result;
 	}
 	
 }

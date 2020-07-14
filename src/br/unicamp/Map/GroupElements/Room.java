@@ -1,8 +1,8 @@
 package br.unicamp.Map.GroupElements;
 
+
 public class Room extends GroupMapElement {
-
-
+	
 	private boolean lights;
 	
 	public Room(int x0, int y0, int dimX, int dimY) {
@@ -18,4 +18,5 @@ public class Room extends GroupMapElement {
 		return this.lights;
 	}
 	
+
 }

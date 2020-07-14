@@ -8,7 +8,15 @@ import br.unicamp.Map.MapElements.StaticElements.WallElement;
 import br.unicamp.Map.MapElements.StaticElements.VariableElements.*;
 import br.unicamp.Exceptions.*;
 import br.unicamp.Game.Command;
-import br.unicamp.Map.MapElements.Characters.Character;;
+import br.unicamp.Interfaces.Collectable;
+import br.unicamp.Items.Coin;
+import br.unicamp.Items.Potion;
+import br.unicamp.Items.Armor.Armor;
+import br.unicamp.Map.MapElements.Characters.Character;
+import br.unicamp.Map.MapElements.Characters.Heroes.Barbarian;
+import br.unicamp.Map.MapElements.Characters.Monsters.Goblin;
+import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
+import br.unicamp.Map.MapElements.Characters.Monsters.Skeleton;;
 
 
 public class Map {
@@ -39,12 +47,13 @@ public class Map {
 		
 		this.rooms = new Room[Map.ROOMS];
 		this.roomIndex = 0;
+
 		
 
 		// sets FloorElement in entire map
 		for(int i=0; i<sizeX; i++) {
 			for(int j=0; j<sizeY; j++) {
-				map[i][j] = new FloorElement(i,j);
+				map[i][j] = new FloorElement(i,j, false);
 			}	
 		}
 
@@ -53,23 +62,37 @@ public class Map {
 
 		// Making Doors
 		makeStandardDoors();
+		
+		// Making Chests
+		makeStandardChest();
 	
 
 	}
 
 	//----------------------- Public Methods
 	
+	
+
 	private void addRoom(int x0, int y0, int dimX, int dimY) {
 		rooms[this.roomIndex] = new Room(x0,y0,dimX,dimY);
 		this.roomIndex++;
 	}
 	
+	
+	private void addTreasure(int x, int y, Collectable reward) {
+		this.map[x][y] = new Treasure(x,y,reward);
+	}
+	
+	private void addChestTrap(int x, int y, Monster monster) {
+		this.map[x][y] = new ChestTrap(x,y,monster);
+	}
+	
 	private void addDoor(int x, int y, int roomIndex, boolean isVertical) {
-		map[x][y] = new Door(x,y,rooms[roomIndex],isVertical);
+		this.map[x][y] = new Door(x,y,rooms[roomIndex],isVertical);
 	}
 	
 	private void addDoor(int x, int y, int roomIndexA, int roomIndexB, boolean isVertical) {
-		map[x][y] = new Door(x,y,rooms[roomIndexA],rooms[roomIndexB],isVertical);
+		this.map[x][y] = new Door(x,y,rooms[roomIndexA],rooms[roomIndexB],isVertical);
 	}
 	
 	private void makeStandardDoors() {
@@ -112,6 +135,16 @@ public class Map {
 
 		
 	}
+	
+	private void makeStandardChest() {
+		addTreasure(2,2, new Coin(10));
+		addTreasure(2,10, new Potion(10));
+		addTreasure(2,16, new Armor(10));
+		
+		addChestTrap(5,4, new Skeleton(5,4));
+		addChestTrap(4,6, new Goblin(4,6));
+		
+	}
 
 	public void print() {
 		for (int j = 0; j < this.sizeY ; j++) {
@@ -151,40 +184,72 @@ public class Map {
 			}
 		}
 	}
-
-	// Checks one position north, south, east and west around (X,Y)
-	// Interacts with the first Interactable object found
-	public void interactAround(Character player) throws OccupiedTileException, OutOfBoundsException {
+	
+	public void interacWithDoor(Character player) throws OccupiedTileException, OutOfBoundsException {
 		int X = player.getX();
 		int Y = player.getY();
 
 
 		// Checking NORTH
-		if(isInMap(X,Y-1) && map[X][Y-1].interact(player)) {
+		if(isInMap(X,Y-1) && map[X][Y-1].interact(player,"OD")) {
 			// Update player position
 			this.updatePlayerPosition(X,Y,player);
 		}
 
 		// Checking EAST
-		else if (isInMap(X+1,Y) && map[X+1][Y].interact(player)) {
+		else if (isInMap(X+1,Y) && map[X+1][Y].interact(player,"OD")) {
 			// Update player position
 			this.updatePlayerPosition(X,Y,player);
 		} 
 
 		// Checking SOUTH
-		else if (isInMap(X,Y+1) && map[X][Y+1].interact(player)) {
+		else if (isInMap(X,Y+1) && map[X][Y+1].interact(player,"OD")) {
 			// Update player position
 			this.updatePlayerPosition(X,Y,player);
 		} 
 
 		// Checking WEST
-		else if (isInMap(X-1,Y) && map[X-1][Y].interact(player)) {
+		else if (isInMap(X-1,Y) && map[X-1][Y].interact(player,"OD")) {
 			// Update player position
 			this.updatePlayerPosition(X,Y,player);
 		}
-
-
+		
 	}
+
+	public void interactWithChest(Character player) throws OccupiedTileException, OutOfBoundsException {
+		int X = player.getX();
+		int Y = player.getY();
+		
+		// Checking NORTH
+		if(isInMap(X,Y-1) && map[X][Y-1].interact(player,"OC")) {
+			// Update player position
+			Chest chest = (Chest) map[X][Y-1];
+			chest.updateChestOnMap(this.map);
+		}
+
+		// Checking EAST
+		else if (isInMap(X+1,Y) && map[X+1][Y].interact(player,"OC")) {
+			// Update player position
+			Chest chest = (Chest) map[X+1][Y];
+			chest.updateChestOnMap(this.map);
+		} 
+
+		// Checking SOUTH
+		else if (isInMap(X,Y+1) && map[X][Y+1].interact(player,"OC")) {
+			// Update player position
+			Chest chest = (Chest) map[X][Y+1];
+			chest.updateChestOnMap(this.map);
+		} 
+
+		// Checking WEST
+		else if (isInMap(X-1,Y) && map[X-1][Y].interact(player,"OC")) {
+			// Update player position
+			Chest chest = (Chest) map[X-1][Y];
+			chest.updateChestOnMap(this.map);
+		}
+		
+	}
+
 
 	public void addElement(MapElement element) {
 		int posX=element.getX();
@@ -336,7 +401,6 @@ public class Map {
 	}
 
 
-//	private void makeRoom(int sizeX, int sizeY, int x0, int y0) {
 	private void makeRoom(int x0, int y0,int sizeX, int sizeY) {
 		// Making outer walls
 		for(int i=x0; i<(x0+sizeX); i++) {
@@ -347,7 +411,7 @@ public class Map {
 		// Making room inside
 		for(int i=x0+1; i<(x0+1+sizeX-2); i++) {
 			for(int j=y0+1; j<(y0+1+sizeY-2); j++) {
-				map[i][j] = new FloorElement(i,j);
+				map[i][j] = new FloorElement(i,j, false);
 			}	
 		}
 		

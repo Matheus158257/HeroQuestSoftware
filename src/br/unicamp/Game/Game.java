@@ -15,6 +15,8 @@ public class Game {
 	private Map gameMap;
 
 	public Game() {
+		//door1 = new Door();
+		
 		gameMap = new Map();
 
 	}
@@ -41,8 +43,16 @@ public class Game {
 				case QUIT:
 					running = false;
 					break;
-				case INTERACT:
-					gameMap.interactAround(player);
+				case OPEN_DOOR:
+					gameMap.interacWithDoor(player);
+					break;
+					
+				case OPEN_CHEST:
+					gameMap.interactWithChest(player);
+					break;
+					
+				case BAG_REPORT:
+					player.reportBagElements();
 					break;
 				default:
 
@@ -89,8 +99,18 @@ public class Game {
 			return Command.RIGHT;
 
 		} else if ( command.compareTo("u") == 0 ) {
-			System.out.println ("INTERACTING \n");
-			return Command.INTERACT;
+			System.out.println ("INTERACTING WITH DOOR\n");
+			return Command.OPEN_DOOR;
+		}
+		
+		else if ( command.compareTo("c") == 0 ) {
+			System.out.println ("INTERACTING WITH CHEST\n");
+			return Command.OPEN_CHEST;
+		}
+		
+		else if ( command.compareTo("b") == 0 ) {
+			System.out.println ("ITEMS ON THE BAG\n");
+			return Command.BAG_REPORT;
 		}
 
 		return Command.NONE;

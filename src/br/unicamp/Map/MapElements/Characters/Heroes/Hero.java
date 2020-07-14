@@ -4,14 +4,19 @@ import br.unicamp.Map.*;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.StaticElements.VariableElements.Trap;
 import br.unicamp.Dices.Dice;
+import br.unicamp.Interfaces.Collectable;
+import br.unicamp.Items.Bag;
 import br.unicamp.Items.Armor.*;
 import br.unicamp.Items.Weapons.*;
 
 public class Hero extends Character {
 	
+	protected Bag bag;
+	
 	public Hero(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
 		super(x0,y0,name,attackPoints,defensePoints,lifePoints,mana);
-		weapons = new Weapon[2];		
+		weapons = new Weapon[2];	
+		this.bag = new Bag();
 		
 	}
 	protected void equipArmor(Armor newArmor){}
@@ -37,9 +42,14 @@ public class Hero extends Character {
 		return false;
 	}
 	
-	@Override
-	public boolean interact(Character character) {
-		return false;
+	
+	public void collect(Collectable reward) {
+		this.bag.putIntoTheBag(reward);
+		
 	}
 	
+	public void reportBagElements() {
+		this.bag.reportItemsOnBag();
+		
+	}
 }
