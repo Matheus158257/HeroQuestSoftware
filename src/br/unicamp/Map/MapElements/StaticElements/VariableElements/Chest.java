@@ -1,8 +1,5 @@
 package br.unicamp.Map.MapElements.StaticElements.VariableElements;
 
-import br.unicamp.Exceptions.OccupiedTileException;
-import br.unicamp.Exceptions.OutOfBoundsException;
-import br.unicamp.Map.Map;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 
@@ -15,7 +12,11 @@ public abstract class Chest extends VariableElement{
 	
 	@Override
 	public String toString() {
-		return "C";
+		if(this.isVisible()) {
+			return "C";
+		} else {
+			return "-";
+		}
 	}
 
 	@Override

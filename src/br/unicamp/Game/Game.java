@@ -23,7 +23,7 @@ public class Game {
 
 	public void start() {
 
-		Barbarian player = new Barbarian(0,0);
+		Barbarian player = new Barbarian(10,0);
 		gameMap.addElement(player);
 
 		System.out.println("Game started!");
