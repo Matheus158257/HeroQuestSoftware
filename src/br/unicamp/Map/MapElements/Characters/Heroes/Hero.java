@@ -3,9 +3,12 @@ package br.unicamp.Map.MapElements.Characters.Heroes;
 import br.unicamp.Map.*;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.StaticElements.VariableElements.Trap;
+import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.Dice;
+import br.unicamp.Dices.RedDice;
 import br.unicamp.Interfaces.Collectable;
 import br.unicamp.Items.Bag;
+import br.unicamp.Items.Potion;
 import br.unicamp.Items.Armor.*;
 import br.unicamp.Items.Weapons.*;
 
@@ -33,6 +36,11 @@ public class Hero extends Character {
 	protected void searchForTraps(Map map){}
 	protected void jumpTrap(Map map, Trap trap){}
 	
+	public void drinkPotion(Potion potion) {
+		this.lifePoints += potion.getHealingPoints();
+		this.bag.removeItem(potion);
+	}
+	
 	protected void play(Dice gameDice){
 		//implementar chamando o metodo gameDice.roll()
 	}
@@ -52,4 +60,19 @@ public class Hero extends Character {
 		this.bag.reportItemsOnBag();
 		
 	}
+	
+	//-------------------- NPCs actions
+	@Override
+	protected void dummyWalk(Character character, RedDice redDice) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	protected void dummyAction(Character character, CombatDice combatDice) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+
 }

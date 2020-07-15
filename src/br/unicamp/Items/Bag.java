@@ -21,6 +21,11 @@ public class Bag {
 			collectable.report();
 
 	}
+
+	public void removeItem(Collectable item) {
+		bagElements.remove(item);
+		
+	}
 	
 	
 }

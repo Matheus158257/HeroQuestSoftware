@@ -1,5 +1,11 @@
 package br.unicamp.Dices;
 
-public class Dice {
+public abstract class Dice {
+	protected int low=1;
+	protected int high=6;
+
+	public Dice() {
+
+	}
 
 }

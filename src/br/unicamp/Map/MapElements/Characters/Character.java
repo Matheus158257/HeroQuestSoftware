@@ -3,16 +3,17 @@ package br.unicamp.Map.MapElements.Characters;
 import br.unicamp.Items.Armor.*;
 import br.unicamp.Items.Weapons.*;
 import br.unicamp.Map.MapElements.MapElement;
+import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 import br.unicamp.Dices.*;
 import br.unicamp.Game.Command;
 import br.unicamp.Interfaces.Collectable;
 
 public abstract class Character extends MapElement{
-	private String name;
-	private int attackPoints;
-	private int defensePoints;
-	private int lifePoints;
-	private int mana;
+	protected String name;
+	protected int attackPoints;
+	protected int defensePoints;
+	protected int lifePoints;
+	protected int mana;
 	protected Armor armor;
 	protected Weapon weapons[];
 	
@@ -63,6 +64,10 @@ public abstract class Character extends MapElement{
 	protected void receiveDamage(int damage){
 		lifePoints = lifePoints-damage;
 	}
-
+	
+	//-------------------- NPCs actions
+	protected abstract void dummyWalk(Character character, RedDice redDice);
+	protected abstract void dummyAction(Character character, CombatDice combatDice);
+	
 	
 }

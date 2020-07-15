@@ -14,6 +14,7 @@ import br.unicamp.Items.Potion;
 import br.unicamp.Items.Armor.Armor;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.Barbarian;
+import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 import br.unicamp.Map.MapElements.Characters.Monsters.Goblin;
 import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
 import br.unicamp.Map.MapElements.Characters.Monsters.Skeleton;;
@@ -33,10 +34,8 @@ public class Map {
 	
 	private Room[] rooms;
 	private int roomIndex;
-	
-
-
-
+	private Monster[] monsters;
+	private Hero[] friends;
 
 	//----------------------- Constructors
 
@@ -468,21 +467,21 @@ public class Map {
 		makeRoom(13,9,8,7);
 		
 	}
+	
+	//----------------------- Methods to treat NPCs movements
+	public void excuteNPCsMovements() {
+		for (Hero friend: friends) {
+			//
+		}
+		
+		for (Monster monster: monsters) {
+
+		}	
+		
+	}
+	
 
 
-	//----------------------- Getters and Setters
-
-
-
-
-
-	//	private void generateCharacterMask(){
-	//		for(int j = Map.Y_MAX-1; j>=0; j-- ){
-	//			for(int i = this.xMax-1; i>=0; i-- ){
-	////				this.activeMask[i][j] = new EmptyMask(i,j);
-	//			}
-	//		}
-	//	}
 
 
 }

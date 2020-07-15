@@ -22,9 +22,25 @@ public class Game {
 	}
 
 	public void start() {
-
+		
+		// Heros additions
 		Barbarian player = new Barbarian(0,0);
 		gameMap.addElement(player);
+		
+		// Monster additions
+		
+		Monster m1 = new Goblin(3,4);
+		gameMap.addElement(m1);
+		
+		Monster m2 = new Skeleton(5,10);
+		gameMap.addElement(m2);
+		
+		Monster m3 = new SkeletonWizard(8,8);
+		gameMap.addElement(m3);
+		
+		
+		
+		
 
 		System.out.println("Game started!");
 
@@ -65,6 +81,7 @@ public class Game {
 
 			gameMap.updateMap(player);
 			gameMap.print();
+			gameMap.excuteNPCsMovements();
 
 		}
 
