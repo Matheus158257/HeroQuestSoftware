@@ -13,10 +13,7 @@ import br.unicamp.Items.Coin;
 import br.unicamp.Items.Potion;
 import br.unicamp.Items.Armor.Armor;
 import br.unicamp.Map.MapElements.Characters.Character;
-import br.unicamp.Map.MapElements.Characters.Heroes.Barbarian;
-import br.unicamp.Map.MapElements.Characters.Monsters.Goblin;
-import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
-import br.unicamp.Map.MapElements.Characters.Monsters.Skeleton;;
+import br.unicamp.Map.MapElements.Characters.Monsters.*;
 
 
 public class Map {
@@ -34,8 +31,6 @@ public class Map {
 	private Room[] rooms;
 	private int roomIndex;
 	
-
-
 
 
 	//----------------------- Constructors
@@ -131,9 +126,7 @@ public class Map {
 		addDoor(18,19,17,false);
 		addDoor(22,20,17,18,false);
 		addDoor(27,20,18,19,false);
-		
-
-		
+	
 	}
 	
 	private void makeStandardChest() {
@@ -352,7 +345,7 @@ public class Map {
 
 		// Updating LEFT
 		blocked=false;
-		for(int i=(currX-1); i>0 & !blocked; i-- ) {
+		for(int i=(currX-1); i>=0 & !blocked; i-- ) {
 			if(map[i][currY].isFree()) {
 				map[i][currY].beSeen();
 			} else {
@@ -362,7 +355,7 @@ public class Map {
 
 		// Updating DOWN
 		blocked=false;
-		for(int i=(currY-1); i>0 & !blocked; i-- ) {
+		for(int i=(currY-1); i>=0 & !blocked; i-- ) {
 			if(map[currX][i].isFree()) {
 				map[currX][i].beSeen();
 			} else {

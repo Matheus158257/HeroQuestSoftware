@@ -11,7 +11,9 @@ public class FloorElement extends StaticElement {
 	
 	public FloorElement(int x, int y, boolean seen) {
 		super(x, y);
-		this.beSeen();
+		if(seen) {
+			this.beSeen();
+		}
 		// TODO Auto-generated constructor stub
 	}
 
