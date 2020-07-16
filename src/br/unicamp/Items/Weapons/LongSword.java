@@ -7,4 +7,10 @@ public class LongSword extends Weapon {
 		super(3);
 		
 	}
+	
+	@Override
+	public void report() {
+		String message = "Long Sword: "  + "(range " + String.valueOf(range) + ") (attackBonus" + String.valueOf(attackBonus) + ")\n";
+		System.out.println(message);
+	}
 }

@@ -1,7 +1,9 @@
 package br.unicamp.Map.GroupElements;
 
-public class GroupMapElement {
+import br.unicamp.Map.MapElements.MapElement;
 
+public class GroupMapElement {
+	
 	private int x0;
 	private int y0;
 	private int dimX;
@@ -30,5 +32,5 @@ public class GroupMapElement {
 	public int getDimY() {
 		return this.dimY;
 	}
-	
+
 }

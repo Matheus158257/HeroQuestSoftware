@@ -29,10 +29,6 @@ public class FloorElement extends StaticElement {
 		return true;
 	}
 
-	@Override
-	public boolean interact(Character character) {
-		// Do nothing
-		return false;
-	}
+
 
 }

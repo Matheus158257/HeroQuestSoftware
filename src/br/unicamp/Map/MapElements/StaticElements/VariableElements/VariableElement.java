@@ -4,7 +4,7 @@ import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.StaticElements.StaticElement;
 import br.unicamp.Interfaces.Interactable;
 
-public abstract class VariableElement extends StaticElement implements Interactable {
+public abstract class VariableElement extends StaticElement{
 
 	public VariableElement(int x, int y) {
 		super(x, y);

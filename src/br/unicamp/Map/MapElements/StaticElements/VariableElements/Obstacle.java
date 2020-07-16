@@ -14,10 +14,5 @@ public class Obstacle extends VariableElement {
 		return "O";
 	}
 
-	@Override
-	public boolean interact(Character character) {
-		// Do nothing
-		return false;
-	}
 	
 }
