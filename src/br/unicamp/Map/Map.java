@@ -470,9 +470,6 @@ public class Map {
 	
 	//----------------------- Methods to treat NPCs movements
 	public void excuteNPCsMovements() {
-		for (Hero friend: friends) {
-			//
-		}
 		
 		for (Monster monster: monsters) {
 
