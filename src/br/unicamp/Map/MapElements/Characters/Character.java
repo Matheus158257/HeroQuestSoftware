@@ -1,45 +1,72 @@
 package br.unicamp.Map.MapElements.Characters;
 
-import br.unicamp.Map.MapElements.Armor.Armor;
-import br.unicamp.Map.MapElements.Weapons.Weapon;
+import br.unicamp.Items.Armor.*;
+import br.unicamp.Items.Weapons.*;
+import br.unicamp.Map.MapElements.MapElement;
+import br.unicamp.Dices.*;
+import br.unicamp.Game.Command;
+import br.unicamp.Interfaces.Collectable;
 
-public abstract class Character {
+public abstract class Character extends MapElement{
 	private String name;
 	private int attackPoints;
 	private int defensePoints;
 	private int lifePoints;
-	private int mana;
+	private int mana; //intelligence points
 	protected Armor armor;
 	protected Weapon weapons[];
 	
-	public Character(String name,int attackPoints,int defensePoints, int lifePoints, int mana){
+	public Character(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
+		super(x0,y0);
 		this.name = name;
 		this.attackPoints = attackPoints;
 		this.defensePoints = defensePoints;
 		this.lifePoints = lifePoints;
 		this.mana = mana;
 	}
+
+	public void changePosition(Command direction) {
+		
+		switch (direction) {
+		case UP:
+			this.incrementCoordinates(0,-1);
+			break;
+		case RIGHT:
+			this.incrementCoordinates(1,0);
+			break;
+		case DOWN:
+			this.incrementCoordinates(0,1);
+			break;
+		case LEFT:
+			this.incrementCoordinates(-1,0);
+			break;
+		default:
+			break;
+				
+		}
+	}
 	
-	public void moveUp(){}
+	public void changePosition(int newX, int newY) {
+		this.changeCoordinates(newX, newY);
+	}
 	
-	public void moveDown(){}
-	
-	public void moveRight(){}
-	
-	public void moveLeft(){}
-	
-	protected int getMana(){
+	public int getMana(){
 		return mana;
 	}
 	 
-	protected void defenseAgainstMagic(Dice combatDice){
-		//para se defender podem ser lançados dados de combate
-		//tentos quanto os pontos de mana
-		//implementar
+	protected int defenseAgainstMagic(CombatDice combatDice){
+		//TODO
+		int result=0;
+		//combatDice.rollDices();
+		//retonar os pontos de defesa
+		//para se defender podem ser lancados dados de combate
+		//tantos quanto os pontos de mana
+		return result;
 	}
 	
-	protected void receiveDamage(int damage){
-		lifePoints = lifePoints-damage;
+	protected void receiveDamage(int damage, int defense){
+		lifePoints = lifePoints-damage+defense;
 	}
+
 	
 }
