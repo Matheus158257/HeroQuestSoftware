@@ -13,7 +13,6 @@ public class Armor implements Collectable,Usable{
 	public Armor(int defensePoins) {
 		this.defensePoins = defensePoins;
 	}
-
 	
 	@Override
 	public void report() {

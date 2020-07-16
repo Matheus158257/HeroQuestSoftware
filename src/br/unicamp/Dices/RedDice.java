@@ -17,8 +17,7 @@ public class RedDice extends Dice {
 		return result;
 	}
 	
-	public int getRedDicesResult() {
-		int NumberOfDices = 2;
+	public int getResult(int NumberOfDices) {
 		int walkPositions = 0;
 		for (int i=1;i<=NumberOfDices; i++) {
 			walkPositions += rollDices();
