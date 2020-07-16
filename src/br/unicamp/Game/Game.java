@@ -28,7 +28,6 @@ public class Game {
 		gameMap.addElement(player);
 		
 		// Monster additions
-		
 		Monster m1 = new Goblin(3,4);
 		gameMap.addElement(m1);
 		

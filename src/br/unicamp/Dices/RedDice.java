@@ -4,9 +4,6 @@ import java.util.Random;
 
 public class RedDice extends Dice {
 
-	
-	private int low=1;
-	private int high=6;
 
 	public RedDice() {
 
