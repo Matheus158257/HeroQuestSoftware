@@ -11,7 +11,11 @@ public class Trap extends VariableElement {
 
 	@Override
 	public String toString() {
-		return "T";
+		if(this.isVisible()) {
+			return "T";
+		} else {
+			return "-";
+		}
 	}
 	
 	@Override

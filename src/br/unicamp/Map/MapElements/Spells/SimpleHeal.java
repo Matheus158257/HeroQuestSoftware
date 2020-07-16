@@ -1,4 +1,4 @@
-package br.unicamp.Items.Spells;
+package br.unicamp.Map.MapElements.Spells;
 
 
 public class SimpleHeal extends Spell {

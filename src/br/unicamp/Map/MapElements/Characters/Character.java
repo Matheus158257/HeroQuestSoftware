@@ -51,18 +51,22 @@ public abstract class Character extends MapElement{
 		this.changeCoordinates(newX, newY);
 	}
 	
-	protected int getMana(){
+	public int getMana(){
 		return mana;
 	}
 	 
-	protected void defenseAgainstMagic(Dice combatDice){
+	protected int defenseAgainstMagic(CombatDice combatDice){
 		//TODO
+		int result=0;
+		//combatDice.rollDices();
+		//retonar os pontos de defesa
 		//para se defender podem ser lancados dados de combate
 		//tantos quanto os pontos de mana
+		return result;
 	}
 	
-	protected void receiveDamage(int damage){
-		lifePoints = lifePoints-damage;
+	protected void receiveDamage(int damage, int defense){
+		lifePoints = lifePoints-damage+defense;
 	}
 	
 	//-------------------- NPCs actions

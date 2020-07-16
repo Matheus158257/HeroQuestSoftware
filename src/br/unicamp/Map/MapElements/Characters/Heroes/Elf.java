@@ -1,13 +1,14 @@
 package br.unicamp.Map.MapElements.Characters.Heroes;
 
-import br.unicamp.Dices.Dice;
-import br.unicamp.Items.Spells.SimpleHeal;
-import br.unicamp.Items.Spells.Spell;
+import br.unicamp.Dices.CombatDice;
+import br.unicamp.Dices.RedDice;
+import br.unicamp.Interfaces.Caster;
 import br.unicamp.Items.Weapons.ShortSword;
 import br.unicamp.Items.Weapons.Weapon;
 import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
+import br.unicamp.Map.MapElements.Spells.Spell;
 
-public class Elf extends Hero{
+public class Elf extends Hero implements Caster{
 	
 	public static final int ATK = 2; // Attack Points
 	public static final int DEF = 2; // Defense Points
@@ -34,17 +35,21 @@ public class Elf extends Hero{
 //		actualSpellsNo++;
 //	}
 
-	protected void castSpell(Monster targetMontser, Dice redDice1, Dice redDice2, Dice combatDice){
-		//		int result = redDice1.roll()+ redDice2.roll();
-		//		if(result<targetMontser.getMana()){
-		//			//verifica se o alvo tem defesa
-		//			targetMontser.defenseAgainstMagic(combatDice);
-
-	}
-	
 	@Override
 	public String toString() {
 		return "E";
+	}
+
+	@Override
+	public void castSpell(Spell castSpeell, Monster targetMontser, RedDice redDice1, CombatDice combatDice) {
+		//int result = redDice1.getResults();
+		//if(result<this.getMana()){
+			// verifica os pontos de dano da spell lançada
+			// int damage = castSpeell.getDamage();
+			// verifica se o alvo tem defesa e retona quantos pontos ele tem de defesa
+			// int targetDefensePoints = targetMontser.defenseAgainstMagic(combatDice);
+			// targetMontser.receiveDamage(damage,targetDefensePoints);
+		//}		
 	}
 	
 }

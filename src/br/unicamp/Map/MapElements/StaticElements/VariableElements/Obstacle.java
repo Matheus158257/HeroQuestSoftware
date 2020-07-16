@@ -11,7 +11,11 @@ public class Obstacle extends VariableElement {
 
 	@Override
 	public String toString() {
-		return "O";
+		if(this.isVisible()) {
+			return "O";
+		} else {
+			return "-";
+		}
 	}
 
 	

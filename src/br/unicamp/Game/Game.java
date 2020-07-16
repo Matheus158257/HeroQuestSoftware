@@ -37,9 +37,6 @@ public class Game {
 		Monster m3 = new SkeletonWizard(8,8);
 		gameMap.addElement(m3);
 		
-		
-		
-		
 
 		System.out.println("Game started!");
 
