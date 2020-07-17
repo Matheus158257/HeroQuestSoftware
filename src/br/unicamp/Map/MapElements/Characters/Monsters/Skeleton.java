@@ -14,7 +14,11 @@ public class Skeleton extends Monster {
 
 	@Override
 	public String toString() {
-		return "S";
+		if(this.isVisible()) {
+			return "S";
+		} else {
+			return "-";
+		}
 	}
 	
 }

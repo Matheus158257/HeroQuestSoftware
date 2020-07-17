@@ -25,7 +25,11 @@ public class Goblin extends Monster {
 	
 	@Override
 	public String toString() {
-		return "G";
+		if(this.isVisible()) {
+			return "G";
+		} else {
+			return "-";
+		}
 	}
 	
 }

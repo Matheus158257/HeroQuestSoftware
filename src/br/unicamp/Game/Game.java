@@ -77,7 +77,7 @@ public class Game {
 
 			gameMap.updateMap(player);
 			gameMap.print();
-			gameMap.excuteNPCsMovements();
+//			gameMap.excuteNPCsMovements();
 
 		}
 
