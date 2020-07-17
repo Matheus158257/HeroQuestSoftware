@@ -5,6 +5,7 @@ public class ShortSword extends Weapon{
 	
 	public ShortSword(){
 		super(2);
+		isShort = true;
 	}
 	
 	@Override

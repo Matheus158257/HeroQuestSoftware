@@ -2,9 +2,12 @@ package br.unicamp.Items.Weapons;
 
 
 public class Dagger extends Weapon {
+	// usa  mão
+	// perdido após o uso
 	
 	public Dagger(){
 		super(1);
+		isShort = true;
 	}
 	
 	@Override

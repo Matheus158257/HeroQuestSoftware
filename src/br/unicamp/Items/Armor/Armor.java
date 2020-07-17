@@ -9,6 +9,7 @@ public class Armor implements Collectable,Usable{
 	
 	
 	private int defensePoins;
+	private Hero possessor;
 
 	public Armor(int defensePoins) {
 		this.defensePoins = defensePoins;
@@ -20,11 +21,13 @@ public class Armor implements Collectable,Usable{
 		System.out.println(message);
 	}
 
-
+	public int getArmorDefensePoints(){
+		return defensePoins;
+	}
+	
 	@Override
 	public void use(Hero hero) {
-		// TODO Auto-generated method stub
-		
+		this.possessor = hero;
 	}
 
 }

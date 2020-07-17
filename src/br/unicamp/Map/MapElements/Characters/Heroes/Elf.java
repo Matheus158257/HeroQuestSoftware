@@ -21,12 +21,11 @@ public class Elf extends Hero implements Caster{
 	
 	public Elf (int x0, int y0){
 		super(x0,y0,"Elf",Elf.ATK,Elf.DEF,Elf.LP,Elf.MP);
-		
-//		Weapon shortSword = new ShortSword();
-//		this.equipWeapon(shortSword);
-//		Spell simpleHeal = new SimpleHeal();
-//		elfSpells = new Spell[Elf.MAX_SPELLS];
-//		elfGetSpell(simpleHeal);
+		Weapon shortSword = new ShortSword();
+		this.equipWeapon(shortSword);
+		//Spell simpleHeal = new SimpleHeal();
+		//elfSpells = new Spell[Elf.MAX_SPELLS];
+		//elfGetSpell(simpleHeal);
 		
 	}
 

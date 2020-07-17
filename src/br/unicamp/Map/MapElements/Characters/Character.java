@@ -14,7 +14,6 @@ public abstract class Character extends MapElement{
 	protected int defensePoints;
 	protected int lifePoints;
 	protected int mana;
-	protected Armor armor;
 	protected Weapon weapons[];
 	
 	public Character(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){

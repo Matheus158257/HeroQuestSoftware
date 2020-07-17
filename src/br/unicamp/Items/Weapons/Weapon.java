@@ -7,14 +7,22 @@ import br.unicamp.Map.MapElements.Characters.Character;
 public class Weapon implements Collectable{
 	
 	protected int range;
-	protected int attackBonus;
+	protected int attackBonus;// dados de ataque
 	protected boolean destroys;
 	protected boolean OTHERBONUS;
+	protected boolean isShort;
 	
 	public Weapon(int attackBonus){
 		this.attackBonus=attackBonus;
 	}
-
+	
+	public boolean getIsShort(){
+		return isShort;
+	}
+	
+	public int getAttackBonus(){
+		return attackBonus;
+	}
 
 	@Override
 	public void report() {
