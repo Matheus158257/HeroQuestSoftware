@@ -54,7 +54,27 @@ public abstract class Character extends MapElement{
 	public int getMana(){
 		return mana;
 	}
-	 
+	
+	public int getAttackRange() {
+		return 1;
+		// TODO metodo que retorna o alcance da arma atualmente equipada
+	}
+	
+	public int getDamagePoints() {
+		return 2;
+		// TODO metodo que retorna e dano infligido pelas armas atualmente equipadas
+	}
+	
+	public boolean takeDamage(int damage) {
+		this.lifePoints-=damage;
+		
+		if(this.lifePoints<=0) {
+			return true; // has died
+		} else {
+			return false; // is still alive
+		}
+	}
+	
 	protected int defenseAgainstMagic(CombatDice combatDice){
 		//TODO
 		int result=0;

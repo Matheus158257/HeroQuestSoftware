@@ -1,4 +1,4 @@
-package br.unicamp.Map.MapElements.Spells;
+package br.unicamp.Items.Spells;
 
 public abstract class Spell {
 	

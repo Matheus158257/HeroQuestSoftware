@@ -3,7 +3,7 @@ package br.unicamp.Map.MapElements.Characters.Monsters;
 import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.RedDice;
 import br.unicamp.Interfaces.Caster;
-import br.unicamp.Map.MapElements.Spells.Spell;
+import br.unicamp.Items.Spells.Spell;
 
 
 public class SkeletonWizard extends Monster implements Caster {

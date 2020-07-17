@@ -1,8 +1,8 @@
 package br.unicamp.Interfaces;
 
 import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
-import br.unicamp.Map.MapElements.Spells.Spell;
 import br.unicamp.Dices.*;
+import br.unicamp.Items.Spells.Spell;
 
 public interface Caster {
 	
