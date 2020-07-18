@@ -3,10 +3,10 @@ package br.unicamp.Map.MapElements.Characters.Heroes;
 import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.RedDice;
 import br.unicamp.Interfaces.Caster;
+import br.unicamp.Items.Spells.Spell;
 import br.unicamp.Items.Weapons.ShortSword;
 import br.unicamp.Items.Weapons.Weapon;
 import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
-import br.unicamp.Map.MapElements.Spells.Spell;
 
 public class Elf extends Hero implements Caster{
 	
@@ -43,7 +43,7 @@ public class Elf extends Hero implements Caster{
 	public void castSpell(Spell castSpeell, Monster targetMontser, RedDice redDice1, CombatDice combatDice) {
 		//int result = redDice1.getResults();
 		//if(result<this.getMana()){
-			// verifica os pontos de dano da spell lançada
+			// verifica os pontos de dano da spell lanï¿½ada
 			// int damage = castSpeell.getDamage();
 			// verifica se o alvo tem defesa e retona quantos pontos ele tem de defesa
 			// int targetDefensePoints = targetMontser.defenseAgainstMagic(combatDice);

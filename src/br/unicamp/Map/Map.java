@@ -6,6 +6,9 @@ import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.StaticElements.FloorElement;
 import br.unicamp.Map.MapElements.StaticElements.WallElement;
 import br.unicamp.Map.MapElements.StaticElements.VariableElements.*;
+
+import java.util.ArrayList;
+
 import br.unicamp.Exceptions.*;
 import br.unicamp.Game.Command;
 import br.unicamp.Interfaces.Collectable;
@@ -34,8 +37,9 @@ public class Map {
 	
 	private Room[] rooms;
 	private int roomIndex;
-	private Monster[] monsters;
-	private Hero[] friends;
+//	private Monster[] monsters;
+//	private int monsterIndex;
+	private ArrayList<Monster> monsters;
 
 
 	//----------------------- Constructors
@@ -48,6 +52,9 @@ public class Map {
 		this.rooms = new Room[Map.ROOMS];
 		this.roomIndex = 0;
 
+		this.monsters = new ArrayList<Monster>();
+//		this.monsters = new Monster[50];
+//		this.monsterIndex = 0;
 		
 
 		// sets FloorElement in entire map
@@ -72,77 +79,6 @@ public class Map {
 	//----------------------- Public Methods
 	
 	
-
-	private void addRoom(int x0, int y0, int dimX, int dimY) {
-		rooms[this.roomIndex] = new Room(x0,y0,dimX,dimY);
-		this.roomIndex++;
-	}
-	
-	
-	private void addTreasure(int x, int y, Collectable reward) {
-		this.map[x][y] = new Treasure(x,y,reward);
-	}
-	
-	private void addChestTrap(int x, int y, Monster monster) {
-		this.map[x][y] = new ChestTrap(x,y,monster);
-	}
-	
-	private void addDoor(int x, int y, int roomIndex, boolean isVertical) {
-		this.map[x][y] = new Door(x,y,rooms[roomIndex],isVertical);
-	}
-	
-	private void addDoor(int x, int y, int roomIndexA, int roomIndexB, boolean isVertical) {
-		this.map[x][y] = new Door(x,y,rooms[roomIndexA],rooms[roomIndexB],isVertical);
-	}
-	
-	private void makeStandardDoors() {
-		// Vertical Doors
-		addDoor(4,1,0,true);
-		addDoor(4,11,0,3,true);
-		
-		addDoor(20,1,5,true);
-		addDoor(25,6,6,8,true);
-		addDoor(30,6,7,9,true);
-		addDoor(25,11,8,true);
-		
-		addDoor(4,18,10,12,true);
-		addDoor(8,17,11,13,true);
-		addDoor(9,13,11,true);
-		addDoor(9,23,13,true);
-		addDoor(13,17,14,true);
-		
-		addDoor(24,13,15,true);
-		addDoor(30,13,16,true);
-		addDoor(25,18,15,18,true);
-		
-		addDoor(17,15,20,true);
-		
-		// Horizontal Doors
-		addDoor(6,3,1,0,false);
-		addDoor(11,6,2,4,false);
-		addDoor(6,9,3,4,false);
-		addDoor(1,8,3,false);
-		
-		addDoor(18,4,5,false);
-		addDoor(22,4,5,6,false);
-		addDoor(32,3,7,false);
-		addDoor(1,21,12,false);
-		
-		addDoor(18,19,17,false);
-		addDoor(22,20,17,18,false);
-		addDoor(27,20,18,19,false);
-	
-	}
-	
-	private void makeStandardChest() {
-		addTreasure(2,2, new Coin(10));
-		addTreasure(2,10, new Potion(10));
-		addTreasure(2,16, new Armor(10));
-		
-		addChestTrap(5,4, new Skeleton(5,4));
-		addChestTrap(4,6, new Goblin(4,6));
-		
-	}
 
 	public void print() {
 		for (int j = 0; j < this.sizeY ; j++) {
@@ -183,7 +119,7 @@ public class Map {
 		}
 	}
 	
-	public void interacWithDoor(Character player) throws OccupiedTileException, OutOfBoundsException {
+	public void interactWithDoor(Character player) throws OccupiedTileException, OutOfBoundsException {
 		int X = player.getX();
 		int Y = player.getY();
 
@@ -255,6 +191,11 @@ public class Map {
 
 		this.map[posX][posY] = element;
 	}
+	
+	public void addMonster(Monster monster) {
+		this.addElement(monster);
+		this.monsters.add(monster);
+	}
 
 	public void moveCharacter(Command direction, Character character) throws OccupiedTileException, OutOfBoundsException {
 		int currX = character.getX();
@@ -318,10 +259,69 @@ public class Map {
 		this.updateVisibility(reference);
 		this.checkLights();
 	}
+	
 
+	public void attackMonster(Character player) {
+		int damage = player.getDamagePoints();
+		int range = player.getAttackRange();
+		
+		System.out.println("LOG: Checking " + range + " tiles around " + player);
+		Monster target = this.checkMonsterTargets(range, player);
+
+		
+		if(target !=null) {
+			//TODO rolar Attack Dice para realizar a batalha
+			if(target.takeDamage(damage)) {
+				System.out.println("LOG: Killed monster: " + target);
+				this.killMonster(target);
+			}
+		}
+	}
+	
+	public Monster checkMonsterTargets(int range, Character reference) {
+		int Xh = reference.getX();
+		int Yh = reference.getY();
+		int Xm,Ym,Xdif,Ydif;
+		
+		// TODO checar se o caminho entre o player e o Monster esta realmente livre
+		
+		for (Monster m : this.monsters) {
+			if(m!=null) {
+//				System.out.print("LOG: Got here");
+				Xm = m.getX();
+				Ym = m.getY();
+				
+				if(Xm>=Xh) {
+					Xdif = Xm-Xh;
+				} else {
+					Xdif = Xh-Xm;					
+				}
+				
+				if(Ym>=Yh) {
+					Ydif = Ym-Yh;
+				} else {
+					Ydif = Yh-Ym;					
+				}
+				
+				if(Xdif<=range && Ydif<=range ) {
+					System.out.println("LOG: Monster found: " + m);
+					return m;
+				}
+			}
+		}
+		
+		return null;
+	}
 
 	//----------------------- Private Methods
 
+	private void killMonster(Monster m) {
+		//TODO remover do array monsters
+		this.monsters.remove(m);
+		this.clearTile(m.getX(), m.getY(), true);
+	}
+	
+	
 	private void updateVisibility(Character reference) {
 		// Updates map's visibility in four directions according to a Character Reference
 		int currX = reference.getX();
@@ -467,14 +467,91 @@ public class Map {
 		
 	}
 	
+
+	private void addRoom(int x0, int y0, int dimX, int dimY) {
+		rooms[this.roomIndex] = new Room(x0,y0,dimX,dimY);
+		this.roomIndex++;
+	}
+	
+	
+	private void addTreasure(int x, int y, Collectable reward) {
+		this.map[x][y] = new Treasure(x,y,reward);
+	}
+	
+	private void addChestTrap(int x, int y, Monster monster) {
+		this.map[x][y] = new ChestTrap(x,y,monster);
+	}
+	
+	private void addDoor(int x, int y, int roomIndex, boolean isVertical) {
+		this.map[x][y] = new Door(x,y,rooms[roomIndex],isVertical);
+	}
+	
+	private void addDoor(int x, int y, int roomIndexA, int roomIndexB, boolean isVertical) {
+		this.map[x][y] = new Door(x,y,rooms[roomIndexA],rooms[roomIndexB],isVertical);
+	}
+	
+	private void makeStandardDoors() {
+		// Vertical Doors
+		addDoor(4,1,0,true);
+		addDoor(4,11,0,3,true);
+		
+		addDoor(20,1,5,true);
+		addDoor(25,6,6,8,true);
+		addDoor(30,6,7,9,true);
+		addDoor(25,11,8,true);
+		
+		addDoor(4,18,10,12,true);
+		addDoor(8,17,11,13,true);
+		addDoor(9,13,11,true);
+		addDoor(9,23,13,true);
+		addDoor(13,17,14,true);
+		
+		addDoor(24,13,15,true);
+		addDoor(30,13,16,true);
+		addDoor(25,18,15,18,true);
+		
+		addDoor(17,15,20,true);
+		
+		// Horizontal Doors
+		addDoor(6,3,1,0,false);
+		addDoor(11,6,2,4,false);
+		addDoor(6,9,3,4,false);
+		addDoor(1,8,3,false);
+		
+		addDoor(18,4,5,false);
+		addDoor(22,4,5,6,false);
+		addDoor(32,3,7,false);
+		addDoor(1,21,12,false);
+		
+		addDoor(18,19,17,false);
+		addDoor(22,20,17,18,false);
+		addDoor(27,20,18,19,false);
+	
+	}
+	
+	private void makeStandardChest() {
+		addTreasure(2,2, new Coin(10));
+		addTreasure(2,10, new Potion(10));
+		addTreasure(2,16, new Armor(10));
+		
+		addChestTrap(5,4, new Skeleton(5,4));
+		addChestTrap(4,6, new Goblin(4,6));
+		
+	}
+
+	
+	
 	//----------------------- Methods to treat NPCs movements
+	
 	public void excuteNPCsMovements() {
 		
 		for (Monster monster: monsters) {
-
+			
 		}	
 		
 	}
+
+
 	
 
 

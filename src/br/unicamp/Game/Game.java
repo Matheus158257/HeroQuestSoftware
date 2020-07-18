@@ -29,13 +29,16 @@ public class Game {
 		
 		// Monster additions
 		Monster m1 = new Goblin(3,4);
-		gameMap.addElement(m1);
+//		gameMap.addElement(m1);
+		gameMap.addMonster(m1);
 		
 		Monster m2 = new Skeleton(5,10);
-		gameMap.addElement(m2);
+//		gameMap.addElement(m2);
+		gameMap.addMonster(m2);
 		
 		Monster m3 = new SkeletonWizard(8,8);
-		gameMap.addElement(m3);
+//		gameMap.addElement(m3);
+		gameMap.addMonster(m3);
 		
 
 		System.out.println("Game started!");
@@ -56,7 +59,7 @@ public class Game {
 					running = false;
 					break;
 				case OPEN_DOOR:
-					gameMap.interacWithDoor(player);
+					gameMap.interactWithDoor(player);
 					break;
 					
 				case OPEN_CHEST:
@@ -65,6 +68,10 @@ public class Game {
 					
 				case BAG_REPORT:
 					player.reportBagElements();
+					break;
+					
+				case ATTACK:
+					gameMap.attackMonster(player);
 					break;
 				default:
 
@@ -77,7 +84,7 @@ public class Game {
 
 			gameMap.updateMap(player);
 			gameMap.print();
-			gameMap.excuteNPCsMovements();
+//			gameMap.excuteNPCsMovements();
 
 		}
 
@@ -124,6 +131,11 @@ public class Game {
 		else if ( command.compareTo("b") == 0 ) {
 			System.out.println ("ITEMS ON THE BAG\n");
 			return Command.BAG_REPORT;
+		}
+		
+		else if ( command.compareTo("e") == 0 ) {
+			System.out.println ("TRY TO ATTACK\n");
+			return Command.ATTACK;
 		}
 
 		return Command.NONE;
