@@ -1,5 +1,6 @@
 package br.unicamp.Map.MapElements.StaticElements.VariableElements;
 
+import br.unicamp.Map.Map;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 
@@ -20,7 +21,7 @@ public abstract class Chest extends VariableElement{
 	}
 
 
-	public abstract void updateChestOnMap(MapElement[][] map);
+	public abstract void updateChestOnMap(Map map);
 
 
 	//--------------------

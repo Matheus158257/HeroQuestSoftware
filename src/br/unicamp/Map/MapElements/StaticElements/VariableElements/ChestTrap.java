@@ -1,6 +1,7 @@
 package br.unicamp.Map.MapElements.StaticElements.VariableElements;
 
 import br.unicamp.Interfaces.Collectable;
+import br.unicamp.Map.Map;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
@@ -26,10 +27,15 @@ public class ChestTrap extends Chest {
 		}
 	}
 	
-	public void updateChestOnMap(MapElement[][] map) {
-		int chestX = this.getX();
-		int chestY = this.getY();
-		map[chestX][chestY] = this.monster;
+//	public void updateChestOnMap(MapElement[][] map) {
+//		int chestX = this.getX();
+//		int chestY = this.getY();
+//		map[chestX][chestY] = this.monster;
+//		
+//	}
+	
+	public void updateChestOnMap(Map map) {
+		map.addMonster(this.monster);
 		
 	}
 

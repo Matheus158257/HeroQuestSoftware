@@ -10,7 +10,7 @@ public class SkeletonWizard extends Monster implements Caster {
 
 	public static final int ATK = 1;
 	public static final int DEF = 1;
-	public static final int LP = 1;
+	public static final int LP = 4;
 	public static final int MP = 1;
 	
 	
@@ -29,11 +29,11 @@ public class SkeletonWizard extends Monster implements Caster {
 	}
 
 	@Override
-	public void castSpell(Spell castSpeell, Monster targetMontser, RedDice redDice1, CombatDice combatDice) {
+	public void castSpell(Spell castSpell, Monster targetMontser, RedDice redDice1, CombatDice combatDice) {
 		/*int result = redDice1.rollDices();
 		if(result<this.getMana()){
 			// verifica os pontos de dano da spell lan�ada
-			// int damage = castSpeell.getDamage();
+			// int damage = castSpell.getDamage();
 			// verifica se o alvo tem defesa e retona quantos pontos ele tem de defesa
 			// int targetDefensePoints = targetMontser.defenseAgainstMagic(combatDice);
 			// targetMontser.receiveDamage(damage,targetDefensePoints);

@@ -3,10 +3,13 @@ package br.unicamp.Game;
 import java.util.Scanner;
 
 import br.unicamp.Exceptions.*;
+import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.Map;
+import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Heroes.Barbarian;
 import br.unicamp.Map.MapElements.Characters.Heroes.Dwarf;
 import br.unicamp.Map.MapElements.Characters.Heroes.Elf;
+import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 import br.unicamp.Map.MapElements.Characters.Heroes.Wizard;
 import br.unicamp.Map.MapElements.Characters.Monsters.*;
 
@@ -25,8 +28,8 @@ public class Game {
 
 	public void start() {
 		
-		// Heros additions
-		Barbarian player = new Barbarian(0,0);
+		// Hero addition	
+		Hero player = chooseHero();
 		gameMap.addElement(player);
 		
 		// Monster additions
@@ -61,11 +64,11 @@ public class Game {
 					running = false;
 					break;
 				case OPEN_DOOR:
-					gameMap.interactWithDoor(player);
+					gameMap.searchDoors(player);
 					break;
 					
 				case OPEN_CHEST:
-					gameMap.interactWithChest(player);
+					gameMap.searchChests(player);
 					break;
 					
 				case BAG_REPORT:
@@ -144,4 +147,33 @@ public class Game {
 
 
 	}
+	
+	
+	private Hero chooseHero() {
+
+		@SuppressWarnings("resource")
+		Scanner keyboard = new Scanner(System.in);
+		System.out.print ("Choose your Hero: \n W => Wizard \n B => Barbarian \n D => Dwarf \n E => Elf \n") ;
+		String command = keyboard.nextLine();
+
+		if ( command.compareTo("W") == 0 ) {
+			System.out.println ("Chose Wizard \n");
+			return new Wizard(0,0);
+
+		} else if ( command.compareTo("B") == 0 ) {
+			System.out.println ("Chose Barbarian \n");
+			return new Barbarian(0,0);
+
+		} else if ( command.compareTo("D") == 0 ) {
+			System.out.println ("Chose Dwarf \n");
+			return new Dwarf(0,0);
+
+		} else if ( command.compareTo("E") == 0 ) {
+			System.out.println ("Chose Elf \n");
+			return new Elf(0,0);
+		} else {
+			return new Barbarian(0,0);
+		}
+	}
+	
 }

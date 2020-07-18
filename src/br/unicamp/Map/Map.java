@@ -85,7 +85,7 @@ public class Map {
 	}
 
 	
-	public void interactWithDoor(Character player) throws OccupiedTileException, OutOfBoundsException {
+	public void searchDoors(Character player) throws OccupiedTileException, OutOfBoundsException {
 		int X = player.getX();
 		int Y = player.getY();
 
@@ -116,36 +116,32 @@ public class Map {
 		
 	}
 
-	public void interactWithChest(Character player) throws OccupiedTileException, OutOfBoundsException {
+	public void searchChests(Character player) {
 		int X = player.getX();
 		int Y = player.getY();
 		
 		// Checking NORTH
-//		if(isInMap(X,Y-1) && map[X][Y-1].interact(player,"OC")) {
 		if(isInMap(X,Y-1) && map[X][Y-1].getOpened(player)) {
 			Chest chest = (Chest) map[X][Y-1];
-			chest.updateChestOnMap(this.map);
+			chest.updateChestOnMap(this);
 		}
 
 		// Checking EAST
-//		else if (isInMap(X+1,Y) && map[X+1][Y].interact(player,"OC")) {
 		else if (isInMap(X+1,Y) && map[X+1][Y].getOpened(player)) {
 			Chest chest = (Chest) map[X+1][Y];
-			chest.updateChestOnMap(this.map);
+			chest.updateChestOnMap(this);
 		} 
 
 		// Checking SOUTH
-//		else if (isInMap(X,Y+1) && map[X][Y+1].interact(player,"OC")) {
 		else if (isInMap(X,Y+1) && map[X][Y+1].getOpened(player)) {
 			Chest chest = (Chest) map[X][Y+1];
-			chest.updateChestOnMap(this.map);
+			chest.updateChestOnMap(this);
 		} 
 
 		// Checking WEST
-//		else if (isInMap(X-1,Y) && map[X-1][Y].interact(player,"OC")) {
 		else if (isInMap(X-1,Y) && map[X-1][Y].getOpened(player)) {
 			Chest chest = (Chest) map[X-1][Y];
-			chest.updateChestOnMap(this.map);
+			chest.updateChestOnMap(this);
 		}
 		
 	}
@@ -214,7 +210,7 @@ public class Map {
 		}
 	}
 
-	private void clearTile(int x, int y, boolean seen) {
+	public void clearTile(int x, int y, boolean seen) {
 		map[x][y] = new FloorElement(x,y,seen);
 	}
 
@@ -225,7 +221,7 @@ public class Map {
 	}
 	
 
-	public void attackMonster(Character player) {
+	public void attackMonster(Hero player) {
 		int damage = player.getDamagePoints();
 		int range = player.getAttackRange();
 		
@@ -251,7 +247,6 @@ public class Map {
 		
 		for (Monster m : this.monsters) {
 			if(m!=null) {
-//				System.out.print("LOG: Got here");
 				Xm = m.getX();
 				Ym = m.getY();
 				

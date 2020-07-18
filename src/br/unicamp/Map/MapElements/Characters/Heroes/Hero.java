@@ -27,27 +27,11 @@ public class Hero extends Character {
 		this.bag = new Bag();
 		
 	}
+	
 	protected void equipArmor(Armor newArmor){
 		this.bag.removeItem(newArmor);
 		this.armor = newArmor;
 		this.defensePoints += newArmor.getArmorDefensePoints();
-	}
-	
-	protected void equipWeapon(Weapon newWeapon){
-		//TODO Resolver estouro de tamanho do vetor
-		this.bag.removeItem(newWeapon);//tira a arma da sacola e p�es nas m�os do h�roi
-		if(newWeapon.getIsShort()){
-			weapons[equippedWeapons]=newWeapon;
-			equippedWeapons++;
-			//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
-			//newWeapon.getAttackBonus();
-		}else{
-			weapons[equippedWeapons]=newWeapon;
-			//Solu��o para que o heroi n�o tente pegar mais uma arma
-			equippedWeapons+=2;
-			//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
-			//newWeapon.getAttackBonus();
-		}
 	}
 	
 	protected void unequipArmor(Armor removArmor){
@@ -55,17 +39,33 @@ public class Hero extends Character {
 		this.defensePoints -= removArmor.getArmorDefensePoints();		
 	}
 	
-	protected void unequipWeapon(Weapon removWeapon){
-		this.bag.putIntoTheBag(removWeapon);
-		if(removWeapon.getIsShort()){
+//	@Override
+	protected void equipWeapon(Weapon newWeapon){
+		//TODO Resolver estouro de tamanho do vetor
+		this.bag.removeItem(newWeapon); // tira a arma da sacola e equipa
+		if(newWeapon.getIsShort()){
+			weapons[equippedWeapons]=newWeapon;
+			equippedWeapons++;
+		} else {
+			weapons[equippedWeapons]=newWeapon;
+			equippedWeapons+=2;
+		}
+		this.giveAttackBonus(newWeapon.getAttackBonus());
+	}
+
+//	@Override
+	protected void unequipWeapon(Weapon weapon){
+		this.bag.putIntoTheBag(weapon);
+		if(weapon.getIsShort()){
 			weapons[equippedWeapons]=null;
 			equippedWeapons--;
 		}else{
-			weapons[equippedWeapons]=null;
-			weapons[equippedWeapons--]=null;
-			//Livra as duas m�os
-			equippedWeapons=equippedWeapons-2;
+			for(Weapon w:weapons) {
+				w = null;
+			}
+			equippedWeapons=0;
 		}
+		this.giveAttackBonus(-1*weapon.getAttackBonus());
 		
 	}
 	

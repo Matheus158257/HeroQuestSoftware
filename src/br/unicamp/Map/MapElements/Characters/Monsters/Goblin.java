@@ -5,9 +5,9 @@ import br.unicamp.Items.Weapons.Weapon;
 
 public class Goblin extends Monster {
 
-	public static final int ATK = 1; // Attack Points
-	public static final int DEF = 1; // Defense Points
-	public static final int LP = 1; // Life Points
+	public static final int ATK = 0; // Attack Points
+	public static final int DEF = 2; // Defense Points
+	public static final int LP = 4; // Life Points
 	public static final int MP = 0; // Mana Points
 	
 	public Goblin(int x0, int y0){
