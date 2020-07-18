@@ -4,8 +4,10 @@ import java.util.Scanner;
 
 import br.unicamp.Exceptions.*;
 import br.unicamp.Map.Map;
-import br.unicamp.Map.MapElements.Characters.Character;
-import br.unicamp.Map.MapElements.Characters.Heroes.*;
+import br.unicamp.Map.MapElements.Characters.Heroes.Barbarian;
+import br.unicamp.Map.MapElements.Characters.Heroes.Dwarf;
+import br.unicamp.Map.MapElements.Characters.Heroes.Elf;
+import br.unicamp.Map.MapElements.Characters.Heroes.Wizard;
 import br.unicamp.Map.MapElements.Characters.Monsters.*;
 
 public class Game {

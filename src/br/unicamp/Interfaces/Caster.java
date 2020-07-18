@@ -6,5 +6,5 @@ import br.unicamp.Items.Spells.Spell;
 
 public interface Caster {
 	
-	public void castSpell(Spell castSpeell, Monster targetMontser, RedDice redDice1, CombatDice combatDice);
+	public void castSpell(Spell castSpell, Monster targetMontser, RedDice redDice1, CombatDice combatDice);
 }

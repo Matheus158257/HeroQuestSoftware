@@ -72,18 +72,16 @@ public class Door extends VariableElement {
 		}
 	}
 	
+	
+	//--------------------
+	
+	
 	@Override
-	public boolean interact(Character character,String iteration){
-		Boolean result = false;
-		
-		if (iteration == "OD") {
-			open(character);
-			this.roomA.lightsOn();
-			this.roomB.lightsOn();
-			result = true;
-		}
-
-		return result;
+	public boolean goThrough(Character character) {
+		open(character);
+		this.roomA.lightsOn();
+		this.roomB.lightsOn();
+		return true;
 	}
 	
 }

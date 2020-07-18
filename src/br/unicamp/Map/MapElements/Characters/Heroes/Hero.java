@@ -19,7 +19,7 @@ public class Hero extends Character {
 	
 	protected Armor armor;
 	protected Bag bag;
-	private int noWeaponsInHands = 0;
+	private int equippedWeapons = 0;
 	
 	public Hero(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
 		super(x0,y0,name,attackPoints,defensePoints,lifePoints,mana);
@@ -34,17 +34,17 @@ public class Hero extends Character {
 	}
 	
 	protected void equipWeapon(Weapon newWeapon){
-		//TO DO: Resolver estouro de tamanho do vetor
-		this.bag.removeItem(newWeapon);//tira a arma da sacola e pões nas mãos do héroi
+		//TODO Resolver estouro de tamanho do vetor
+		this.bag.removeItem(newWeapon);//tira a arma da sacola e pï¿½es nas mï¿½os do hï¿½roi
 		if(newWeapon.getIsShort()){
-			weapons[noWeaponsInHands]=newWeapon;
-			noWeaponsInHands++;
+			weapons[equippedWeapons]=newWeapon;
+			equippedWeapons++;
 			//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
 			//newWeapon.getAttackBonus();
 		}else{
-			weapons[noWeaponsInHands]=newWeapon;
-			//Solução para que o heroi não tente pegar mais uma arma
-			noWeaponsInHands=noWeaponsInHands+2;
+			weapons[equippedWeapons]=newWeapon;
+			//Soluï¿½ï¿½o para que o heroi nï¿½o tente pegar mais uma arma
+			equippedWeapons+=2;
 			//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
 			//newWeapon.getAttackBonus();
 		}
@@ -58,13 +58,13 @@ public class Hero extends Character {
 	protected void unequipWeapon(Weapon removWeapon){
 		this.bag.putIntoTheBag(removWeapon);
 		if(removWeapon.getIsShort()){
-			weapons[noWeaponsInHands]=null;
-			noWeaponsInHands--;
+			weapons[equippedWeapons]=null;
+			equippedWeapons--;
 		}else{
-			weapons[noWeaponsInHands]=null;
-			weapons[noWeaponsInHands--]=null;
-			//Livra as duas mãos
-			noWeaponsInHands=noWeaponsInHands-2;
+			weapons[equippedWeapons]=null;
+			weapons[equippedWeapons--]=null;
+			//Livra as duas mï¿½os
+			equippedWeapons=equippedWeapons-2;
 		}
 		
 	}
@@ -107,6 +107,18 @@ public class Hero extends Character {
 	protected void dummyAction(Character character, CombatDice combatDice) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	//--------------------
+	
+	
+	@Override
+	public boolean getOpened(Character character) {
+		return false;
+	}
+	@Override
+	public boolean goThrough(Character character) {
+		return false;
 	}
 	
 	

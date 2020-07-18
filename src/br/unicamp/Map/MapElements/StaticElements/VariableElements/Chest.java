@@ -19,16 +19,15 @@ public abstract class Chest extends VariableElement{
 		}
 	}
 
-	@Override
-	public boolean interact(Character character, String iteration) {
-		Boolean result = false;
-		if (iteration == "OC") {
-			result = true;
-		}
-		return result;
-	}
 
 	public abstract void updateChestOnMap(MapElement[][] map);
 
 
+	//--------------------
+	
+	@Override
+	public boolean getOpened(Character character) {
+		return true;
+	}
+	
 }

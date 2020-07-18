@@ -37,8 +37,6 @@ public class Map {
 	
 	private Room[] rooms;
 	private int roomIndex;
-//	private Monster[] monsters;
-//	private int monsterIndex;
 	private ArrayList<Monster> monsters;
 
 
@@ -53,9 +51,6 @@ public class Map {
 		this.roomIndex = 0;
 
 		this.monsters = new ArrayList<Monster>();
-//		this.monsters = new Monster[50];
-//		this.monsterIndex = 0;
-		
 
 		// sets FloorElement in entire map
 		for(int i=0; i<sizeX; i++) {
@@ -67,10 +62,10 @@ public class Map {
 		// Making fixed Rooms
 		makeRooms();
 
-		// Making Doors
+		// Making Standard Doors
 		makeStandardDoors();
 		
-		// Making Chests
+		// Making Standard Chests
 		makeStandardChest();
 	
 
@@ -89,35 +84,6 @@ public class Map {
 		}
 	}
 
-	private void updatePlayerPosition(int oldX, int oldY, Character character) {
-		this.clearTile(oldX, oldY, true);
-		
-		int newX = character.getX();
-		int newY = character.getY();
-		this.map[newX][newY] = character;
-	}
-	
-	private void checkLights() {
-		int x0;
-		int y0;
-		int dimX;
-		int dimY;
-		
-		for(Room r : rooms) {
-			if(r != null && r.isLit()) {
-				x0=r.getX0();
-				y0=r.getY0();
-				dimX=r.getDimX();
-				dimY=r.getDimY();
-				
-				for(int i=x0; i<(x0+dimX);i++) {
-					for(int j=y0; j<(y0+dimY);j++) {
-						map[i][j].beSeen();
-					}
-				}
-			}
-		}
-	}
 	
 	public void interactWithDoor(Character player) throws OccupiedTileException, OutOfBoundsException {
 		int X = player.getX();
@@ -125,25 +91,25 @@ public class Map {
 
 
 		// Checking NORTH
-		if(isInMap(X,Y-1) && map[X][Y-1].interact(player,"OD")) {
+		if(isInMap(X,Y-1) && map[X][Y-1].goThrough(player)) {
 			// Update player position
 			this.updatePlayerPosition(X,Y,player);
 		}
 
 		// Checking EAST
-		else if (isInMap(X+1,Y) && map[X+1][Y].interact(player,"OD")) {
+		else if (isInMap(X+1,Y) && map[X+1][Y].goThrough(player)) {
 			// Update player position
 			this.updatePlayerPosition(X,Y,player);
 		} 
 
 		// Checking SOUTH
-		else if (isInMap(X,Y+1) && map[X][Y+1].interact(player,"OD")) {
+		else if (isInMap(X,Y+1) && map[X][Y+1].goThrough(player)) {
 			// Update player position
 			this.updatePlayerPosition(X,Y,player);
 		} 
 
 		// Checking WEST
-		else if (isInMap(X-1,Y) && map[X-1][Y].interact(player,"OD")) {
+		else if (isInMap(X-1,Y) && map[X-1][Y].goThrough(player)) {
 			// Update player position
 			this.updatePlayerPosition(X,Y,player);
 		}
@@ -155,35 +121,34 @@ public class Map {
 		int Y = player.getY();
 		
 		// Checking NORTH
-		if(isInMap(X,Y-1) && map[X][Y-1].interact(player,"OC")) {
-			// Update player position
+//		if(isInMap(X,Y-1) && map[X][Y-1].interact(player,"OC")) {
+		if(isInMap(X,Y-1) && map[X][Y-1].getOpened(player)) {
 			Chest chest = (Chest) map[X][Y-1];
 			chest.updateChestOnMap(this.map);
 		}
 
 		// Checking EAST
-		else if (isInMap(X+1,Y) && map[X+1][Y].interact(player,"OC")) {
-			// Update player position
+//		else if (isInMap(X+1,Y) && map[X+1][Y].interact(player,"OC")) {
+		else if (isInMap(X+1,Y) && map[X+1][Y].getOpened(player)) {
 			Chest chest = (Chest) map[X+1][Y];
 			chest.updateChestOnMap(this.map);
 		} 
 
 		// Checking SOUTH
-		else if (isInMap(X,Y+1) && map[X][Y+1].interact(player,"OC")) {
-			// Update player position
+//		else if (isInMap(X,Y+1) && map[X][Y+1].interact(player,"OC")) {
+		else if (isInMap(X,Y+1) && map[X][Y+1].getOpened(player)) {
 			Chest chest = (Chest) map[X][Y+1];
 			chest.updateChestOnMap(this.map);
 		} 
 
 		// Checking WEST
-		else if (isInMap(X-1,Y) && map[X-1][Y].interact(player,"OC")) {
-			// Update player position
+//		else if (isInMap(X-1,Y) && map[X-1][Y].interact(player,"OC")) {
+		else if (isInMap(X-1,Y) && map[X-1][Y].getOpened(player)) {
 			Chest chest = (Chest) map[X-1][Y];
 			chest.updateChestOnMap(this.map);
 		}
 		
 	}
-
 
 	public void addElement(MapElement element) {
 		int posX=element.getX();
@@ -254,7 +219,6 @@ public class Map {
 	}
 
 
-
 	public void updateMap(Character reference) {
 		this.updateVisibility(reference);
 		this.checkLights();
@@ -315,10 +279,43 @@ public class Map {
 
 	//----------------------- Private Methods
 
+	
+	
 	private void killMonster(Monster m) {
 		//TODO remover do array monsters
 		this.monsters.remove(m);
 		this.clearTile(m.getX(), m.getY(), true);
+	}
+	
+
+	private void updatePlayerPosition(int oldX, int oldY, Character character) {
+		this.clearTile(oldX, oldY, true);
+		
+		int newX = character.getX();
+		int newY = character.getY();
+		this.map[newX][newY] = character;
+	}
+	
+	private void checkLights() {
+		int x0;
+		int y0;
+		int dimX;
+		int dimY;
+		
+		for(Room r : rooms) {
+			if(r != null && r.isLit()) {
+				x0=r.getX0();
+				y0=r.getY0();
+				dimX=r.getDimX();
+				dimY=r.getDimY();
+				
+				for(int i=x0; i<(x0+dimX);i++) {
+					for(int j=y0; j<(y0+dimY);j++) {
+						map[i][j].beSeen();
+					}
+				}
+			}
+		}
 	}
 	
 	

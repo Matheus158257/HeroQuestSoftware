@@ -11,4 +11,15 @@ public abstract class StaticElement extends MapElement {
 
 	}
 
+	//--------------------
+	
+	@Override
+	public boolean getOpened(Character character) {
+		return false;
+	}
+	@Override
+	public boolean goThrough(Character character) {
+		return false;
+	}
+	
 }
