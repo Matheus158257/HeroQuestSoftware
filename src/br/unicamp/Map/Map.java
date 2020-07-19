@@ -60,12 +60,6 @@ public class Map {
 		// Making fixed Rooms
 		makeRooms();
 
-		// Making Doors
-		makeStandardDoors();
-		
-		// Making Chests
-		makeStandardChest();
-	
 
 	}
 
@@ -79,23 +73,23 @@ public class Map {
 	}
 	
 	
-	private void addTreasure(int x, int y, Collectable reward) {
+	public void addTreasure(int x, int y, Collectable reward) {
 		this.map[x][y] = new Treasure(x,y,reward);
 	}
 	
-	private void addChestTrap(int x, int y, Monster monster) {
+	public void addChestTrap(int x, int y, Monster monster) {
 		this.map[x][y] = new ChestTrap(x,y,monster);
 	}
 	
-	private void addDoor(int x, int y, int roomIndex, boolean isVertical) {
+	public void addDoor(int x, int y, int roomIndex, boolean isVertical) {
 		this.map[x][y] = new Door(x,y,rooms[roomIndex],isVertical);
 	}
 	
-	private void addDoor(int x, int y, int roomIndexA, int roomIndexB, boolean isVertical) {
+	public void addDoor(int x, int y, int roomIndexA, int roomIndexB, boolean isVertical) {
 		this.map[x][y] = new Door(x,y,rooms[roomIndexA],rooms[roomIndexB],isVertical);
 	}
 	
-	private void makeStandardDoors() {
+	public void makeStandardDoors() {
 		// Vertical Doors
 		addDoor(4,1,0,true);
 		addDoor(4,11,0,3,true);
@@ -134,7 +128,7 @@ public class Map {
 	
 	}
 	
-	private void makeStandardChest() {
+	public void makeStandardChest() {
 		addTreasure(2,2, new Coin(10));
 		addTreasure(2,10, new Potion(10));
 		addTreasure(2,16, new Armor(10));
@@ -468,11 +462,9 @@ public class Map {
 	}
 	
 	//----------------------- Methods to treat NPCs movements
-	public void excuteNPCsMovements() {
-		
-		for (Monster monster: monsters) {
-
-		}	
+	public void excuteNPCsMovements() {	
+		/*for (Monster monster: monsters) {
+		}*/
 		
 	}
 	

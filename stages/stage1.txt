@@ -1,0 +1,19 @@
+HB 0 0
+C1 5 4 G
+C1 4 6 S
+C2 2 2 A 3
+C2 2 10 P 5
+C2 2 14 Q 10
+G 3 4
+S 5 10
+K 8 8
+U 4 1 true 0
+U 4 11 true 0 3	
+U 20 1 true 5
+U 25 6 true 6 8
+U 30 6 true 7 9
+U 25 11 true 8
+U 11 6 false 2 4	
+U 6 3 false 1 0
+U 6 9 false 3 4	
+U 1 8 false 3
