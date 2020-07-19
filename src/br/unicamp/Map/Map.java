@@ -86,6 +86,7 @@ public class Map {
 	}
 	
 	public void addDoor(int x, int y, int roomIndexA, int roomIndexB, boolean isVertical) {
+		
 		this.map[x][y] = new Door(x,y,rooms[roomIndexA],rooms[roomIndexB],isVertical);
 	}
 	

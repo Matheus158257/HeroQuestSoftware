@@ -18,7 +18,7 @@ public class Hero extends Character {
 	
 	public Hero(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
 		super(x0,y0,name,attackPoints,defensePoints,lifePoints,mana);
-		weapons = new Weapon[2];	
+		this.weapons = new Weapon[2];	
 		this.bag = new Bag();
 		
 	}

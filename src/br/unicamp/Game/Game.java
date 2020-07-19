@@ -211,6 +211,19 @@ public class Game {
 			System.out.println ("ITEMS ON THE BAG\n");
 			return Command.BAG_REPORT;
 		}
+		
+		else if ( command.compareTo("e") == 0 ) {
+			System.out.println ("DRINKING POTION\n");
+			return Command.DRINK_POTION;
+		}
+		else if ( command.compareTo("r") == 0 ) {
+			System.out.println ("CHANGE ARMOR\n");
+			return Command.CHANGE_ARMOR;
+		}
+		else if ( command.compareTo("t") == 0 ) {
+			System.out.println ("CHANGE WEAPON \n");
+			return Command.CHANGE_WEAPON;
+		}
 
 		return Command.NONE;
 
