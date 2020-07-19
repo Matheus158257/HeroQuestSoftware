@@ -53,7 +53,6 @@ public class Hero extends Character {
 	
 	public void collect(Collectable reward) {
 		this.bag.putIntoTheBag(reward);
-		
 	}
 	
 	public void reportBagElements() {

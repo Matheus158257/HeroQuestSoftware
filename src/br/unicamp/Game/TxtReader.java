@@ -114,6 +114,7 @@ public class TxtReader {
 		}
 		// Variable Elements
 		else if (parts[0].equals("O")) {
+			System.out.println(parts[0]);
 			stageElements.add(new Obstacle(x0,y0));
 		}
 		 else if (parts[0].equals("T")) {
@@ -124,11 +125,9 @@ public class TxtReader {
 			int roomA = Integer.valueOf(parts[4]);
 			try {
 				int roomB = Integer.valueOf(parts[5]);
-				System.out.println("Adição de porta que liga dois corredores");
 				doorMaskElements.add(new DoorMask(x0, y0, vert, roomA,roomB));
 						
 			}catch(Exception e){
-				System.out.println("Adição de porta que liga corredor e sala");
 				doorMaskElements.add(new DoorMask(x0, y0, vert, roomA));
 			}
 			

@@ -24,8 +24,6 @@ public class Game {
 
 	public void start() {
 		
-
-		
 		Hero player = null;
 		boolean running1 = true;
 		Command input1;
