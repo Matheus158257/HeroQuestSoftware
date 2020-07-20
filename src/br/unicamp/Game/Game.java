@@ -221,7 +221,7 @@ public class Game {
 			return Command.CHANGE_ARMOR;
 		}
 		else if ( command.compareTo("t") == 0 ) {
-			System.out.println ("CHANGE WEAPON \n");
+			System.out.println ("CHANGE WEAPON\n");
 			return Command.CHANGE_WEAPON;
 		}
 
