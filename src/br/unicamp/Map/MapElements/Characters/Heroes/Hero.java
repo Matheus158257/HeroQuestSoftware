@@ -1,6 +1,7 @@
 package br.unicamp.Map.MapElements.Characters.Heroes;
 
 import br.unicamp.Map.*;
+import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.StaticElements.VariableElements.Trap;
 import br.unicamp.Dices.CombatDice;
@@ -99,12 +100,12 @@ public class Hero extends Character {
 	
 	//-------------------- NPCs actions
 	@Override
-	protected void dummyWalk(Character character, RedDice redDice) {
+	protected void dummyWalk(Character character, RedDice redDice, MapElement map[][]) {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
-	protected void dummyAction(Character character, CombatDice combatDice) {
+	protected void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
 		// TODO Auto-generated method stub
 		
 	}

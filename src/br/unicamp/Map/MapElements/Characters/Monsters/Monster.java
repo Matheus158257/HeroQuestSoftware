@@ -3,7 +3,9 @@ package br.unicamp.Map.MapElements.Characters.Monsters;
 
 import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.RedDice;
+import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
+import br.unicamp.Game.Game;
 
 public class Monster extends Character {
 
@@ -21,15 +23,32 @@ public class Monster extends Character {
 	//-------------------- NPCs actions
 	
 	@Override
-	public void dummyWalk(Character character, RedDice redDice) {
+	public void dummyWalk(Character character, RedDice redDice, MapElement map[][]) {
+		int steps = redDice.getResult(1);
 		if (this.isVisible()) {
-			
+			do{
+				while(map[this.getX()][this.getY()+1].isFree() && steps>0){ 		//DOWN
+					this.incrementCoordinates(0,1);
+					steps--;
+				}
+				while(map[this.getX()][this.getY()-1].isFree() && steps>0){ 	//UP
+					this.incrementCoordinates(0,-1);
+					steps--;
+				}
+				while(map[this.getX()][this.getY()+1].isFree() && steps>0){ 	//RIGHT
+					this.incrementCoordinates(1,0);
+					steps--;
+				}
+				while(map[this.getX()][this.getY()+1].isFree() && steps>0){ 	//LEFT
+					this.incrementCoordinates(-1,0);
+					steps--;
+				}
+			}while(steps>0);
 		}
-
 	}
 
 	@Override
-	public void dummyAction(Character character, CombatDice combatDice) {
+	public void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -69,8 +69,8 @@ public abstract class Character extends MapElement{
 	}
 	
 	//-------------------- NPCs actions
-	protected abstract void dummyWalk(Character character, RedDice redDice);
-	protected abstract void dummyAction(Character character, CombatDice combatDice);
+	protected abstract void dummyWalk(Character character, RedDice redDice, MapElement map[][]);
+	protected abstract void dummyAction(Character character, CombatDice combatDice,MapElement map[][]);
 	
 	
 }
