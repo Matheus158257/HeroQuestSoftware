@@ -7,7 +7,19 @@ import br.unicamp.Exceptions.*;
 import br.unicamp.Map.Map;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Heroes.*;
-import br.unicamp.Map.MapElements.Characters.Monsters.*;
+import br.unicamp.Map.MapElements.Characters.Character;
+import br.unicamp.Map.Map;
+import br.unicamp.Map.MapElements.MapElement;
+import br.unicamp.Map.MapElements.Characters.Heroes.Barbarian;
+import br.unicamp.Map.MapElements.Characters.Heroes.Dwarf;
+import br.unicamp.Map.MapElements.Characters.Heroes.Elf;
+import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
+import br.unicamp.Map.MapElements.Characters.Heroes.Wizard;
+import br.unicamp.Map.MapElements.Characters.Monsters.Goblin;
+import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
+import br.unicamp.Map.MapElements.Characters.Monsters.Skeleton;
+import br.unicamp.Map.MapElements.Characters.Monsters.SkeletonWizard;
+
 
 public class Game {
 
@@ -24,10 +36,10 @@ public class Game {
 
 	public void start() {
 		
+
 		Hero player = null;
 		boolean running1 = true;
 		Command input1;
-
 		
 		// Loading the Map
 		while (running1) {
@@ -59,23 +71,32 @@ public class Game {
 					int roomB= doorMaskElement.getRoomB();
 					boolean vert= doorMaskElement.getVericability();
 					gameMap.addDoor(x,y,roomA,roomB,vert);
-				}	
+				}
+				// All monsters
+				ArrayList<Monster> monsterElements = stage.getArrayMonsterElements();
+				for(Monster monster: monsterElements){
+					gameMap.addMonster(monster);
+				}
+				
 				running1 = false;
 				break;
 			case PREGAME:
 				// Heros additions
-				player = new Barbarian(0,0);
+				player = chooseHero();
 				gameMap.addElement(player);
 				
 				// Monster additions
 				Monster m1 = new Goblin(3,4);
 				gameMap.addElement(m1);
+				gameMap.addMonster(m1);
 				
 				Monster m2 = new Skeleton(5,10);
 				gameMap.addElement(m2);
+				gameMap.addMonster(m1);
 				
 				Monster m3 = new SkeletonWizard(8,8);
 				gameMap.addElement(m3);
+				gameMap.addMonster(m1);
 				
 				
 				
@@ -117,15 +138,19 @@ public class Game {
 					running2 = false;
 					break;
 				case OPEN_DOOR:
-					gameMap.interacWithDoor(player);
+					gameMap.searchDoors(player);
 					break;
 					
 				case OPEN_CHEST:
-					gameMap.interactWithChest(player);
+					gameMap.searchChests(player);
 					break;
 					
 				case BAG_REPORT:
 					player.reportBagElements();
+					break;
+					
+				case ATTACK:
+					gameMap.attackMonster(player);
 					break;
 				default:
 
@@ -138,7 +163,7 @@ public class Game {
 
 			gameMap.updateMap(player);
 			gameMap.print();
-			gameMap.excuteNPCsMovements();
+//			gameMap.excuteNPCsMovements();
 
 		}
 
@@ -180,38 +205,30 @@ public class Game {
 		if ( command.compareTo("quit") == 0) {
 			System.out.println("Game terminated. Bye!");
 			return Command.QUIT;
-
 		} else if ( command.compareTo("w") == 0 ) {
 			System.out.println ("Moving UP \n");
 			return Command.UP;
-
 		} else if ( command.compareTo("a") == 0 ) {
 			System.out.println ("Moving LEFT \n");	
 			return Command.LEFT;
-
 		} else if ( command.compareTo("s") == 0 ) {
 			System.out.println ("Moving DOWN \n");
 			return Command.DOWN;
-
 		} else if ( command.compareTo("d") == 0 ) {
 			System.out.println ("Moving RIGHT \n");
 			return Command.RIGHT;
-
 		} else if ( command.compareTo("u") == 0 ) {
 			System.out.println ("INTERACTING WITH DOOR\n");
 			return Command.OPEN_DOOR;
 		}
-		
 		else if ( command.compareTo("c") == 0 ) {
 			System.out.println ("INTERACTING WITH CHEST\n");
 			return Command.OPEN_CHEST;
 		}
-		
 		else if ( command.compareTo("b") == 0 ) {
 			System.out.println ("ITEMS ON THE BAG\n");
 			return Command.BAG_REPORT;
 		}
-		
 		else if ( command.compareTo("e") == 0 ) {
 			System.out.println ("DRINKING POTION\n");
 			return Command.DRINK_POTION;
@@ -220,13 +237,43 @@ public class Game {
 			System.out.println ("CHANGE ARMOR\n");
 			return Command.CHANGE_ARMOR;
 		}
-		else if ( command.compareTo("t") == 0 ) {
+		else if ( command.compareTo("f") == 0 ) {
 			System.out.println ("CHANGE WEAPON\n");
 			return Command.CHANGE_WEAPON;
+		}else if ( command.compareTo("t") == 0 ) {
+			System.out.println ("TRY TO ATTACK\n");
+			return Command.ATTACK;
 		}
 
 		return Command.NONE;
-
-
 	}
+	
+	
+	private Hero chooseHero() {
+
+		@SuppressWarnings("resource")
+		Scanner keyboard = new Scanner(System.in);
+		System.out.print ("Choose your Hero: \n W => Wizard \n B => Barbarian \n D => Dwarf \n E => Elf \n") ;
+		String command = keyboard.nextLine();
+
+		if ( command.compareTo("W") == 0 ) {
+			System.out.println ("Chose Wizard \n");
+			return new Wizard(0,0);
+
+		} else if ( command.compareTo("B") == 0 ) {
+			System.out.println ("Chose Barbarian \n");
+			return new Barbarian(0,0);
+
+		} else if ( command.compareTo("D") == 0 ) {
+			System.out.println ("Chose Dwarf \n");
+			return new Dwarf(0,0);
+
+		} else if ( command.compareTo("E") == 0 ) {
+			System.out.println ("Chose Elf \n");
+			return new Elf(0,0);
+		} else {
+			return new Barbarian(0,0);
+		}
+	}
+	
 }

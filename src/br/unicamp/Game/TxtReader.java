@@ -18,6 +18,7 @@ import br.unicamp.Map.MapElements.Characters.Heroes.Elf;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 import br.unicamp.Map.MapElements.Characters.Heroes.Wizard;
 import br.unicamp.Map.MapElements.Characters.Monsters.Goblin;
+import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
 import br.unicamp.Map.MapElements.Characters.Monsters.Skeleton;
 import br.unicamp.Map.MapElements.Characters.Monsters.SkeletonWizard;
 import br.unicamp.Map.MapElements.StaticElements.VariableElements.ChestTrap;
@@ -29,6 +30,7 @@ public class TxtReader {
   
 	private ArrayList<MapElement> stageElements = new ArrayList<MapElement>();
 	private ArrayList<DoorMask> doorMaskElements = new ArrayList<DoorMask>();
+	private ArrayList<Monster> monstersElements = new ArrayList<Monster>();
 	private String stageName;
 	private Hero myhero;
 	
@@ -39,6 +41,11 @@ public class TxtReader {
 	public ArrayList<MapElement>  getArrayStageElements() {
 		return this.stageElements;
 	}
+	
+	public ArrayList<Monster>  getArrayMonsterElements() {
+		return this.monstersElements;
+	}
+	
 	
 	public ArrayList<DoorMask>  getArraydoorMaskElements() {
 		return this.doorMaskElements;
@@ -105,12 +112,18 @@ public class TxtReader {
 		}
 		//Monsters
 		else if (parts[0].equals("G")) {
-			stageElements.add(new Goblin(x0,y0));
+			Monster monster = new Goblin(x0,y0);
+			stageElements.add(monster);
+			monstersElements.add(monster);
 		} else if (parts[0].equals("S")) {
-			stageElements.add(new Skeleton(x0,y0));
+			Monster monster = new Skeleton(x0,y0);
+			stageElements.add(monster);
+			monstersElements.add(monster);
 		}
 		else if (parts[0].equals("K")) {
-			stageElements.add(new SkeletonWizard(x0,y0));
+			Monster monster = new SkeletonWizard(x0,y0);
+			stageElements.add(monster);
+			monstersElements.add(monster);
 		}
 		// Variable Elements
 		else if (parts[0].equals("O")) {

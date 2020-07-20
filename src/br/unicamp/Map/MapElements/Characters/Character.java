@@ -14,8 +14,9 @@ public abstract class Character extends MapElement{
 	protected int defensePoints;
 	protected int lifePoints;
 	protected int mana;
-	protected Armor armor;
+	
 	protected Weapon weapons[];
+	protected int equippedWeapons = 0;
 	
 	public Character(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
 		super(x0,y0);
@@ -25,6 +26,11 @@ public abstract class Character extends MapElement{
 		this.lifePoints = lifePoints;
 		this.mana = mana;
 	}
+	
+	public void giveAttackBonus(int bonus) {
+		this.attackPoints+=bonus;
+	}
+	
 
 	public void changePosition(Command direction) {
 		
@@ -54,7 +60,33 @@ public abstract class Character extends MapElement{
 	public int getMana(){
 		return mana;
 	}
-	 
+	
+	public int getAttackRange() {
+		int range=0;
+		for(Weapon w:this.weapons) {
+			if(w!=null && range<w.getRange()) {
+					range =w.getRange();
+			}
+		}
+		
+		return range;
+	}
+	
+	public int getDamagePoints() {
+		return this.attackPoints;
+		// TODO metodo que retorna e dano infligido pelas armas atualmente equipadas
+	}
+	
+	public boolean takeDamage(int damage) {
+		this.lifePoints-=damage;
+		
+		if(this.lifePoints<=0) {
+			return true; // has died
+		} else {
+			return false; // is still alive
+		}
+	}
+	
 	protected int defenseAgainstMagic(CombatDice combatDice){
 		//TODO
 		int result=0;

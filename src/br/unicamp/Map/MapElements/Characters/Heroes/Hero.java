@@ -9,12 +9,17 @@ import br.unicamp.Dices.RedDice;
 import br.unicamp.Interfaces.Collectable;
 import br.unicamp.Items.Bag;
 import br.unicamp.Items.Potion;
-import br.unicamp.Items.Armor.*;
-import br.unicamp.Items.Weapons.*;
+import br.unicamp.Items.Armor.Armor;
+import br.unicamp.Items.Weapons.Dagger;
+import br.unicamp.Items.Weapons.LongSword;
+import br.unicamp.Items.Weapons.ShortSword;
+import br.unicamp.Items.Weapons.Weapon;
 
 public class Hero extends Character {
 	
+	protected Armor armor;
 	protected Bag bag;
+	private int equippedWeapons = 0;
 	
 	public Hero(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
 		super(x0,y0,name,attackPoints,defensePoints,lifePoints,mana);
@@ -22,17 +27,48 @@ public class Hero extends Character {
 		this.bag = new Bag();
 		
 	}
-	protected void equipArmor(Armor newArmor){}
 	
-	protected void equipWeapon(Weapon newWeapon){
-		//rever esta funcao para poder ser chamada sempre, n�o so na instancia��o do heroi
-		//quantas armas cada personagem pode ter? At� duas, uma em cada m�o, se  n�o for a espada longa
-
-		//		weapons[0]= newWeapon;
+	protected void equipArmor(Armor newArmor){
+		this.bag.removeItem(newArmor);
+		this.armor = newArmor;
+		this.defensePoints += newArmor.getArmorDefensePoints();
 	}
 	
-	protected void unequipArmor(Armor removArmor){}
-	protected void unequipWeapon(Weapon removWeapon){}
+	protected void unequipArmor(Armor removArmor){
+		this.bag.putIntoTheBag(removArmor);
+		this.defensePoints -= removArmor.getArmorDefensePoints();		
+	}
+	
+//	@Override
+	protected void equipWeapon(Weapon newWeapon){
+		//TODO Resolver estouro de tamanho do vetor
+		this.bag.removeItem(newWeapon); // tira a arma da sacola e equipa
+		if(newWeapon.getIsShort()){
+			weapons[equippedWeapons]=newWeapon;
+			equippedWeapons++;
+		} else {
+			weapons[equippedWeapons]=newWeapon;
+			equippedWeapons+=2;
+		}
+		this.giveAttackBonus(newWeapon.getAttackBonus());
+	}
+
+//	@Override
+	protected void unequipWeapon(Weapon weapon){
+		this.bag.putIntoTheBag(weapon);
+		if(weapon.getIsShort()){
+			weapons[equippedWeapons]=null;
+			equippedWeapons--;
+		}else{
+			for(Weapon w:weapons) {
+				w = null;
+			}
+			equippedWeapons=0;
+		}
+		this.giveAttackBonus(-1*weapon.getAttackBonus());
+		
+	}
+	
 	protected void searchForTraps(Map map){}
 	protected void jumpTrap(Map map, Trap trap){}
 	
@@ -70,6 +106,24 @@ public class Hero extends Character {
 	protected void dummyAction(Character character, CombatDice combatDice) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	//--------------------
+	
+	
+	@Override
+	public boolean getOpened(Character character) {
+		return false;
+	}
+	@Override
+	public boolean goThrough(Character character) {
+		return false;
+	}
+
+	@Override
+	public boolean interact(Character character, String interactable) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

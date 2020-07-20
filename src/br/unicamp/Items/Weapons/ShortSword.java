@@ -4,12 +4,13 @@ package br.unicamp.Items.Weapons;
 public class ShortSword extends Weapon{
 	
 	public ShortSword(){
-		super(2);
+		super(1,2,false,true);
 	}
+	
 	
 	@Override
 	public void report() {
-		String message = "Short Sword: "  + "(range " + String.valueOf(range) + ") (attackBonus" + String.valueOf(attackBonus) + ")\n";
+		String message = "Short Sword: "  + this.getData();
 		System.out.println(message);
 	}
  

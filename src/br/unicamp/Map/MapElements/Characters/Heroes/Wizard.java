@@ -3,10 +3,10 @@ package br.unicamp.Map.MapElements.Characters.Heroes;
 import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.RedDice;
 import br.unicamp.Interfaces.Caster;
+import br.unicamp.Items.Spells.Spell;
 import br.unicamp.Items.Weapons.Dagger;
 import br.unicamp.Items.Weapons.Weapon;
 import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
-import br.unicamp.Map.MapElements.Spells.Spell;
 
 
 
@@ -30,10 +30,11 @@ public class Wizard extends Hero implements  Caster{
 //		this.equipWeapon(dagger1);
 //		this.equipWeapon(dagger2);
 //		this.equipWeapon(dagger3);
-//		Spell magicmissile = new MagicMissile();
-//		heroGetSpell(magicmissile);
-//		Spell fireball = new Fireball();
-//		heroGetSpell(fireball);
+		
+		//Spell magicmissile = new MagicMissile();
+		//heroGetSpell(magicmissile);
+		//Spell fireball = new Fireball();
+		//heroGetSpell(fireball);
 //		Spell teleport = new Teleport();
 //		heroGetSpell(teleport);
 	}
@@ -52,7 +53,7 @@ public class Wizard extends Hero implements  Caster{
 	public void castSpell(Spell castSpeell, Monster targetMontser, RedDice redDice1, CombatDice combatDice) {
 		/*int result = redDice1.rollDices();
 		if(result<this.getMana()){
-			// verifica os pontos de dano da spell lançada
+			// verifica os pontos de dano da spell lanï¿½ada
 			// int damage = castSpeell.getDamage();
 			// verifica se o alvo tem defesa e retona quantos pontos ele tem de defesa
 			// int targetDefensePoints = targetMontser.defenseAgainstMagic(combatDice);
@@ -63,9 +64,14 @@ public class Wizard extends Hero implements  Caster{
 	/*
 	@Override
 	public void castSpell( castSpeell, Monster targetMontser, RedDice redDice1,
-			CombatDice combatDice) {
-		// TODO Auto-generated method stub
-		
+		int result = redDice1.getResults();
+		if(result<this.getMana()){
+			// verifica os pontos de dano da spell lanï¿½ada
+			int damage = castSpeell.getDamage();
+			//verifica se o alvo tem defesa e retona quantos pontos ele tem de defesa
+			int targetDefensePoints = targetMontser.defenseAgainstMagic(combatDice);
+			targetMontser.receiveDamage(damage,targetDefensePoints);
+
 	}*/
 	
 }

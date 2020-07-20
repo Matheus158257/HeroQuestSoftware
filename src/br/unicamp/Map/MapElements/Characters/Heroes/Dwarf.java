@@ -12,9 +12,8 @@ public class Dwarf extends Hero{
 	
 	public Dwarf (int x0, int y0){
 		super(x0,y0,"Dwarf",Dwarf.ATK,Dwarf.DEF,Dwarf.LP,Dwarf.MP);
-		
-//		Weapon shortSword = new ShortSword();
-//		this.equipWeapon(shortSword);
+		Weapon shortSword = new ShortSword();
+		this.equipWeapon(shortSword);
 	}
 	
 	@Override

@@ -4,13 +4,15 @@ package br.unicamp.Items.Weapons;
 public class LongSword extends Weapon {
 	
 	public LongSword(){
-		super(3);
+		super(2,3,false,false);
 		
 	}
 	
+
+	
 	@Override
 	public void report() {
-		String message = "Long Sword: "  + "(range " + String.valueOf(range) + ") (attackBonus" + String.valueOf(attackBonus) + ")\n";
+		String message = "Long Sword: "  + this.getData();
 		System.out.println(message);
 	}
 }
