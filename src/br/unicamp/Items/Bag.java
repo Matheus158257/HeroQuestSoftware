@@ -19,7 +19,6 @@ public class Bag {
 	public void reportItemsOnBag() {
 		for (Collectable collectable: this.bagElements)
 			collectable.report();
-
 	}
 
 	public void removeItem(Collectable item) {

@@ -6,6 +6,9 @@ import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.StaticElements.FloorElement;
 import br.unicamp.Map.MapElements.StaticElements.WallElement;
 import br.unicamp.Map.MapElements.StaticElements.VariableElements.*;
+
+import java.util.ArrayList;
+
 import br.unicamp.Exceptions.*;
 import br.unicamp.Game.Command;
 import br.unicamp.Interfaces.Collectable;
@@ -34,8 +37,7 @@ public class Map {
 	
 	private Room[] rooms;
 	private int roomIndex;
-	private Monster[] monsters;
-	private Hero[] friends;
+	private ArrayList<Monster> monsters;
 
 
 	//----------------------- Constructors
@@ -48,7 +50,7 @@ public class Map {
 		this.rooms = new Room[Map.ROOMS];
 		this.roomIndex = 0;
 
-		
+		this.monsters = new ArrayList<Monster>();
 
 		// sets FloorElement in entire map
 		for(int i=0; i<sizeX; i++) {
@@ -60,12 +62,6 @@ public class Map {
 		// Making fixed Rooms
 		makeRooms();
 
-		// Making Doors
-		makeStandardDoors();
-		
-		// Making Chests
-		makeStandardChest();
-	
 
 	}
 
@@ -79,23 +75,24 @@ public class Map {
 	}
 	
 	
-	private void addTreasure(int x, int y, Collectable reward) {
+	public void addTreasure(int x, int y, Collectable reward) {
 		this.map[x][y] = new Treasure(x,y,reward);
 	}
 	
-	private void addChestTrap(int x, int y, Monster monster) {
+	public void addChestTrap(int x, int y, Monster monster) {
 		this.map[x][y] = new ChestTrap(x,y,monster);
 	}
 	
-	private void addDoor(int x, int y, int roomIndex, boolean isVertical) {
+	public void addDoor(int x, int y, int roomIndex, boolean isVertical) {
 		this.map[x][y] = new Door(x,y,rooms[roomIndex],isVertical);
 	}
 	
-	private void addDoor(int x, int y, int roomIndexA, int roomIndexB, boolean isVertical) {
+	public void addDoor(int x, int y, int roomIndexA, int roomIndexB, boolean isVertical) {
+		
 		this.map[x][y] = new Door(x,y,rooms[roomIndexA],rooms[roomIndexB],isVertical);
 	}
 	
-	private void makeStandardDoors() {
+	public void makeStandardDoors() {
 		// Vertical Doors
 		addDoor(4,1,0,true);
 		addDoor(4,11,0,3,true);
@@ -134,7 +131,7 @@ public class Map {
 	
 	}
 	
-	private void makeStandardChest() {
+	public void makeStandardChest() {
 		addTreasure(2,2, new Coin(10));
 		addTreasure(2,10, new Potion(10));
 		addTreasure(2,16, new Armor(10));
@@ -153,107 +150,78 @@ public class Map {
 		}
 	}
 
-	private void updatePlayerPosition(int oldX, int oldY, Character character) {
-		this.clearTile(oldX, oldY, true);
-		
-		int newX = character.getX();
-		int newY = character.getY();
-		this.map[newX][newY] = character;
-	}
 	
-	private void checkLights() {
-		int x0;
-		int y0;
-		int dimX;
-		int dimY;
-		
-		for(Room r : rooms) {
-			if(r != null && r.isLit()) {
-				x0=r.getX0();
-				y0=r.getY0();
-				dimX=r.getDimX();
-				dimY=r.getDimY();
-				
-				for(int i=x0; i<(x0+dimX);i++) {
-					for(int j=y0; j<(y0+dimY);j++) {
-						map[i][j].beSeen();
-					}
-				}
-			}
-		}
-	}
-	
-	public void interacWithDoor(Character player) throws OccupiedTileException, OutOfBoundsException {
+	public void searchDoors(Character player) throws OccupiedTileException, OutOfBoundsException {
 		int X = player.getX();
 		int Y = player.getY();
 
 
 		// Checking NORTH
-		if(isInMap(X,Y-1) && map[X][Y-1].interact(player,"OD")) {
+		if(isInMap(X,Y-1) && map[X][Y-1].goThrough(player)) {
 			// Update player position
 			this.updatePlayerPosition(X,Y,player);
 		}
 
 		// Checking EAST
-		else if (isInMap(X+1,Y) && map[X+1][Y].interact(player,"OD")) {
+		else if (isInMap(X+1,Y) && map[X+1][Y].goThrough(player)) {
 			// Update player position
 			this.updatePlayerPosition(X,Y,player);
 		} 
 
 		// Checking SOUTH
-		else if (isInMap(X,Y+1) && map[X][Y+1].interact(player,"OD")) {
+		else if (isInMap(X,Y+1) && map[X][Y+1].goThrough(player)) {
 			// Update player position
 			this.updatePlayerPosition(X,Y,player);
 		} 
 
 		// Checking WEST
-		else if (isInMap(X-1,Y) && map[X-1][Y].interact(player,"OD")) {
+		else if (isInMap(X-1,Y) && map[X-1][Y].goThrough(player)) {
 			// Update player position
 			this.updatePlayerPosition(X,Y,player);
 		}
 		
 	}
 
-	public void interactWithChest(Character player) throws OccupiedTileException, OutOfBoundsException {
+	public void searchChests(Character player) {
 		int X = player.getX();
 		int Y = player.getY();
 		
 		// Checking NORTH
-		if(isInMap(X,Y-1) && map[X][Y-1].interact(player,"OC")) {
-			// Update player position
+		if(isInMap(X,Y-1) && map[X][Y-1].getOpened(player)) {
 			Chest chest = (Chest) map[X][Y-1];
-			chest.updateChestOnMap(this.map);
+			chest.updateChestOnMap(this);
 		}
 
 		// Checking EAST
-		else if (isInMap(X+1,Y) && map[X+1][Y].interact(player,"OC")) {
-			// Update player position
+		else if (isInMap(X+1,Y) && map[X+1][Y].getOpened(player)) {
 			Chest chest = (Chest) map[X+1][Y];
-			chest.updateChestOnMap(this.map);
+			chest.updateChestOnMap(this);
 		} 
 
 		// Checking SOUTH
-		else if (isInMap(X,Y+1) && map[X][Y+1].interact(player,"OC")) {
-			// Update player position
+		else if (isInMap(X,Y+1) && map[X][Y+1].getOpened(player)) {
 			Chest chest = (Chest) map[X][Y+1];
-			chest.updateChestOnMap(this.map);
+			chest.updateChestOnMap(this);
 		} 
 
 		// Checking WEST
-		else if (isInMap(X-1,Y) && map[X-1][Y].interact(player,"OC")) {
-			// Update player position
+		else if (isInMap(X-1,Y) && map[X-1][Y].getOpened(player)) {
 			Chest chest = (Chest) map[X-1][Y];
-			chest.updateChestOnMap(this.map);
+			chest.updateChestOnMap(this);
 		}
 		
 	}
-
 
 	public void addElement(MapElement element) {
 		int posX=element.getX();
 		int posY=element.getY();
 
 		this.map[posX][posY] = element;
+	}
+	
+	public void addMonster(Monster monster) {
+		this.addElement(monster);
+		this.monsters.add(monster);
 	}
 
 	public void moveCharacter(Command direction, Character character) throws OccupiedTileException, OutOfBoundsException {
@@ -308,20 +276,110 @@ public class Map {
 		}
 	}
 
-	private void clearTile(int x, int y, boolean seen) {
+	public void clearTile(int x, int y, boolean seen) {
 		map[x][y] = new FloorElement(x,y,seen);
 	}
-
 
 
 	public void updateMap(Character reference) {
 		this.updateVisibility(reference);
 		this.checkLights();
 	}
+	
 
+	public void attackMonster(Hero player) {
+		int damage = player.getDamagePoints();
+		int range = player.getAttackRange();
+		
+		System.out.println("LOG: Checking " + range + " tiles around " + player);
+		Monster target = this.checkMonsterTargets(range, player);
+
+		
+		if(target !=null) {
+			//TODO rolar Attack Dice para realizar a batalha
+			if(target.takeDamage(damage)) {
+				System.out.println("LOG: Killed monster: " + target);
+				this.killMonster(target);
+			}
+		}
+	}
+	
+	public Monster checkMonsterTargets(int range, Character reference) {
+		int Xh = reference.getX();
+		int Yh = reference.getY();
+		int Xm,Ym,Xdif,Ydif;
+		
+		// TODO checar se o caminho entre o player e o Monster esta realmente livre
+		
+		for (Monster m : this.monsters) {
+			if(m!=null) {
+				Xm = m.getX();
+				Ym = m.getY();
+				
+				if(Xm>=Xh) {
+					Xdif = Xm-Xh;
+				} else {
+					Xdif = Xh-Xm;					
+				}
+				
+				if(Ym>=Yh) {
+					Ydif = Ym-Yh;
+				} else {
+					Ydif = Yh-Ym;					
+				}
+				
+				if(Xdif<=range && Ydif<=range ) {
+					System.out.println("LOG: Monster found: " + m);
+					return m;
+				}
+			}
+		}
+		
+		return null;
+	}
 
 	//----------------------- Private Methods
 
+	
+	
+	private void killMonster(Monster m) {
+		//TODO remover do array monsters
+		this.monsters.remove(m);
+		this.clearTile(m.getX(), m.getY(), true);
+	}
+	
+
+	private void updatePlayerPosition(int oldX, int oldY, Character character) {
+		this.clearTile(oldX, oldY, true);
+		
+		int newX = character.getX();
+		int newY = character.getY();
+		this.map[newX][newY] = character;
+	}
+	
+	private void checkLights() {
+		int x0;
+		int y0;
+		int dimX;
+		int dimY;
+		
+		for(Room r : rooms) {
+			if(r != null && r.isLit()) {
+				x0=r.getX0();
+				y0=r.getY0();
+				dimX=r.getDimX();
+				dimY=r.getDimY();
+				
+				for(int i=x0; i<(x0+dimX);i++) {
+					for(int j=y0; j<(y0+dimY);j++) {
+						map[i][j].beSeen();
+					}
+				}
+			}
+		}
+	}
+	
+	
 	private void updateVisibility(Character reference) {
 		// Updates map's visibility in four directions according to a Character Reference
 		int currX = reference.getX();
@@ -467,14 +525,21 @@ public class Map {
 		
 	}
 	
+	
+	
 	//----------------------- Methods to treat NPCs movements
+
+	
 	public void excuteNPCsMovements() {
 		
 		for (Monster monster: monsters) {
-
+			
 		}	
+
 		
 	}
+
+
 	
 
 

@@ -1,9 +1,10 @@
 package br.unicamp.Map.MapElements;
 
-import br.unicamp.Interfaces.Interactable;
+import br.unicamp.Interfaces.Openable;
+import br.unicamp.Interfaces.Repositions;
 import br.unicamp.Map.MapElements.Characters.Character;
 
-public abstract class MapElement implements Interactable{
+public abstract class MapElement implements Openable,Repositions{
 
 	private boolean visible;
 	private Coordinate coord;
@@ -49,18 +50,7 @@ public abstract class MapElement implements Interactable{
 		return this.coord.getY();
 	}
 	
-	@Override
-	public boolean interact(Character character,String Iteration) {
-		return false;
-	}
-	
-	
-	
-	
-	
-//	public char getSymbol() {
-//		return this.symbol;
-//	}
+
 	
 	
 }

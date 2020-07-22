@@ -56,12 +56,21 @@ public class Monster extends Character {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//--------------------
+	
+	@Override
+	public boolean getOpened(Character character) {
+		return false;
+	}
+	@Override
+	public boolean goThrough(Character character) {
+		return false;
+	}
 
 	@Override
 	protected void equipWeapon(Weapon newWeapon){
 		this.bag.putIntoTheBag(newWeapon);
 	}
-	
-	
 
 }

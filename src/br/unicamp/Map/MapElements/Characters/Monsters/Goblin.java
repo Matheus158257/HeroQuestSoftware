@@ -10,9 +10,9 @@ import br.unicamp.Map.MapElements.Characters.Character;
 
 public class Goblin extends Monster {
 
-	public static final int ATK = 1; // Attack Points
-	public static final int DEF = 1; // Defense Points
-	public static final int LP = 1; // Life Points
+	public static final int ATK = 0; // Attack Points
+	public static final int DEF = 2; // Defense Points
+	public static final int LP = 4; // Life Points
 	public static final int MP = 0; // Mana Points
 	public static final int noDaggers = 4; //Dagger numbers
 	
@@ -31,7 +31,11 @@ public class Goblin extends Monster {
 	
 	@Override
 	public String toString() {
-		return "G";
+		if(this.isVisible()) {
+			return "G";
+		} else {
+			return "-";
+		}
 	}
 	
 	@Override

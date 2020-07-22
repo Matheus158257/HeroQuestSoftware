@@ -20,14 +20,15 @@ public class Hero extends Character {
 	
 	protected Armor armor;
 	protected Bag bag;
-	private int noWeaponsInHands = 0;
+	private int equippedWeapons = 0;
 	
 	public Hero(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
 		super(x0,y0,name,attackPoints,defensePoints,lifePoints,mana);
-		weapons = new Weapon[2];	
+		this.weapons = new Weapon[2];	
 		this.bag = new Bag();
 		
 	}
+	
 	protected void equipArmor(Armor newArmor){
 		this.bag.removeItem(newArmor);
 		this.armor = newArmor;
@@ -38,12 +39,12 @@ public class Hero extends Character {
 		this.bag.putIntoTheBag(removArmor);
 		this.defensePoints -= removArmor.getArmorDefensePoints();		
 	}
-	
+
 	@Override
 	protected void equipWeapon(Weapon newWeapon) {
 		// TODO Auto-generated method stub
 		//TO DO: Resolver estouro de tamanho do vetor
-				this.bag.removeItem(newWeapon);//tira a arma da sacola e pões nas mãos do héroi
+				this.bag.removeItem(newWeapon);//tira a arma da sacola e pï¿½es nas mï¿½os do hï¿½roi
 				if(newWeapon.getIsShort()){
 					weapons[noWeaponsInHands]=newWeapon;
 					noWeaponsInHands++;
@@ -51,7 +52,7 @@ public class Hero extends Character {
 					//newWeapon.getAttackBonus();
 				}else{
 					weapons[noWeaponsInHands]=newWeapon;
-					//Solução para que o heroi não tente pegar mais uma arma
+					//Soluï¿½ï¿½o para que o heroi nï¿½o tente pegar mais uma arma
 					noWeaponsInHands=noWeaponsInHands+2;
 					//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
 					//newWeapon.getAttackBonus();
@@ -65,11 +66,12 @@ public class Hero extends Character {
 			weapons[noWeaponsInHands]=null;
 			noWeaponsInHands--;
 		}else{
-			weapons[noWeaponsInHands]=null;
-			weapons[noWeaponsInHands--]=null;
-			//Livra as duas mãos
-			noWeaponsInHands=noWeaponsInHands-2;
+			for(Weapon w:weapons) {
+				w = null;
+			}
+			equippedWeapons=0;
 		}
+		this.giveAttackBonus(-1*weapon.getAttackBonus());
 		
 	}
 	
@@ -93,7 +95,6 @@ public class Hero extends Character {
 	
 	public void collect(Collectable reward) {
 		this.bag.putIntoTheBag(reward);
-		
 	}
 	
 	public void reportBagElements() {
@@ -110,7 +111,25 @@ public class Hero extends Character {
 	@Override
 	protected void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
 		// TODO Auto-generated method stub
-		
-	}	
+	}
+
+	//--------------------
+	
+	
+	@Override
+	public boolean getOpened(Character character) {
+		return false;
+	}
+	@Override
+	public boolean goThrough(Character character) {
+		return false;
+	}
+
+	@Override
+	public boolean interact(Character character, String interactable) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }

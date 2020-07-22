@@ -1,4 +1,4 @@
-package br.unicamp.Map.MapElements.Spells;
+package br.unicamp.Items.Spells;
 
 import br.unicamp.Map.MapElements.Characters.Character;
 
@@ -9,11 +9,11 @@ public class Teleport extends Spell {
 	}
 	
 	/*private teleportUse(Character teleportedCharacter){
-		//entender como o personagem vai ter acesso a outras poisções visiveis
+		//entender como o personagem vai ter acesso a outras poisï¿½ï¿½es visiveis
 		//chamada ao mapa?
 		int newX = teleportedCharacter.getVisiblePositionX();
 		int newy = teleportedCharacter.getVisiblePositionY();
-		teleportedCharacter.x = newX;//Chatacter é um mapElement por iso tem atributos x e y de posição herdados
+		teleportedCharacter.x = newX;//Chatacter ï¿½ um mapElement por iso tem atributos x e y de posiï¿½ï¿½o herdados
 		teleportedCharacter.y = newY;
 	}*/
 }

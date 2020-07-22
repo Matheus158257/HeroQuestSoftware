@@ -23,11 +23,6 @@ public class Trap extends VariableElement {
 		return true;
 	}
 	
-	// Tem que poder desarmar
-	@Override
-	public boolean interact(Character character, String iteration) {
-		Boolean result = false;
-		return result;
-	}
+
 
 }
