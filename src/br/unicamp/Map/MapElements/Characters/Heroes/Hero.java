@@ -1,6 +1,7 @@
 package br.unicamp.Map.MapElements.Characters.Heroes;
 
 import br.unicamp.Map.*;
+import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.StaticElements.VariableElements.Trap;
 import br.unicamp.Dices.CombatDice;
@@ -38,27 +39,32 @@ public class Hero extends Character {
 		this.bag.putIntoTheBag(removArmor);
 		this.defensePoints -= removArmor.getArmorDefensePoints();		
 	}
-	
-//	@Override
-	protected void equipWeapon(Weapon newWeapon){
-		//TODO Resolver estouro de tamanho do vetor
-		this.bag.removeItem(newWeapon); // tira a arma da sacola e equipa
-		if(newWeapon.getIsShort()){
-			weapons[equippedWeapons]=newWeapon;
-			equippedWeapons++;
-		} else {
-			weapons[equippedWeapons]=newWeapon;
-			equippedWeapons+=2;
-		}
-		this.giveAttackBonus(newWeapon.getAttackBonus());
-	}
 
-//	@Override
-	protected void unequipWeapon(Weapon weapon){
-		this.bag.putIntoTheBag(weapon);
-		if(weapon.getIsShort()){
-			weapons[equippedWeapons]=null;
-			equippedWeapons--;
+	@Override
+	protected void equipWeapon(Weapon newWeapon) {
+		// TODO Auto-generated method stub
+		//TO DO: Resolver estouro de tamanho do vetor
+				this.bag.removeItem(newWeapon);//tira a arma da sacola e p�es nas m�os do h�roi
+				if(newWeapon.getIsShort()){
+					weapons[noWeaponsInHands]=newWeapon;
+					noWeaponsInHands++;
+					//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
+					//newWeapon.getAttackBonus();
+				}else{
+					weapons[noWeaponsInHands]=newWeapon;
+					//Solu��o para que o heroi n�o tente pegar mais uma arma
+					noWeaponsInHands=noWeaponsInHands+2;
+					//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
+					//newWeapon.getAttackBonus();
+				}
+		
+	}
+	
+	protected void unequipWeapon(Weapon removWeapon){
+		this.bag.putIntoTheBag(removWeapon);
+		if(removWeapon.getIsShort()){
+			weapons[noWeaponsInHands]=null;
+			noWeaponsInHands--;
 		}else{
 			for(Weapon w:weapons) {
 				w = null;
@@ -98,14 +104,13 @@ public class Hero extends Character {
 	
 	//-------------------- NPCs actions
 	@Override
-	protected void dummyWalk(Character character, RedDice redDice) {
+	protected void dummyWalk(Character character, RedDice redDice, MapElement map[][]) {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
-	protected void dummyAction(Character character, CombatDice combatDice) {
+	protected void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	//--------------------
@@ -125,7 +130,6 @@ public class Hero extends Character {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
+
 
 }
