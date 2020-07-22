@@ -35,7 +35,7 @@ public class Goblin extends Monster {
 	}
 	
 	@Override
-	public int dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
+	public void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
 		int damage =0;
 		if(noDaggers>0){
 			// ataca o herói com punhais
@@ -43,14 +43,12 @@ public class Goblin extends Monster {
 			Collectable bagItem = this.bag.takeItem();
 			Weapon dagger = (Weapon) bagItem;
 			//lança dados nºdados=bonus de ataque+bonus da arma
-			damage = somaSimbolosAtaque(combatDice, dagger);
-			return damage;
-		}else{
-			//TODO não pode atacar pq já usou todos os punhais
-			return damage;
-		}
+			//damage = somaSimbolosAtaque(combatDice, dagger);
+
+
 	}
 		
+		/*
 		public int somaSimbolosAtaque(CombatDice combatDice, Weapon dagger){
 			int totalSkull=0;
 			ArrayList<CombatDiceSymbol> combatResult = combatDice.getRedDicesResult(Goblin.ATK + dagger.getAttackBonus();
@@ -62,7 +60,7 @@ public class Goblin extends Monster {
 			}
 		}
 
-		
+		*/
 		
 	}
 	
