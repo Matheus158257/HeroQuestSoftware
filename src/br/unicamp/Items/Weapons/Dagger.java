@@ -2,7 +2,7 @@ package br.unicamp.Items.Weapons;
 
 
 public class Dagger extends Weapon {
-	// usa  mão
+	// usa 1 mão
 	// perdido após o uso
 	
 	public Dagger(){
@@ -15,4 +15,6 @@ public class Dagger extends Weapon {
 		String message = "Dagger: "  + "(range " + String.valueOf(range) + ") (attackBonus" + String.valueOf(attackBonus) + ")\n";
 		System.out.println(message);
 	}
+	
+	
 }

@@ -34,26 +34,29 @@ public class Hero extends Character {
 		this.defensePoints += newArmor.getArmorDefensePoints();
 	}
 	
-	protected void equipWeapon(Weapon newWeapon){
-		//TO DO: Resolver estouro de tamanho do vetor
-		this.bag.removeItem(newWeapon);//tira a arma da sacola e pões nas mãos do héroi
-		if(newWeapon.getIsShort()){
-			weapons[noWeaponsInHands]=newWeapon;
-			noWeaponsInHands++;
-			//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
-			//newWeapon.getAttackBonus();
-		}else{
-			weapons[noWeaponsInHands]=newWeapon;
-			//Solução para que o heroi não tente pegar mais uma arma
-			noWeaponsInHands=noWeaponsInHands+2;
-			//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
-			//newWeapon.getAttackBonus();
-		}
-	}
-	
 	protected void unequipArmor(Armor removArmor){
 		this.bag.putIntoTheBag(removArmor);
 		this.defensePoints -= removArmor.getArmorDefensePoints();		
+	}
+	
+	@Override
+	protected void equipWeapon(Weapon newWeapon) {
+		// TODO Auto-generated method stub
+		//TO DO: Resolver estouro de tamanho do vetor
+				this.bag.removeItem(newWeapon);//tira a arma da sacola e pões nas mãos do héroi
+				if(newWeapon.getIsShort()){
+					weapons[noWeaponsInHands]=newWeapon;
+					noWeaponsInHands++;
+					//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
+					//newWeapon.getAttackBonus();
+				}else{
+					weapons[noWeaponsInHands]=newWeapon;
+					//Solução para que o heroi não tente pegar mais uma arma
+					noWeaponsInHands=noWeaponsInHands+2;
+					//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
+					//newWeapon.getAttackBonus();
+				}
+		
 	}
 	
 	protected void unequipWeapon(Weapon removWeapon){
@@ -108,8 +111,6 @@ public class Hero extends Character {
 	protected void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	
+	}	
 
 }

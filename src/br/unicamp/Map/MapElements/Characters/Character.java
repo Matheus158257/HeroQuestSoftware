@@ -1,5 +1,6 @@
 package br.unicamp.Map.MapElements.Characters;
 
+import br.unicamp.Items.Bag;
 import br.unicamp.Items.Armor.*;
 import br.unicamp.Items.Weapons.*;
 import br.unicamp.Map.MapElements.MapElement;
@@ -67,6 +68,8 @@ public abstract class Character extends MapElement{
 	protected void receiveDamage(int damage, int defense){
 		lifePoints = lifePoints-damage+defense;
 	}
+	
+	protected abstract void equipWeapon(Weapon newWeapon);
 	
 	//-------------------- NPCs actions
 	protected abstract void dummyWalk(Character character, RedDice redDice, MapElement map[][]);

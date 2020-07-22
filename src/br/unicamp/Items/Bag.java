@@ -27,5 +27,9 @@ public class Bag {
 		
 	}
 	
+	public Collectable takeItem() {
+		Collectable caughtItem = bagElements.remove(bagElements.size()-1);
+		return caughtItem;
+	}
 	
 }

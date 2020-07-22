@@ -6,8 +6,12 @@ import br.unicamp.Dices.RedDice;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Game.Game;
+import br.unicamp.Items.Bag;
+import br.unicamp.Items.Weapons.Weapon;
 
 public class Monster extends Character {
+	
+	protected Bag bag;
 
  
 	public Monster(int x0, int y0,String name,int attackPoints,int defensePoints, int lifePoints, int mana){
@@ -52,5 +56,12 @@ public class Monster extends Character {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	protected void equipWeapon(Weapon newWeapon){
+		this.bag.putIntoTheBag(newWeapon);
+	}
+	
+	
 
 }
