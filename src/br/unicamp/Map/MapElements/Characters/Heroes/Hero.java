@@ -40,6 +40,7 @@ public class Hero extends Character {
 		this.defensePoints -= removArmor.getArmorDefensePoints();		
 	}
 
+	/*
 	@Override
 	protected void equipWeapon(Weapon newWeapon) {
 		// TODO Auto-generated method stub
@@ -58,8 +59,9 @@ public class Hero extends Character {
 					//newWeapon.getAttackBonus();
 				}
 		
-	}
+	}*/
 	
+	/*
 	protected void unequipWeapon(Weapon removWeapon){
 		this.bag.putIntoTheBag(removWeapon);
 		if(removWeapon.getIsShort()){
@@ -73,7 +75,7 @@ public class Hero extends Character {
 		}
 		this.giveAttackBonus(-1*weapon.getAttackBonus());
 		
-	}
+	}*/
 	
 	protected void searchForTraps(Map map){}
 	protected void jumpTrap(Map map, Trap trap){}
@@ -126,10 +128,11 @@ public class Hero extends Character {
 	}
 
 	@Override
-	public boolean interact(Character character, String interactable) {
+	protected void equipWeapon(Weapon newWeapon) {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
+
 
 
 }

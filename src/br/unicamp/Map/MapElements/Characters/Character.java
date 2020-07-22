@@ -4,6 +4,7 @@ import br.unicamp.Items.Bag;
 import br.unicamp.Items.Armor.*;
 import br.unicamp.Items.Weapons.*;
 import br.unicamp.Map.MapElements.MapElement;
+import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 import br.unicamp.Dices.*;
 import br.unicamp.Game.Command;
@@ -108,5 +109,22 @@ public abstract class Character extends MapElement{
 	protected abstract void dummyWalk(Character character, RedDice redDice, MapElement map[][]);
 	protected abstract void dummyAction(Character character, CombatDice combatDice,MapElement map[][]);
 	
+	
+	@Override
+	public boolean interact(Character character, String interactable) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public boolean getOpened(Character character) {
+		return false;
+	}
+	@Override
+	public boolean goThrough(Character character) {
+		return false;
+	}
+
+
 	
 }

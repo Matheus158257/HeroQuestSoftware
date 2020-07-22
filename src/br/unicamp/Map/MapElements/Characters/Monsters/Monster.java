@@ -73,4 +73,6 @@ public class Monster extends Character {
 		this.bag.putIntoTheBag(newWeapon);
 	}
 
+
+
 }
