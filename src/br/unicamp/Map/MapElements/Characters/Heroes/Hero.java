@@ -1,6 +1,7 @@
 package br.unicamp.Map.MapElements.Characters.Heroes;
 
 import br.unicamp.Map.*;
+import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.StaticElements.VariableElements.Trap;
 
@@ -43,9 +44,9 @@ public class Hero extends Character {
 	
 	private void unequipArmor(){
 		this.bag.putIntoTheBag(this.armor);
-		this.giveDefenseBonus(-1+this.armor.getArmorDefensePoints());
+		this.giveDefenseBonus(-1*this.armor.getArmorDefensePoints());
 	}
-	
+
 	public void changeArmor(Armor armor) {
 		if (this.armor != null) {
 			this.bag.putIntoTheBag(this.armor);
@@ -55,7 +56,7 @@ public class Hero extends Character {
 			equipArmor(armor);
 		}
 	}
-	
+
 	
 	protected void searchForTraps(Map map){}
 	protected void jumpTrap(Map map, Trap trap){}
@@ -80,14 +81,13 @@ public class Hero extends Character {
 	
 	//-------------------- NPCs actions
 	@Override
-	protected void dummyWalk(Character character, RedDice redDice) {
+	protected void dummyWalk(Character character, RedDice redDice, MapElement map[][]) {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
-	protected void dummyAction(Character character, CombatDice combatDice) {
+	protected void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	//--------------------
@@ -137,6 +137,7 @@ public class Hero extends Character {
 		return false;
 	}
 
+
 	public void useBagItem(int position) throws ItemNotInBagException{
 		if (position < this.bag.getSize()) {
 			Collectable item = this.bag.getItem(position);
@@ -163,6 +164,6 @@ public class Hero extends Character {
 		}
 	}
 
-	
+
 
 }

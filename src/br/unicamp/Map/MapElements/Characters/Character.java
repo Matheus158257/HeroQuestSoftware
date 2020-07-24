@@ -1,6 +1,7 @@
 package br.unicamp.Map.MapElements.Characters;
 
 import br.unicamp.Items.Bag;
+import br.unicamp.Items.Armor.Armor;
 import br.unicamp.Items.Weapons.*;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Dices.*;
@@ -171,8 +172,8 @@ public abstract class Character extends MapElement{
 		
 	
 	//-------------------- NPCs actions
-	protected abstract void dummyWalk(Character character, RedDice redDice);
-	protected abstract void dummyAction(Character character, CombatDice combatDice);
+	protected abstract void dummyWalk(Character character, RedDice redDice, MapElement map[][]);
+	protected abstract void dummyAction(Character character, CombatDice combatDice,MapElement map[][]);
 	
 	
 }

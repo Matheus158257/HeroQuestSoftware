@@ -40,11 +40,17 @@ public class Bag {
 		
 	}
 	
+
 	public Collectable getItem(int position) {
 		return bagElements.get(position);
 		
 	}
 
 	
+	public Collectable takeItem() {
+		Collectable caughtItem = bagElements.remove(bagElements.size()-1);
+		return caughtItem;
+	}
+
 	
 }

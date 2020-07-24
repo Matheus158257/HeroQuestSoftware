@@ -2,6 +2,8 @@ package br.unicamp.Items.Weapons;
 
 
 public class Dagger extends Weapon {
+	// usa 1 m�o
+	// perdido ap�s o uso
 
 	
 	public Dagger(){
@@ -19,4 +21,5 @@ public class Dagger extends Weapon {
 		System.out.println(message);
 	}
 	
+
 }
