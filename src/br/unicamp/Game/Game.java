@@ -50,7 +50,7 @@ public class Game {
 				Scanner keyboard = new Scanner(System.in);
 				System.out.print ("Name from txt file:");
 				String command = keyboard.nextLine();
-				TxtReader stage = new TxtReader("stage1");
+				TxtReader stage = new TxtReader(command);
 				
 				
 				//Player
@@ -81,22 +81,19 @@ public class Game {
 				running1 = false;
 				break;
 			case PREGAME:
-				// Heros additions
+				// Hero addition
 				player = chooseHero();
 				gameMap.addElement(player);
-				
-				// Monster additions
+//				
+				// Test Monster additions
 				Monster m1 = new Goblin(3,4);
-				gameMap.addElement(m1);
 				gameMap.addMonster(m1);
 				
 				Monster m2 = new Skeleton(5,10);
-				gameMap.addElement(m2);
-				gameMap.addMonster(m1);
+				gameMap.addMonster(m2);
 				
 				Monster m3 = new SkeletonWizard(8,8);
-				gameMap.addElement(m3);
-				gameMap.addMonster(m1);
+				gameMap.addMonster(m3);
 				
 				
 				
@@ -173,11 +170,11 @@ public class Game {
 		Command retorno = Command.NONE;
 		@SuppressWarnings("resource")
 		Scanner keyboard = new Scanner(System.in);
-		System.out.println("To to read default map press 0 or for congfiguration file press 1");
+		System.out.println("To read default map press '0'. For configuration file, press '1':");
 		String command = keyboard.nextLine();
 	
 		if ( command.compareTo("1") == 0) {
-			System.out.println("Readding game form file");
+			System.out.println("Reading game form file");
 			retorno = Command.FROM_TXT;
 
 		} else if ( command.compareTo("0") == 0 ) {
@@ -185,7 +182,7 @@ public class Game {
 			retorno =  Command.PREGAME;
 
 		} else {
-			System.out.print ("Enter the 0 to default game or 1 to read from file:");
+			System.out.print ("To read default map press '0'. For configuration file, press '1':");
 		}
 		
 		return retorno;
@@ -240,6 +237,7 @@ public class Game {
 		else if ( command.compareTo("f") == 0 ) {
 			System.out.println ("CHANGE WEAPON\n");
 			return Command.CHANGE_WEAPON;
+			
 		}else if ( command.compareTo("t") == 0 ) {
 			System.out.println ("TRY TO ATTACK\n");
 			return Command.ATTACK;

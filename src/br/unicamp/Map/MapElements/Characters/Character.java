@@ -11,14 +11,18 @@ import br.unicamp.Game.Command;
 import br.unicamp.Interfaces.Collectable;
 
 public abstract class Character extends MapElement{
+	
+	public final static int HANDS = 2;
+	
 	protected String name;
 	protected int attackPoints;
 	protected int defensePoints;
 	protected int lifePoints;
 	protected int mana;
+	protected Bag bag;
 	
 	protected Weapon weapons[];
-	protected int equippedWeapons = 0;
+	protected int occupiedHands = 0;
 	
 	public Character(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
 		super(x0,y0);
@@ -27,6 +31,7 @@ public abstract class Character extends MapElement{
 		this.defensePoints = defensePoints;
 		this.lifePoints = lifePoints;
 		this.mana = mana;
+		this.bag = new Bag();
 	}
 	
 	public void giveAttackBonus(int bonus) {
@@ -103,7 +108,36 @@ public abstract class Character extends MapElement{
 		lifePoints = lifePoints-damage+defense;
 	}
 	
-	protected abstract void equipWeapon(Weapon newWeapon);
+	protected void equipWeapon(Weapon newWeapon) {
+		if (this.occupiedHands < Character.HANDS) {
+				this.bag.removeItem(newWeapon); //tira a arma da sacola e p�es nas m�os do h�roi
+				if(newWeapon.getIsShort()){
+					weapons[this.occupiedHands]=newWeapon;
+					this.occupiedHands++;
+				}else{
+					weapons[this.occupiedHands]=newWeapon;
+					this.occupiedHands+=2;
+				}
+		}else {
+			System.out.println("LOG: Both hands are occupied.");
+		}
+	}
+	
+	
+	protected void unequipWeapon(Weapon removWeapon){
+		this.bag.putIntoTheBag(removWeapon);
+		if(removWeapon.getIsShort()){
+			weapons[occupiedHands]=null;
+			occupiedHands--;
+		}else{
+			for(Weapon w:weapons) {
+				w = null;
+			}
+			occupiedHands=0;
+		}
+		this.giveAttackBonus(-1*removWeapon.getAttackBonus());
+		
+	}
 	
 	//-------------------- NPCs actions
 	protected abstract void dummyWalk(Character character, RedDice redDice, MapElement map[][]);

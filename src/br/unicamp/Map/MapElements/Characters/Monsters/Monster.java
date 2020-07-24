@@ -70,7 +70,7 @@ public class Monster extends Character {
 
 	@Override
 	protected void equipWeapon(Weapon newWeapon){
-		this.bag.putIntoTheBag(newWeapon);
+//		this.bag.putIntoTheBag(newWeapon);
 	}
 
 
