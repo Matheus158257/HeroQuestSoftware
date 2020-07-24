@@ -124,7 +124,7 @@ public abstract class Character extends MapElement{
 				//N�o faz nada. Para o caso em que � a arma inicial
 			}
 			if(newWeapon.getIsShort()){
-				if(equippedWeapons ==2) {
+				if(occupiedHands ==2) {
 					if(weapons[1]==null) {//long sword na 0
 						this.unequipWeapon();
 						weapons[0] = newWeapon;
@@ -139,14 +139,14 @@ public abstract class Character extends MapElement{
 					}
 					
 				}else {
-					weapons[equippedWeapons]=newWeapon;
+					weapons[occupiedHands]=newWeapon;
 					
 				}
-			equippedWeapons++;
+				occupiedHands++;
 			} else {
 				unequipWeapon();
 				weapons[0]=newWeapon;
-				equippedWeapons+=2;
+				occupiedHands+=2;
 			}
 			this.giveAttackBonus(newWeapon.getAttackBonus());
 		}
@@ -155,7 +155,7 @@ public abstract class Character extends MapElement{
 			this.bag.putIntoTheBag(weapon);
 			if(weapon.getIsShort()){
 				weapons[arrayPosition]=null;
-				equippedWeapons--;
+				occupiedHands--;
 			}
 			this.giveAttackBonus(-1*weapon.getAttackBonus());
 		}
@@ -167,7 +167,7 @@ public abstract class Character extends MapElement{
 				}
 				w = null;
 			}
-			equippedWeapons=0;
+			occupiedHands=0;
 		}
 		
 

@@ -7,7 +7,7 @@ import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 public class Armor implements Collectable,Usable{
 	
 	
-	private int defensePoins;
+	private int defensePoints;
 
 
 	public Armor(int defensePoints) {
@@ -16,7 +16,7 @@ public class Armor implements Collectable,Usable{
 	
 	@Override
 	public void report(int i) {
-		String message = String.valueOf(i) + " - "+ "Armor: " + String.valueOf(defensePoins) + " defensePoins points";
+		String message = String.valueOf(i) + " - "+ "Armor: " + String.valueOf(defensePoints) + " defensePoins points";
 		System.out.println(message);
 	}
 	

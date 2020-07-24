@@ -10,7 +10,6 @@ import br.unicamp.Dices.Dice;
 import br.unicamp.Dices.RedDice;
 import br.unicamp.Exceptions.ItemNotInBagException;
 import br.unicamp.Exceptions.LifeOnMaximumException;
-import br.unicamp.Exceptions.OccupiedTileException;
 import br.unicamp.Interfaces.Collectable;
 import br.unicamp.Items.Bag;
 import br.unicamp.Items.Potion;
@@ -38,13 +37,13 @@ public class Hero extends Character {
 		}
 		this.armor = newArmor;
     
-		this.giveDefenseBonus(newArmor.getArmorDefensePoints());
+		this.giveDefenseBonus(newArmor.getDefensePoints());
 	}
 	
 	
 	private void unequipArmor(){
 		this.bag.putIntoTheBag(this.armor);
-		this.giveDefenseBonus(-1*this.armor.getArmorDefensePoints());
+		this.giveDefenseBonus(-1*this.armor.getDefensePoints());
 	}
 
 	public void changeArmor(Armor armor) {
