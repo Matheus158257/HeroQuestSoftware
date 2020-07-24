@@ -40,8 +40,11 @@ public class ChestTrap extends Chest {
 	}
 
 	
-	private void open(Character character) {
+	
+	@Override
+	public boolean getOpened(Character character) {
 		System.out.println("A MONSTER APPEARED");
+		return true;
 	}
 
 }

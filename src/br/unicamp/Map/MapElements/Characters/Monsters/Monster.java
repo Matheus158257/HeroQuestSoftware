@@ -5,7 +5,6 @@ import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.RedDice;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
-import br.unicamp.Game.Game;
 import br.unicamp.Items.Bag;
 import br.unicamp.Items.Weapons.Weapon;
 
@@ -67,12 +66,5 @@ public class Monster extends Character {
 	public boolean goThrough(Character character) {
 		return false;
 	}
-
-	@Override
-	protected void equipWeapon(Weapon newWeapon){
-//		this.bag.putIntoTheBag(newWeapon);
-	}
-
-
 
 }

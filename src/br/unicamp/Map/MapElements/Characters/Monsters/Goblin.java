@@ -19,14 +19,14 @@ public class Goblin extends Monster {
 	public Goblin(int x0, int y0){
 		super(x0,y0,"Goblin", Goblin.ATK, Goblin.DEF, Goblin.LP, Goblin.MP);
 
-		Dagger dagger1 = new Dagger();
+		/*Dagger dagger1 = new Dagger();
 		Dagger dagger2 = new Dagger();
 		Dagger dagger3 = new Dagger();
 		Dagger dagger4 = new Dagger();
 		this.equipWeapon(dagger1);
 		this.equipWeapon(dagger2);
 		this.equipWeapon(dagger3);
-		this.equipWeapon(dagger4);
+		this.equipWeapon(dagger4);*/
 	}
 	
 	@Override

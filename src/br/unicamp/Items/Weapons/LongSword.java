@@ -15,8 +15,13 @@ public class LongSword extends Weapon {
 	}
 	
 	@Override
+	public void report(int i) {
+		String message = String.valueOf(i) + " - "+  "Long Sword: "  + this.getData();
+		System.out.println(message);
+	}
+
 	public String toString() {
 		return ("Long Sword " + this.getData());
 	}
-	
+
 }

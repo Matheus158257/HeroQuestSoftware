@@ -23,12 +23,5 @@ public abstract class Chest extends VariableElement{
 
 	public abstract void updateChestOnMap(Map map);
 
-
-	//--------------------
-	
-	@Override
-	public boolean getOpened(Character character) {
-		return true;
-	}
 	
 }

@@ -4,9 +4,12 @@ import br.unicamp.Map.*;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.StaticElements.VariableElements.Trap;
+
 import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.Dice;
 import br.unicamp.Dices.RedDice;
+import br.unicamp.Exceptions.ItemNotInBagException;
+import br.unicamp.Exceptions.LifeOnMaximumException;
 import br.unicamp.Interfaces.Collectable;
 import br.unicamp.Items.Bag;
 import br.unicamp.Items.Potion;
@@ -26,27 +29,36 @@ public class Hero extends Character {
 		
 	}
 	
-	protected void equipArmor(Armor newArmor){
-		this.bag.removeItem(newArmor);
+	private void equipArmor(Armor newArmor){
+		try {
+			this.bag.removeItem(newArmor);
+		}catch(ItemNotInBagException e) {
+			//N�o faz nada. Para o caso em que � a armadura inicial
+		}
 		this.armor = newArmor;
-		this.defensePoints += newArmor.getDefensePoints();
+    
+		this.giveDefenseBonus(newArmor.getDefensePoints());
 	}
 	
-	protected void unequipArmor(Armor removArmor){
-		this.bag.putIntoTheBag(removArmor);
-		this.defensePoints -= removArmor.getDefensePoints();		
+	
+	private void unequipArmor(){
+		this.bag.putIntoTheBag(this.armor);
+		this.giveDefenseBonus(-1*this.armor.getDefensePoints());
 	}
 
+	public void changeArmor(Armor armor) {
+		if (this.armor != null) {
+			this.bag.putIntoTheBag(this.armor);
+			unequipArmor();
+			equipArmor(armor);
+		}else {
+			equipArmor(armor);
+		}
+	}
 	
 	protected void searchForTraps(Map map){}
 	
 	protected void jumpTrap(Map map, Trap trap){}
-	
-	public void drinkPotion(Potion potion) {
-		this.lifePoints += potion.getHealingPoints();
-		this.bag.removeItem(potion);
-	}
-	
 	protected void play(Dice gameDice){
 		//implementar chamando o metodo gameDice.roll()
 	}
@@ -98,7 +110,36 @@ public class Hero extends Character {
 	}
 
 	//--------------------
-	
+	public void status() {
+		
+		System.out.println("OVERALL STATUS: ");
+		String lifePoints = "Life Points: " + String.valueOf(this.lifePoints);
+		lifePoints += " - MAX Life Points: " + String.valueOf(this.maxLifePoints);
+		System.out.println(lifePoints);
+		String manaPoints = "Mana Points: " + String.valueOf(this.mana);
+		System.out.println(manaPoints);
+		String atackPoints = "Atack Points: " + String.valueOf(this.attackPoints);
+		System.out.println(atackPoints);
+		String defensePoints = "Defense Points: " + String.valueOf(this.defensePoints);
+		System.out.println(defensePoints);
+		System.out.println("-------------------------------------------------------------------");
+		
+		System.out.println("EQUIPMENT STATUS: ");
+		if (this.weapons[0] != null) {
+			this.weapons[0].report();
+
+		}
+		if (this.weapons[1] != null) {
+			this.weapons[1].report();
+		}
+		if (this.armor != null) {
+			this.armor.report();
+		}
+		
+		System.out.println("-------------------------------------------------------------------");
+		
+
+	}
 	
 	@Override
 	public boolean getOpened(Character character) {
@@ -114,6 +155,34 @@ public class Hero extends Character {
 
 	//--------------------
 	
+
+
+
+	public void useBagItem(int position) throws ItemNotInBagException{
+		if (position < this.bag.getSize()) {
+			Collectable item = this.bag.getItem(position);
+			item.use(this);
+			
+		}else {
+			throw new ItemNotInBagException();
+		}
+		
+	}
+
+
+
+	public void drinkPotion(Potion potion) throws LifeOnMaximumException {
+		if (this.lifePoints == this.maxLifePoints) {
+			throw new LifeOnMaximumException("When your life is on maximum you cant use a Potion");
+		} else {
+			this.lifePoints+=potion.getHealingPoints();
+			try {
+				this.bag.removeItem(potion);
+			} catch (ItemNotInBagException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
 
 
 

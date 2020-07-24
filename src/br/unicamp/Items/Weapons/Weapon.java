@@ -1,6 +1,7 @@
 package br.unicamp.Items.Weapons;
 
 import br.unicamp.Interfaces.Collectable;
+import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 public class Weapon implements Collectable{
 	
@@ -27,16 +28,29 @@ public class Weapon implements Collectable{
 	public int getRange() {
 		return this.range;
 	}
+	
 
-//	@Override
+	@Override
+	public void report(int i) {
+		String message = String.valueOf(i) + " - "+ "Weapon: "  + "(range " + String.valueOf(range) + ") (attackBonus" + String.valueOf(attackBonus) + ")";
+		System.out.println(message);
+	}
+	
+	@Override
 	public void report() {
-		String message = "Weapon: "  + "(range " + String.valueOf(range) + ") (attackBonus" + String.valueOf(attackBonus) + ")";
+		String message = "Weapon: "  + this.getData();
 		System.out.println(message);
 	}
 
 	public String getData() {
 		String message = "(Range: " + String.valueOf(range) + ") (+" + String.valueOf(attackBonus) + " Attack Points)\n";
 		return message;
+	}
+
+	@Override
+	public void use(Hero hero) {
+		hero.changeWeapon(this);
+		
 	}
 	
 }
