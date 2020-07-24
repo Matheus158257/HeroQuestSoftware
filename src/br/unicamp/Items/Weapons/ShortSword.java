@@ -20,4 +20,9 @@ public class ShortSword extends Weapon{
 		System.out.println(message);
 	}
  
+	@Override
+	public String toString() {
+		return ("Short Sword "  + this.getData());
+	}
+	
 }

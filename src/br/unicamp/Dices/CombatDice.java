@@ -17,17 +17,17 @@ public class CombatDice extends Dice {
 	     hmap.put(6,  CombatDiceSymbol.MONSTER_SHIELD);
 	}
 	
-	//returns a random number between 1 and six for each dice
-	private CombatDiceSymbol rollDices() {
+	//returns a random CombatDiceSymbol for each dice
+	private CombatDiceSymbol rollDice() {
 		Random r = new Random();
 		int n = r.nextInt(high-low+1) + low;
 		return hmap.get(n);
 	}
 	
-	public ArrayList<CombatDiceSymbol> getRedDicesResult(int NumberOfDices) {
+	public ArrayList<CombatDiceSymbol> getRedDicesResult(int numberOfDice) {
 		ArrayList<CombatDiceSymbol> combatDicesSymbols = new ArrayList<CombatDiceSymbol>();
-		for (int i=1;i<=NumberOfDices; i++) {
-			combatDicesSymbols.add(rollDices());
+		for (int i=1;i<=numberOfDice; i++) {
+			combatDicesSymbols.add(rollDice());
 		}
 		return combatDicesSymbols;
 	}

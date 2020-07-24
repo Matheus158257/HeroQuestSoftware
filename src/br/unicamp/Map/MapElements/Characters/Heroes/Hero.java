@@ -23,7 +23,6 @@ import br.unicamp.Items.Weapons.Weapon;
 public class Hero extends Character {
 	
 	protected Armor armor;
-	private int equippedWeapons = 0;
 	
 	public Hero(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
 		super(x0,y0,name,attackPoints,defensePoints,lifePoints,mana);
@@ -35,9 +34,10 @@ public class Hero extends Character {
 		try {
 			this.bag.removeItem(newArmor);
 		}catch(ItemNotInBagException e) {
-			//Não faz nada. Para o caso em que é a armadura inicial
+			//Nï¿½o faz nada. Para o caso em que ï¿½ a armadura inicial
 		}
 		this.armor = newArmor;
+    
 		this.giveDefenseBonus(newArmor.getArmorDefensePoints());
 	}
 	
@@ -56,9 +56,9 @@ public class Hero extends Character {
 			equipArmor(armor);
 		}
 	}
-
 	
 	protected void searchForTraps(Map map){}
+	
 	protected void jumpTrap(Map map, Trap trap){}
 	protected void play(Dice gameDice){
 		//implementar chamando o metodo gameDice.roll()
@@ -77,6 +77,26 @@ public class Hero extends Character {
 	public void reportBagElements() {
 		this.bag.reportItemsOnBag();
 		
+		//Report equipped Items
+		this.reportEquippedItems();
+		
+		//Report 
+	}
+	
+	private void reportEquippedItems() {
+		String report = ("Player has equipped:\n- Armor: ");
+		if(this.armor != null) {
+			report += this.armor;
+		}
+		report+=("\n- Weapons:");
+		for(Weapon w:this.weapons) {
+			if(w != null) {
+				report += (" " + w);
+			}
+		}
+
+		
+		System.out.println(report);
 	}
 	
 	//-------------------- NPCs actions
@@ -131,11 +151,12 @@ public class Hero extends Character {
 		return false;
 	}
 
-	@Override
-	public boolean interact(Character character, String interactable) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
+
+
+	//--------------------
+	
+
 
 
 	public void useBagItem(int position) throws ItemNotInBagException{

@@ -9,8 +9,9 @@ public class Armor implements Collectable,Usable{
 	
 	private int defensePoins;
 
-	public Armor(int defensePoins) {
-		this.defensePoins = defensePoins;
+
+	public Armor(int defensePoints) {
+		this.defensePoints = defensePoints;
 	}
 	
 	@Override
@@ -21,12 +22,12 @@ public class Armor implements Collectable,Usable{
 	
 	@Override
 	public void report() {
-		String message = "Armor: " + String.valueOf(defensePoins) + " defensePoins points";
+		String message = "Armor: " + String.valueOf(defensePoints) + " defensePoins points";
 		System.out.println(message);
 	}
 
-	public int getArmorDefensePoints(){
-		return defensePoins;
+	public int getDefensePoints(){
+		return defensePoints;
 	}
 	
 	@Override

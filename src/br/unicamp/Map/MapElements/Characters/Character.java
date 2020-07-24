@@ -4,11 +4,16 @@ import br.unicamp.Items.Bag;
 import br.unicamp.Items.Armor.Armor;
 import br.unicamp.Items.Weapons.*;
 import br.unicamp.Map.MapElements.MapElement;
+import br.unicamp.Map.MapElements.Characters.Character;
+import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 import br.unicamp.Dices.*;
 import br.unicamp.Exceptions.ItemNotInBagException;
 import br.unicamp.Game.Command;
 
 public abstract class Character extends MapElement{
+	
+	public final static int HANDS = 2;
+	
 	protected String name;
 	protected int attackPoints;
 	protected int defensePoints;
@@ -18,7 +23,7 @@ public abstract class Character extends MapElement{
 	protected Bag bag;
 	
 	protected Weapon weapons[];
-	protected int equippedWeapons = 0;
+	protected int occupiedHands = 0;
 	
 	public Character(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
 		super(x0,y0);
@@ -116,7 +121,7 @@ public abstract class Character extends MapElement{
 			try {
 				this.bag.removeItem(newWeapon);
 			}catch(ItemNotInBagException e) {
-				//Não faz nada. Para o caso em que é a arma inicial
+				//Nï¿½o faz nada. Para o caso em que ï¿½ a arma inicial
 			}
 			if(newWeapon.getIsShort()){
 				if(equippedWeapons ==2) {
@@ -170,10 +175,59 @@ public abstract class Character extends MapElement{
 			equipWeapon(newWeapon);
 		}
 		
+/*
+	protected void equipWeapon(Weapon newWeapon) {
+		if (this.occupiedHands < Character.HANDS) {
+				this.bag.removeItem(newWeapon); //tira a arma da sacola e pï¿½es nas mï¿½os do hï¿½roi
+				if(newWeapon.getIsShort()){
+					weapons[this.occupiedHands]=newWeapon;
+					this.occupiedHands++;
+				}else{
+					weapons[this.occupiedHands]=newWeapon;
+					this.occupiedHands+=2;
+				}
+		}else {
+			System.out.println("LOG: Both hands are occupied.");
+		}
+	}
+	
+	
+	protected void unequipWeapon(Weapon removWeapon){
+		this.bag.putIntoTheBag(removWeapon);
+		if(removWeapon.getIsShort()){
+			weapons[occupiedHands]=null;
+			occupiedHands--;
+		}else{
+			for(Weapon w:weapons) {
+				w = null;
+			}
+			occupiedHands=0;
+		}
+		this.giveAttackBonus(-1*removWeapon.getAttackBonus());
+		
+	}
+*/
 	
 	//-------------------- NPCs actions
 	protected abstract void dummyWalk(Character character, RedDice redDice, MapElement map[][]);
 	protected abstract void dummyAction(Character character, CombatDice combatDice,MapElement map[][]);
 	
+	
+	@Override
+	public boolean interact(Character character, String interactable) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public boolean getOpened(Character character) {
+		return false;
+	}
+	@Override
+	public boolean goThrough(Character character) {
+		return false;
+	}
+
+
 	
 }

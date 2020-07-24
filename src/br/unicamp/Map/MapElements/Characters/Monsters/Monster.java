@@ -67,15 +67,4 @@ public class Monster extends Character {
 		return false;
 	}
 
-	@Override
-	protected void equipWeapon(Weapon newWeapon){
-		this.bag.putIntoTheBag(newWeapon);
-	}
-
-	@Override
-	public boolean interact(Character character, String interactable) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }
