@@ -14,9 +14,18 @@ public class Coin implements Collectable{
 	}
 
 	@Override
-	public void report() {
-		String message = "Coin: " + String.valueOf(moneyPoints) + " money points";
+	public void report(int i) {
+		String message =  String.valueOf(i) + " - "+"Coin: " + String.valueOf(moneyPoints) + " money points";
 		System.out.println(message);
+	}
+	
+	@Override
+	public void report() {}
+
+	@Override
+	public void use(Hero hero) {
+		// TODO Auto-generated method stub
+		System.out.println("Coins are only a prize to make you happy, they dont have any function in this game XD");
 	}
 
 

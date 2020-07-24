@@ -39,11 +39,12 @@ public class Treasure extends Chest {
 		map.clearTile(chestX, chestY, true);
 	}
 	
-
 	
-	private void open(Character character) {
+	@Override
+	public boolean getOpened(Character character) {
 		Hero hero = (Hero)character;
-		hero.collect(this.reward);
+		hero.collect(this.reward);;
+		return true;
 	}
 
 }
