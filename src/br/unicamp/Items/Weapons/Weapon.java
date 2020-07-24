@@ -35,7 +35,7 @@ public class Weapon implements Collectable{
 	}
 
 	public String getData() {
-		String message = "(range " + String.valueOf(range) + ") (attackBonus" + String.valueOf(attackBonus) + ")\n";
+		String message = "(Range: " + String.valueOf(range) + ") (+" + String.valueOf(attackBonus) + " Attack Points)\n";
 		return message;
 	}
 	

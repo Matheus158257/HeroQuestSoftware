@@ -19,65 +19,27 @@ import br.unicamp.Items.Weapons.Weapon;
 public class Hero extends Character {
 	
 	protected Armor armor;
-	protected Bag bag;
-	private int equippedWeapons = 0;
 	
 	public Hero(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
 		super(x0,y0,name,attackPoints,defensePoints,lifePoints,mana);
 		this.weapons = new Weapon[2];	
-		this.bag = new Bag();
 		
 	}
 	
 	protected void equipArmor(Armor newArmor){
 		this.bag.removeItem(newArmor);
 		this.armor = newArmor;
-		this.defensePoints += newArmor.getArmorDefensePoints();
+		this.defensePoints += newArmor.getDefensePoints();
 	}
 	
 	protected void unequipArmor(Armor removArmor){
 		this.bag.putIntoTheBag(removArmor);
-		this.defensePoints -= removArmor.getArmorDefensePoints();		
+		this.defensePoints -= removArmor.getDefensePoints();		
 	}
 
-	/*
-	@Override
-	protected void equipWeapon(Weapon newWeapon) {
-		// TODO Auto-generated method stub
-		//TO DO: Resolver estouro de tamanho do vetor
-				this.bag.removeItem(newWeapon);//tira a arma da sacola e p�es nas m�os do h�roi
-				if(newWeapon.getIsShort()){
-					weapons[noWeaponsInHands]=newWeapon;
-					noWeaponsInHands++;
-					//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
-					//newWeapon.getAttackBonus();
-				}else{
-					weapons[noWeaponsInHands]=newWeapon;
-					//Solu��o para que o heroi n�o tente pegar mais uma arma
-					noWeaponsInHands=noWeaponsInHands+2;
-					//PEGA OS PONTOS DE ATAQUE DA ARMA E ATACA AQUI?
-					//newWeapon.getAttackBonus();
-				}
-		
-	}*/
-	
-	/*
-	protected void unequipWeapon(Weapon removWeapon){
-		this.bag.putIntoTheBag(removWeapon);
-		if(removWeapon.getIsShort()){
-			weapons[noWeaponsInHands]=null;
-			noWeaponsInHands--;
-		}else{
-			for(Weapon w:weapons) {
-				w = null;
-			}
-			equippedWeapons=0;
-		}
-		this.giveAttackBonus(-1*weapon.getAttackBonus());
-		
-	}*/
 	
 	protected void searchForTraps(Map map){}
+	
 	protected void jumpTrap(Map map, Trap trap){}
 	
 	public void drinkPotion(Potion potion) {
@@ -102,6 +64,26 @@ public class Hero extends Character {
 	public void reportBagElements() {
 		this.bag.reportItemsOnBag();
 		
+		//Report equipped Items
+		this.reportEquippedItems();
+		
+		//Report 
+	}
+	
+	private void reportEquippedItems() {
+		String report = ("Player has equipped:\n- Armor: ");
+		if(this.armor != null) {
+			report += this.armor;
+		}
+		report+=("\n- Weapons:");
+		for(Weapon w:this.weapons) {
+			if(w != null) {
+				report += (" " + w);
+			}
+		}
+
+		
+		System.out.println(report);
 	}
 	
 	//-------------------- NPCs actions
@@ -115,11 +97,20 @@ public class Hero extends Character {
 		// TODO Auto-generated method stub
 	}
 
+	//--------------------
+	
+	
 	@Override
-	protected void equipWeapon(Weapon newWeapon) {
-		// TODO Auto-generated method stub
-		
+	public boolean getOpened(Character character) {
+		return false;
 	}
+	@Override
+	public boolean goThrough(Character character) {
+		return false;
+	}
+
+
+
 
 	//--------------------
 	

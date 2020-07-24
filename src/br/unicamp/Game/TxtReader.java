@@ -57,9 +57,10 @@ public class TxtReader {
 	}
 	
 	private void readTxtFile() {
-		
-		String cwd = System.getProperty("user.dir");
-		String filePath = cwd + "\\stages\\" + this.stageName +".txt";
+
+		String cwd = ("../stages/");
+//		System.out.println("LOG: Checking directory " + cwd);
+		String filePath = cwd + this.stageName +".txt";
 		
 		 try {
 		      
@@ -72,7 +73,7 @@ public class TxtReader {
 		      }
 		      myReader.close();
 		    } catch (FileNotFoundException e) {
-		      System.out.println("An error occurred. Please respect the manual format");
+		      System.out.println("An error has occurred. Please respect the map file pattern.");
 		      e.printStackTrace();
 		    }
 	}
@@ -82,7 +83,7 @@ public class TxtReader {
 		int x0 = Integer.valueOf(parts[1]);
 		int y0 = Integer.valueOf(parts[2]);
 		// My Hero
-		System.out.println(data);
+//		System.out.println(data);
 		
 		if (parts[0].equals("HB")) {
 			myhero = new Barbarian(x0,y0);
@@ -127,7 +128,6 @@ public class TxtReader {
 		}
 		// Variable Elements
 		else if (parts[0].equals("O")) {
-			System.out.println(parts[0]);
 			stageElements.add(new Obstacle(x0,y0));
 		}
 		 else if (parts[0].equals("T")) {

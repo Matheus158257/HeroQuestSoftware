@@ -291,9 +291,8 @@ public class Map {
 		int damage = player.getDamagePoints();
 		int range = player.getAttackRange();
 		
-		System.out.println("LOG: Checking " + range + " tiles around " + player);
+//		System.out.println("LOG: Checking " + range + " tiles around " + player);
 		Monster target = this.checkMonsterTargets(range, player);
-
 		
 		if(target !=null) {
 			//TODO rolar Attack Dice para realizar a batalha
@@ -392,6 +391,7 @@ public class Map {
 			if(map[i][currY].isFree()) {
 				map[i][currY].beSeen();
 			} else {
+				map[i][currY].beSeen();
 				blocked = true;
 			}
 		}
@@ -402,6 +402,7 @@ public class Map {
 			if(map[currX][i].isFree()) {
 				map[currX][i].beSeen();
 			} else {
+				map[currX][i].beSeen();
 				blocked = true;
 			}
 		}
@@ -412,6 +413,7 @@ public class Map {
 			if(map[i][currY].isFree()) {
 				map[i][currY].beSeen();
 			} else {
+				map[i][currY].beSeen();
 				blocked = true;
 			}
 		}
@@ -422,6 +424,7 @@ public class Map {
 			if(map[currX][i].isFree()) {
 				map[currX][i].beSeen();
 			} else {
+				map[currX][i].beSeen();
 				blocked = true;
 			}
 		}
