@@ -59,7 +59,7 @@ public class TxtReader {
 	private void readTxtFile() {
 
 		String cwd = ("../stages/");
-//		System.out.println("LOG: Checking directory " + cwd);
+		System.out.println("LOG: Checking directory " + cwd);
 		String filePath = cwd + this.stageName +".txt";
 		
 		 try {
