@@ -2,17 +2,22 @@ package br.unicamp.Items.Armor;
 
 import br.unicamp.Interfaces.Collectable;
 import br.unicamp.Interfaces.Usable;
-import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 public class Armor implements Collectable,Usable{
 	
 	
-	private int defensePoints;
-	private Hero possessor;
+	private int defensePoins;
+
 
 	public Armor(int defensePoints) {
 		this.defensePoints = defensePoints;
+	}
+	
+	@Override
+	public void report(int i) {
+		String message = String.valueOf(i) + " - "+ "Armor: " + String.valueOf(defensePoins) + " defensePoins points";
+		System.out.println(message);
 	}
 	
 	@Override
@@ -27,7 +32,7 @@ public class Armor implements Collectable,Usable{
 	
 	@Override
 	public void use(Hero hero) {
-		this.possessor = hero;
+		hero.changeArmor(this);
 	}
 
 }

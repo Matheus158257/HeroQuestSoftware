@@ -11,6 +11,11 @@ public class Dagger extends Weapon {
 	}
 	
 	@Override
+	public void report(int i) {
+		String message = String.valueOf(i) + " - "+  "Dagger: "  + this.getData();
+		System.out.println(message);
+	}
+	@Override
 	public void report() {
 		String message = "Dagger: "  + this.getData();
 		System.out.println(message);

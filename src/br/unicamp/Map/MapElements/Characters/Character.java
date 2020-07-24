@@ -1,14 +1,14 @@
 package br.unicamp.Map.MapElements.Characters;
 
 import br.unicamp.Items.Bag;
-import br.unicamp.Items.Armor.*;
+import br.unicamp.Items.Armor.Armor;
 import br.unicamp.Items.Weapons.*;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 import br.unicamp.Dices.*;
+import br.unicamp.Exceptions.ItemNotInBagException;
 import br.unicamp.Game.Command;
-import br.unicamp.Interfaces.Collectable;
 
 public abstract class Character extends MapElement{
 	
@@ -18,6 +18,7 @@ public abstract class Character extends MapElement{
 	protected int attackPoints;
 	protected int defensePoints;
 	protected int lifePoints;
+	protected int maxLifePoints;
 	protected int mana;
 	protected Bag bag;
 	
@@ -30,12 +31,17 @@ public abstract class Character extends MapElement{
 		this.attackPoints = attackPoints;
 		this.defensePoints = defensePoints;
 		this.lifePoints = lifePoints;
+		this.maxLifePoints = lifePoints;
 		this.mana = mana;
 		this.bag = new Bag();
 	}
 	
-	public void giveAttackBonus(int bonus) {
+	protected void giveAttackBonus(int bonus) {
 		this.attackPoints+=bonus;
+	}
+	
+	protected void giveDefenseBonus(int bonus) {
+		this.defensePoints+=bonus;
 	}
 	
 
@@ -108,6 +114,68 @@ public abstract class Character extends MapElement{
 		lifePoints = lifePoints-damage+defense;
 	}
 	
+	
+	//@Override
+		protected void equipWeapon(Weapon newWeapon){
+			//TODO Resolver estouro de tamanho do vetor
+			try {
+				this.bag.removeItem(newWeapon);
+			}catch(ItemNotInBagException e) {
+				//N�o faz nada. Para o caso em que � a arma inicial
+			}
+			if(newWeapon.getIsShort()){
+				if(equippedWeapons ==2) {
+					if(weapons[1]==null) {//long sword na 0
+						this.unequipWeapon();
+						weapons[0] = newWeapon;
+					}else {
+						if(weapons[0].getAttackBonus()>weapons[1].getAttackBonus()) {
+							this.unequipWeapon(weapons[1],1);
+						}else {
+							this.unequipWeapon(weapons[0],0);
+							weapons[0] = weapons[1];
+							weapons[1] = null;
+						}
+					}
+					
+				}else {
+					weapons[equippedWeapons]=newWeapon;
+					
+				}
+			equippedWeapons++;
+			} else {
+				unequipWeapon();
+				weapons[0]=newWeapon;
+				equippedWeapons+=2;
+			}
+			this.giveAttackBonus(newWeapon.getAttackBonus());
+		}
+
+		private void unequipWeapon(Weapon weapon,int arrayPosition){;
+			this.bag.putIntoTheBag(weapon);
+			if(weapon.getIsShort()){
+				weapons[arrayPosition]=null;
+				equippedWeapons--;
+			}
+			this.giveAttackBonus(-1*weapon.getAttackBonus());
+		}
+		
+		private void unequipWeapon() {
+			for(Weapon w:weapons) {
+				if (w!=null) {
+					this.giveAttackBonus(-1*w.getAttackBonus());
+				}
+				w = null;
+			}
+			equippedWeapons=0;
+		}
+		
+
+		public void changeWeapon(Weapon newWeapon) {
+			equipWeapon(newWeapon);
+		}
+		
+/*
 	protected void equipWeapon(Weapon newWeapon) {
 		if (this.occupiedHands < Character.HANDS) {
 				this.bag.removeItem(newWeapon); //tira a arma da sacola e p�es nas m�os do h�roi
@@ -138,6 +206,7 @@ public abstract class Character extends MapElement{
 		this.giveAttackBonus(-1*removWeapon.getAttackBonus());
 		
 	}
+*/
 	
 	//-------------------- NPCs actions
 	protected abstract void dummyWalk(Character character, RedDice redDice, MapElement map[][]);

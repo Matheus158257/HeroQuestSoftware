@@ -9,6 +9,12 @@ public class ShortSword extends Weapon{
 	
 	
 	@Override
+	public void report(int i) {
+		String message = String.valueOf(i) + " - "+ "Short Sword: "  + this.getData();
+		System.out.println(message);
+	}
+	
+	@Override
 	public void report() {
 		String message = "Short Sword: "  + this.getData();
 		System.out.println(message);
