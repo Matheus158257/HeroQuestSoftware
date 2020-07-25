@@ -8,7 +8,7 @@ import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Items.Bag;
 import br.unicamp.Items.Weapons.Weapon;
 
-public class Monster extends Character {
+public abstract class Monster extends Character {
 	
 	protected Bag bag;
 
@@ -25,36 +25,36 @@ public class Monster extends Character {
 	
 	//-------------------- NPCs actions
 	
-	@Override
-	public void dummyWalk(Character character, RedDice redDice, MapElement map[][]) {
-		int steps = redDice.getResult(1);
-		if (this.isVisible()) {
-			do{
-				while(map[this.getX()][this.getY()+1].isFree() && steps>0){ 		//DOWN
-					this.incrementCoordinates(0,1);
-					steps--;
-				}
-				while(map[this.getX()][this.getY()-1].isFree() && steps>0){ 	//UP
-					this.incrementCoordinates(0,-1);
-					steps--;
-				}
-				while(map[this.getX()][this.getY()+1].isFree() && steps>0){ 	//RIGHT
-					this.incrementCoordinates(1,0);
-					steps--;
-				}
-				while(map[this.getX()][this.getY()+1].isFree() && steps>0){ 	//LEFT
-					this.incrementCoordinates(-1,0);
-					steps--;
-				}
-			}while(steps>0);
-		}
-	}
+	// DUMMY WALK AND ACTION FORAM PARA MAP
+//	@Override
+//	public void dummyWalk(RedDice redDice, MapElement map[][]) {
+//		int steps = redDice.getResult(1);
+//		if (this.isVisible()) {
+//			do{
+//				while(map[this.getX()][this.getY()+1].isFree() && steps>0){ 		//DOWN
+//					this.incrementCoordinates(0,1);
+//					steps--;
+//				}
+//				while(map[this.getX()][this.getY()-1].isFree() && steps>0){ 	//UP
+//					this.incrementCoordinates(0,-1);
+//					steps--;
+//				}
+//				while(map[this.getX()][this.getY()+1].isFree() && steps>0){ 	//RIGHT
+//					this.incrementCoordinates(1,0);
+//					steps--;
+//				}
+//				while(map[this.getX()][this.getY()+1].isFree() && steps>0){ 	//LEFT
+//					this.incrementCoordinates(-1,0);
+//					steps--;
+//				}
+//			}while(steps>0);
+//		}
+//	}
 
-	@Override
-	public void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
-		// TODO Auto-generated method stub
-		
-	}
+//	public void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 	
 	//--------------------
 	

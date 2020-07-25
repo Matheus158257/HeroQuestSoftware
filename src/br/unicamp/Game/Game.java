@@ -3,6 +3,8 @@ package br.unicamp.Game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import br.unicamp.Dices.CombatDice;
+import br.unicamp.Dices.RedDice;
 import br.unicamp.Exceptions.*;
 import br.unicamp.Map.Map;
 import br.unicamp.Map.MapElements.MapElement;
@@ -23,15 +25,15 @@ import br.unicamp.Map.MapElements.Characters.Monsters.SkeletonWizard;
 
 public class Game {
 
-	//	private boolean exitSelected;
-
 	private Map gameMap;
 
+	private RedDice redDice;
+	private CombatDice combatDice;
+	
 	public Game() {
-		//door1 = new Door();
-		
 		gameMap = new Map();
-
+		this.redDice= new RedDice();
+		this.combatDice= new CombatDice();
 	}
 
 	public void start() {
@@ -48,7 +50,7 @@ public class Game {
 			case FROM_TXT:
 				@SuppressWarnings("resource")
 				Scanner keyboard = new Scanner(System.in);
-				System.out.print ("Name from txt file:");
+				System.out.print ("Name from .txt file: ");
 				String command = keyboard.nextLine();
 				TxtReader stage = new TxtReader(command);
 				
@@ -84,7 +86,8 @@ public class Game {
 				// Hero addition
 				player = chooseHero();
 				gameMap.addElement(player);
-//				
+
+				// TODO gameMap.makeStandardMonsters()
 				// Test Monster additions
 				Monster m1 = new Goblin(3,4);
 				gameMap.addMonster(m1);
@@ -94,8 +97,6 @@ public class Game {
 				
 				Monster m3 = new SkeletonWizard(8,8);
 				gameMap.addMonster(m3);
-				
-				
 				
 				
 				// Making Doors
@@ -117,7 +118,7 @@ public class Game {
 			
 		// Starting the game
 
-		System.out.println("Game started!");
+		System.out.println("Game started!\n");
 
 		boolean running2 = true;
 		Command input2;
@@ -149,6 +150,7 @@ public class Game {
 						try{
 							player.useBagItem(position);						
 						}catch(ItemNotInBagException e) {
+							// TODO consertar interacao com o usuario nesse ponto, falar que a entrada foi invalida
 								System.out.println (e.getMessage());
 						}
 					}
@@ -159,13 +161,16 @@ public class Game {
 					break;
 					
 				case ATTACK:
-					gameMap.attackMonster(player);
+					gameMap.attackMonster(this.combatDice, player);
 					break;
 				case HELP:
 					this.giveHelp();
 					break;
+					//TODO
+//				case MOVE:
+//					this.makeMove();
+//					break;
 				default:
-
 					gameMap.moveCharacter(input2, player);
 					break;
 				}
@@ -175,31 +180,41 @@ public class Game {
 
 			gameMap.updateMap(player);
 			gameMap.print();
-//			gameMap.excuteNPCsMovements();
+			
+			try {
+				gameMap.runMonsterActions(combatDice, player);
+			} catch (OccupiedTileException | OutOfBoundsException e) {
+				System.out.println (e.getMessage());
+			}
+			
+			gameMap.print();
 
 		}
 
 	}
 
-
+	private void makeMove() {
+		
+	}
+	
 	private Command readGameType() {
 		
 		Command retorno = Command.NONE;
 		@SuppressWarnings("resource")
 		Scanner keyboard = new Scanner(System.in);
-		System.out.println("To read default map press '0'. For configuration file, press '1':");
+		System.out.println("To read default map press '0'.\nFor configuration file, press '1':");
 		String command = keyboard.nextLine();
 	
 		if ( command.compareTo("1") == 0) {
-			System.out.println("Reading game form file");
+			System.out.println("Reading game form file...");
 			retorno = Command.FROM_TXT;
 
 		} else if ( command.compareTo("0") == 0 ) {
-			System.out.println ("Leading default game \n");
+			System.out.println ("Loading the default game...\n");
 			retorno =  Command.PREGAME;
 
 		} else {
-			System.out.print ("To read default map press '0'. For configuration file, press '1':");
+			System.out.print ("To read default map press '0'.\nFor configuration file, press '1':");
 		}
 		
 		return retorno;
@@ -207,18 +222,51 @@ public class Game {
 	
 	
 	private void giveHelp() {
-		System.out.println("Write [quit] to quit the game");
-		System.out.println("Press [w] to move up");
-		System.out.println("Press [s] to move down");
-		System.out.println("Press [a] to move lef");
-		System.out.println("Press [d] to move right");
-		System.out.println("Press [u] to open door");
-		System.out.println("Press [c] to open door");
-		System.out.println("Press [b] to check bag and possibily use items");
-		System.out.println("Press [v] to check your hero status");
-		System.out.println("Press [t] to attack a monster");
+		System.out.println("Write [quit] to Quit the game");
+		System.out.println("Press [u] to open Door");
+		System.out.println("Press [c] to open Chest");
+		System.out.println("Press [b] to check Bag and possibily use/equip Items");
+		System.out.println("Press [v] to check your Hero's current status");
+		System.out.println("Press [t] to attack a Monster with a Weapon\n");
+		
+		System.out.println("While in move phase:");
+		System.out.println("Press [w] to move Up");
+		System.out.println("Press [s] to move Down");
+		System.out.println("Press [a] to move Left");
+		System.out.println("Press [d] to move Right");
+		System.out.println("Press [p] to stop moving");
 	}
 		
+	
+//	private Command readMovement(int steps) {
+//
+//		@SuppressWarnings("resource")
+//		Scanner keyboard = new Scanner(System.in);
+//		System.out.print ("Enter the next direction:") ;
+//		String command = keyboard.nextLine();
+//
+//		System.out.println("If you need to check commands, press [h] for help\n");
+//		
+//		if ( command.compareTo("quit") == 0) {
+//			System.out.println("Game terminated. Bye!");
+//			return Command.QUIT;
+//		} else if ( command.compareTo("w") == 0 ) {
+//			return Command.UP;
+//		} else if ( command.compareTo("a") == 0 ) {
+//			return Command.LEFT;
+//		} else if ( command.compareTo("s") == 0 ) {
+//			return Command.DOWN;
+//		} else if ( command.compareTo("d") == 0 ) {
+//			return Command.RIGHT;
+//		} else if ( command.compareTo("h") == 0 ) {
+//			return Command.HELP;
+//		} else if ( command.compareTo("p") == 0 ) {
+//			return Command.QUIT;
+//		} else {
+//			return Command.NONE;	
+//		}
+//	}
+	
 	private Command readInput() {
 
 		@SuppressWarnings("resource")
@@ -226,48 +274,45 @@ public class Game {
 		System.out.print ("Enter the command:") ;
 		String command = keyboard.nextLine();
 
-		System.out.println("If you need to check commands press h (help)");
+		System.out.println("If you need to check commands, press [h] for help\n");
 		
 		if ( command.compareTo("quit") == 0) {
 			System.out.println("Game terminated. Bye!");
 			return Command.QUIT;
 		} else if ( command.compareTo("w") == 0 ) {
-			System.out.println ("Moving UP \n");
+//			System.out.println ("Moving UP \n");
 			return Command.UP;
 		} else if ( command.compareTo("a") == 0 ) {
-			System.out.println ("Moving LEFT \n");	
+//			System.out.println ("Moving LEFT \n");	
 			return Command.LEFT;
 		} else if ( command.compareTo("s") == 0 ) {
-			System.out.println ("Moving DOWN \n");
+//			System.out.println ("Moving DOWN \n");
 			return Command.DOWN;
 		} else if ( command.compareTo("d") == 0 ) {
-			System.out.println ("Moving RIGHT \n");
+//			System.out.println ("Moving RIGHT \n");
 			return Command.RIGHT;
 		} else if ( command.compareTo("u") == 0 ) {
-			System.out.println ("INTERACTING WITH DOOR\n");
+//			System.out.println ("INTERACTING WITH DOOR\n");
 			return Command.OPEN_DOOR;
-		}
-		else if ( command.compareTo("c") == 0 ) {
-			System.out.println ("INTERACTING WITH CHEST\n");
+		} else if ( command.compareTo("m") == 0 ) {
+			return Command.MOVE;
+		} else if ( command.compareTo("c") == 0 ) {
 			return Command.OPEN_CHEST;
-		}
-		else if ( command.compareTo("v") == 0 ) {
-			System.out.println ("PLAYER STATUS 	\n");
+		} else if ( command.compareTo("v") == 0 ) {
 			return Command.PLAYER_STATUS;
-		}
-		else if ( command.compareTo("b") == 0 ) {
-			System.out.println ("ITEMS ON THE BAG\n");
+		} else if ( command.compareTo("b") == 0 ) {
+			System.out.println ("ITEMS ON THE BAG:\n");
 			return Command.BAG_REPORT;
-		}else if ( command.compareTo("t") == 0 ) {
-			System.out.println ("TRY TO ATTACK\n");
+		} else if ( command.compareTo("t") == 0 ) {
 			return Command.ATTACK;
 		}
 		else if ( command.compareTo("h") == 0 ) {
-			System.out.println ("HELPING WITH COMMANDS \n");
+//			System.out.println ("HELPING WITH COMMANDS \n");
 			return Command.HELP;
+		} else {
+			return Command.NONE;	
 		}
 
-		return Command.NONE;
 	}
 	
 	
@@ -303,11 +348,11 @@ public class Game {
 
 		@SuppressWarnings("resource")
 		Scanner keyboard = new Scanner(System.in);
-		System.out.print ("Press n for dont use any item or the bag position of the item to use it \n") ;
+		System.out.print ("\nPress the number next to desired Item in order to use/equip it.\nPress [n] to cancel.\n") ;
 		String command = keyboard.nextLine();
 		int position = -1;
 		if ( command.compareTo("n") == 0 ) {
-			System.out.println ("Not using itens \n");
+			System.out.println ("Not using items \n");
 			return position;
 		}
 		try{
@@ -315,7 +360,6 @@ public class Game {
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
 		
 		return position;
 	}

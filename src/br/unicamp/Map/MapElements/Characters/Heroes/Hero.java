@@ -19,13 +19,12 @@ import br.unicamp.Items.Weapons.LongSword;
 import br.unicamp.Items.Weapons.ShortSword;
 import br.unicamp.Items.Weapons.Weapon;
 
-public class Hero extends Character {
+public abstract class Hero extends Character {
 	
 	protected Armor armor;
 	
 	public Hero(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
 		super(x0,y0,name,attackPoints,defensePoints,lifePoints,mana);
-		this.weapons = new Weapon[2];	
 		
 	}
 	
@@ -39,6 +38,7 @@ public class Hero extends Character {
     
 		this.giveDefenseBonus(newArmor.getDefensePoints());
 	}
+	
 	
 	
 	private void unequipArmor(){
@@ -77,37 +77,26 @@ public class Hero extends Character {
 		this.bag.reportItemsOnBag();
 		
 		//Report equipped Items
-		this.reportEquippedItems();
+//		this.reportEquippedItems();
 		
 		//Report 
 	}
 	
-	private void reportEquippedItems() {
-		String report = ("Player has equipped:\n- Armor: ");
-		if(this.armor != null) {
-			report += this.armor;
-		}
-		report+=("\n- Weapons:");
-		for(Weapon w:this.weapons) {
-			if(w != null) {
-				report += (" " + w);
-			}
-		}
-
-		
-		System.out.println(report);
-	}
+//	private void reportEquippedItems() {
+//		String report = ("Player has equipped:\n- Armor: ");
+//		if(this.armor != null) {
+//			report += this.armor;
+//		}
+//		report+=("\n- Weapons:");
+//		for(Weapon w:this.weapons) {
+//			if(w != null) {
+//				report += (" " + w);
+//			}
+//		}
+//		System.out.println(report);
+//	}
 	
-	//-------------------- NPCs actions
-	@Override
-	protected void dummyWalk(Character character, RedDice redDice, MapElement map[][]) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	protected void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
-		// TODO Auto-generated method stub
-	}
+
 
 	//--------------------
 	public void status() {
@@ -118,7 +107,7 @@ public class Hero extends Character {
 		System.out.println(lifePoints);
 		String manaPoints = "Mana Points: " + String.valueOf(this.mana);
 		System.out.println(manaPoints);
-		String atackPoints = "Atack Points: " + String.valueOf(this.attackPoints);
+		String atackPoints = "Attack Points: " + String.valueOf(this.attackPoints);
 		System.out.println(atackPoints);
 		String defensePoints = "Defense Points: " + String.valueOf(this.defensePoints);
 		System.out.println(defensePoints);
@@ -136,7 +125,7 @@ public class Hero extends Character {
 			this.armor.report();
 		}
 		
-		System.out.println("-------------------------------------------------------------------");
+//		System.out.print("\n");
 		
 
 	}
@@ -173,7 +162,7 @@ public class Hero extends Character {
 
 	public void drinkPotion(Potion potion) throws LifeOnMaximumException {
 		if (this.lifePoints == this.maxLifePoints) {
-			throw new LifeOnMaximumException("When your life is on maximum you cant use a Potion");
+			throw new LifeOnMaximumException("When your life is on maximum you can't use a Potion.");
 		} else {
 			this.lifePoints+=potion.getHealingPoints();
 			try {

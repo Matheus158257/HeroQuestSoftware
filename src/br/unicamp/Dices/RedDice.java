@@ -10,7 +10,7 @@ public class RedDice extends Dice {
 	}
 	
 	//returns a random number between 1 and 6 for each dice
-	private int rollDices() {
+	private int rollDie() {
 		int result = 0;
 		Random r = new Random();
 		result = r.nextInt(high-low+1) + low;
@@ -20,7 +20,7 @@ public class RedDice extends Dice {
 	public int getResult(int numberOfDice) {
 		int result = 0;
 		for (int i=1;i<=numberOfDice; i++) {
-			result += rollDices();
+			result += rollDie();
 		}
 		return result;
 	}

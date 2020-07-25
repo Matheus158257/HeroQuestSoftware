@@ -29,16 +29,29 @@ public class Elf extends Hero implements Caster{
 		
 	}
 
-//	private void elfGetSpell(Spell newSpell){
-//		elfSpells[actualSpellsNo]= newSpell;
-//		actualSpellsNo++;
-//	}
-
 	@Override
 	public String toString() {
 		return "E";
 	}
 
+	@Override
+	public String toString(boolean complete) {
+		if(complete) {
+			return("Elf (ATK:" + this.attackPoints + "|DEF:" + this.defensePoints + "|LP:" + this.lifePoints + "|MP:" + this.mana + ")");
+		} else {
+			return this.toString();
+		}
+	}
+	
+	
+	// ----------------- Spell Methods
+	
+//	private void elfGetSpell(Spell newSpell){
+//	elfSpells[actualSpellsNo]= newSpell;
+//	actualSpellsNo++;
+//}
+
+	
 	@Override
 	public void castSpell(Spell castSpeell, Monster targetMontser, RedDice redDice1, CombatDice combatDice) {
 		//int result = redDice1.getResults();

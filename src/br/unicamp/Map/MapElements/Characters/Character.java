@@ -34,6 +34,7 @@ public abstract class Character extends MapElement{
 		this.maxLifePoints = lifePoints;
 		this.mana = mana;
 		this.bag = new Bag();
+		this.weapons = new Weapon[2];	
 	}
 	
 	protected void giveAttackBonus(int bonus) {
@@ -85,15 +86,19 @@ public abstract class Character extends MapElement{
 		return range;
 	}
 	
-	public int getDamagePoints() {
+	public int getAttackPoints() {
 		return this.attackPoints;
-		// TODO metodo que retorna e dano infligido pelas armas atualmente equipadas
+	}
+	
+	public int getDefensePoints() {
+		return this.defensePoints;
 	}
 	
 	public boolean takeDamage(int damage) {
 		this.lifePoints-=damage;
 		
 		if(this.lifePoints<=0) {
+			this.lifePoints=0;
 			return true; // has died
 		} else {
 			return false; // is still alive
@@ -175,6 +180,8 @@ public abstract class Character extends MapElement{
 			equipWeapon(newWeapon);
 		}
 		
+		public abstract String toString(boolean complete);
+		
 /*
 	protected void equipWeapon(Weapon newWeapon) {
 		if (this.occupiedHands < Character.HANDS) {
@@ -209,15 +216,9 @@ public abstract class Character extends MapElement{
 */
 	
 	//-------------------- NPCs actions
-	protected abstract void dummyWalk(Character character, RedDice redDice, MapElement map[][]);
-	protected abstract void dummyAction(Character character, CombatDice combatDice,MapElement map[][]);
+//	protected abstract void dummyWalk(Character character, RedDice redDice, MapElement map[][]);
+//	protected abstract void dummyAction(Character character, CombatDice combatDice,MapElement map[][]);
 	
-	
-	@Override
-	public boolean interact(Character character, String interactable) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	@Override
 	public boolean getOpened(Character character) {

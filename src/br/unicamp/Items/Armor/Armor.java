@@ -15,14 +15,19 @@ public class Armor implements Collectable,Usable{
 	}
 	
 	@Override
+	public String toString() {
+		return "Armor";
+	}
+	
+	@Override
 	public void report(int i) {
-		String message = String.valueOf(i) + " - "+ "Armor: " + String.valueOf(defensePoints) + " defensePoins points";
+		String message = String.valueOf(i) + " - "+ "Armor: (+" + String.valueOf(defensePoints) + " Defense Points)";
 		System.out.println(message);
 	}
 	
 	@Override
 	public void report() {
-		String message = "Armor: " + String.valueOf(defensePoints) + " defensePoins points";
+		String message = "Armor: (+" + String.valueOf(defensePoints) + " Defense Points)";
 		System.out.println(message);
 	}
 
