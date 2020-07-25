@@ -213,7 +213,7 @@ public class Game {
 		System.out.println("Press [a] to move lef");
 		System.out.println("Press [d] to move right");
 		System.out.println("Press [u] to open door");
-		System.out.println("Press [c] to open door");
+		System.out.println("Press [c] to open chest");
 		System.out.println("Press [b] to check bag and possibily use items");
 		System.out.println("Press [v] to check your hero status");
 		System.out.println("Press [t] to attack a monster");

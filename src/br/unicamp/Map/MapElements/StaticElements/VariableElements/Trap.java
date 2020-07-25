@@ -1,6 +1,7 @@
 package br.unicamp.Map.MapElements.StaticElements.VariableElements;
 
 import br.unicamp.Map.MapElements.Characters.Character;
+import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 public class Trap extends VariableElement {
 
@@ -23,6 +24,16 @@ public class Trap extends VariableElement {
 		return true;
 	}
 	
+	protected void trapCatchesHeroprotected(Hero hero){
+		if(hero.getX() == this.getX() && hero.getY()==this.getY()){
+			//significa que o heroi pisou na armadilha
+			hero.takeDamage(1);
+		}
+	}
+	
+	protected void trapDetected(){
+		this.changeVisibility();
+	}
 
 
 }
