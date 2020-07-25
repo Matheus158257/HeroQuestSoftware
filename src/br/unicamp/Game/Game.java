@@ -169,7 +169,6 @@ public class Game {
 					}catch(NotSpellerException e) {
 						System.out.println(e.getMessage());
 					}
-					
 					break;
 				case HELP:
 					this.giveHelp();

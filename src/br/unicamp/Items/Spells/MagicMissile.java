@@ -1,6 +1,5 @@
 package br.unicamp.Items.Spells;
 
-import java.util.Scanner;
 
 import br.unicamp.Exceptions.OutOfBoundsException;
 
@@ -13,7 +12,7 @@ public class MagicMissile extends Spell {
 
 	protected void cast(Character target) throws OutOfBoundsException{
 		for (int i=0; i<3; i++) {
-			int[] position = this.positionAction();
+			//int[] position = this.positionAction();
 			
 
 				

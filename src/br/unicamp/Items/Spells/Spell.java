@@ -16,7 +16,7 @@ public abstract class Spell {
 		
 	protected void cast(Character target, Dice dice){}
 	
-	
+	/*
 	protected int readNumber(String coordinate) throws OutOfBoundsException{
 		@SuppressWarnings("resource")
 		Scanner keyboard = new Scanner(System.in);
@@ -70,6 +70,8 @@ public abstract class Spell {
 
 		return new int[] {x,y};
 	}
+	
+	*/
 }
 
 
