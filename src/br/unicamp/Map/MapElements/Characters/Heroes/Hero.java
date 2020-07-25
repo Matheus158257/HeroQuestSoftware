@@ -19,7 +19,7 @@ import br.unicamp.Items.Weapons.LongSword;
 import br.unicamp.Items.Weapons.ShortSword;
 import br.unicamp.Items.Weapons.Weapon;
 
-public abstract class Hero extends Character {
+public abstract class Hero extends Character{
 	
 	protected Armor armor;
 	
@@ -40,8 +40,6 @@ public abstract class Hero extends Character {
     
 		this.giveDefenseBonus(newArmor.getDefensePoints());
 	}
-	
-	
 	
 	private void unequipArmor(){
 		this.bag.putIntoTheBag(this.armor);
@@ -145,7 +143,7 @@ public abstract class Hero extends Character {
 
 
 	//--------------------
-	
+
 
 
 

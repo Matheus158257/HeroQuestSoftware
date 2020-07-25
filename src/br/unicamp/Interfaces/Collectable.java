@@ -8,5 +8,6 @@ public interface Collectable{
 	public void report(int i);
 	public void report();
 	public void use(Hero hero);
+
 	
 }

@@ -1,10 +1,9 @@
 package br.unicamp.Items.Armor;
 
 import br.unicamp.Interfaces.Collectable;
-import br.unicamp.Interfaces.Usable;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
-public class Armor implements Collectable,Usable{
+public class Armor implements Collectable{
 	
 	
 	private int defensePoints;
