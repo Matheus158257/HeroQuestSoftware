@@ -1,9 +1,14 @@
 package br.unicamp.Map.MapElements.Characters.Heroes;
 
+import java.util.ArrayList;
+
 import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.RedDice;
 import br.unicamp.Interfaces.Caster;
+import br.unicamp.Items.Spells.Fireball;
+import br.unicamp.Items.Spells.MagicMissile;
 import br.unicamp.Items.Spells.Spell;
+import br.unicamp.Items.Spells.Teleport;
 import br.unicamp.Items.Weapons.Dagger;
 import br.unicamp.Items.Weapons.Weapon;
 import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
@@ -16,28 +21,25 @@ public class Wizard extends Hero implements  Caster{
 	public static final int DEF = 2; // Defense Points
 	public static final int LP = 3; // Life Points
 	public static final int MP = 4; // Mana Points
-	public static final int MAX_SPELLS = 4;
 	
-	private Spell heroSpells[];
-	private int actualSpellsNo = 0;
+	private ArrayList<Spell> spells = new ArrayList<Spell>();
 	
 	public Wizard (int x0, int y0){
-		super(x0,y0,"Wizard",Wizard.ATK,Wizard.DEF,Wizard.LP,Wizard.MP);
+		super(x0,y0,"Wizard",Wizard.ATK,Wizard.DEF,Wizard.LP,Wizard.MP,true);
 		
-//		Weapon dagger1 = new Dagger();
-//		Weapon dagger2 = new Dagger();
-//		Weapon dagger3 = new Dagger();
-//		this.equipWeapon(dagger1);
-//		this.equipWeapon(dagger2);
-//		this.equipWeapon(dagger3);
+		Weapon dagger1 = new Dagger();
+		Weapon dagger2 = new Dagger();
+		Weapon dagger3 = new Dagger();
+		this.bag.putIntoTheBag(dagger1);
+		this.bag.putIntoTheBag(dagger2);
+		this.bag.putIntoTheBag(dagger3);
 		
-		//Spell magicmissile = new MagicMissile();
-		//heroGetSpell(magicmissile);
-		//Spell fireball = new Fireball();
-		//heroGetSpell(fireball);
-//		Spell teleport = new Teleport();
-//		heroGetSpell(teleport);
-		
+		this.equipWeapon(dagger1);
+		this.equipWeapon(dagger2);
+
+		this.spells.add(new MagicMissile());
+		this.spells.add(new Fireball());
+		this.spells.add(new Teleport());
 	}
 	
 
@@ -63,29 +65,29 @@ public class Wizard extends Hero implements  Caster{
 //}
 	
 	@Override
-	public void castSpell(Spell castSpeell, Monster targetMontser, RedDice redDice1, CombatDice combatDice) {
-		/*int result = redDice1.rollDices();
+	public void castSpell(Spell castSpell, Character target, RedDice redDice1, CombatDice combatDice) {
+		//int result = redDice1.rollDices();
+		int result = 1;
 		if(result<this.getMana()){
 			// verifica os pontos de dano da spell lan�ada
 			// int damage = castSpeell.getDamage();
 			// verifica se o alvo tem defesa e retona quantos pontos ele tem de defesa
 			// int targetDefensePoints = targetMontser.defenseAgainstMagic(combatDice);
 			// targetMontser.receiveDamage(damage,targetDefensePoints);
-		}	*/	
-	}
-
-	/*
-	@Override
-	public void castSpell( castSpeell, Monster targetMontser, RedDice redDice1,
-		int result = redDice1.getResults();
+			
+			/*
+			 * int result = redDice1.getResults();
 		if(result<this.getMana()){
 			// verifica os pontos de dano da spell lan�ada
 			int damage = castSpeell.getDamage();
 			//verifica se o alvo tem defesa e retona quantos pontos ele tem de defesa
 			int targetDefensePoints = targetMontser.defenseAgainstMagic(combatDice);
 			targetMontser.receiveDamage(damage,targetDefensePoints);
+			 * */
+		}
+	}
 
-	}*/
+
 	
 }
  

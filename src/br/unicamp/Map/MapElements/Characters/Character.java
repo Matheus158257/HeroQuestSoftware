@@ -24,8 +24,10 @@ public abstract class Character extends MapElement{
 	
 	protected Weapon weapons[];
 	protected int occupiedHands = 0;
+
+	protected boolean isSpeller;
 	
-	public Character(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
+	public Character(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana,Boolean isSpeller){
 		super(x0,y0);
 		this.name = name;
 		this.attackPoints = attackPoints;
@@ -35,6 +37,7 @@ public abstract class Character extends MapElement{
 		this.mana = mana;
 		this.bag = new Bag();
 		this.weapons = new Weapon[2];	
+		this.isSpeller = isSpeller;
 	}
 	
 	protected void giveAttackBonus(int bonus) {
@@ -75,6 +78,10 @@ public abstract class Character extends MapElement{
 		return mana;
 	}
 	
+	public Boolean isSpeller(){
+		return this.isSpeller;
+	}
+	
 	public int getAttackRange() {
 		int range=0;
 		for(Weapon w:this.weapons) {
@@ -105,14 +112,14 @@ public abstract class Character extends MapElement{
 		}
 	}
 	
-	protected int defenseAgainstMagic(CombatDice combatDice){
+	public void defenseAgainstMagic(CombatDice combatDice){
 		//TODO
 		int result=0;
 		//combatDice.rollDices();
 		//retonar os pontos de defesa
 		//para se defender podem ser lancados dados de combate
 		//tantos quanto os pontos de mana
-		return result;
+
 	}
 	
 	protected void receiveDamage(int damage, int defense){
@@ -122,35 +129,36 @@ public abstract class Character extends MapElement{
 	
 	//@Override
 		protected void equipWeapon(Weapon newWeapon){
-			//TODO Resolver estouro de tamanho do vetor
+			
 			try {
 				this.bag.removeItem(newWeapon);
 			}catch(ItemNotInBagException e) {
-				//N�o faz nada. Para o caso em que � a arma inicial
+				System.out.println(e.getMessage());
 			}
+			
 			if(newWeapon.getIsShort()){
-				if(occupiedHands ==2) {
-					if(weapons[1]==null) {//long sword na 0
+				if(this.occupiedHands ==2) {
+					if(this.weapons[1]==null) {//long sword na 0
 						this.unequipWeapon();
-						weapons[0] = newWeapon;
+						this.weapons[0] = newWeapon;
 					}else {
-						if(weapons[0].getAttackBonus()>weapons[1].getAttackBonus()) {
+						if(this.weapons[0].getAttackBonus()>weapons[1].getAttackBonus()) {
 							this.unequipWeapon(weapons[1],1);
 						}else {
 							this.unequipWeapon(weapons[0],0);
-							weapons[0] = weapons[1];
-							weapons[1] = null;
+							this.weapons[0] = weapons[1];
+							this.weapons[1] = null;
 						}
 					}
 					
 				}else {
-					weapons[occupiedHands]=newWeapon;
+					this.weapons[occupiedHands]=newWeapon;
 					
 				}
 				occupiedHands++;
 			} else {
 				unequipWeapon();
-				weapons[0]=newWeapon;
+				this.weapons[0]=newWeapon;
 				occupiedHands+=2;
 			}
 			this.giveAttackBonus(newWeapon.getAttackBonus());
@@ -159,20 +167,22 @@ public abstract class Character extends MapElement{
 		private void unequipWeapon(Weapon weapon,int arrayPosition){;
 			this.bag.putIntoTheBag(weapon);
 			if(weapon.getIsShort()){
-				weapons[arrayPosition]=null;
-				occupiedHands--;
+				this.weapons[arrayPosition]=null;
+				this.occupiedHands--;
 			}
 			this.giveAttackBonus(-1*weapon.getAttackBonus());
 		}
 		
 		private void unequipWeapon() {
-			for(Weapon w:weapons) {
+			for(Weapon w:this.weapons) {
 				if (w!=null) {
 					this.giveAttackBonus(-1*w.getAttackBonus());
+					this.bag.putIntoTheBag(w);
 				}
-				w = null;
 			}
-			occupiedHands=0;
+			this.weapons[0] = null;
+			this.weapons[1] = null;
+			this.occupiedHands=0;
 		}
 		
 

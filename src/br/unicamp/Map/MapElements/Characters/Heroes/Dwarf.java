@@ -11,8 +11,9 @@ public class Dwarf extends Hero{
 	public static final int MP = 3; // Mana Points
 	
 	public Dwarf (int x0, int y0){
-		super(x0,y0,"Dwarf",Dwarf.ATK,Dwarf.DEF,Dwarf.LP,Dwarf.MP);
-		Weapon shortSword = new ShortSword();
+		super(x0,y0,"Dwarf",Dwarf.ATK,Dwarf.DEF,Dwarf.LP,Dwarf.MP,false);
+		Weapon shortSword =  new ShortSword();
+		this.bag.putIntoTheBag(shortSword);
 		this.equipWeapon(shortSword);
 	}
 	

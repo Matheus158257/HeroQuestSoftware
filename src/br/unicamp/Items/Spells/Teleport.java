@@ -4,10 +4,14 @@ import br.unicamp.Map.MapElements.Characters.Character;
 
 public class Teleport extends Spell {
 
-	public Teleport(){
-		super();
+	public static final int POINTS = 0;
+	public Teleport() {
+		super(POINTS);
 	}
 	
+	
+
+
 	/*private teleportUse(Character teleportedCharacter){
 		//entender como o personagem vai ter acesso a outras pois��es visiveis
 		//chamada ao mapa?

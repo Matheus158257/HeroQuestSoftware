@@ -8,11 +8,12 @@ public class Barbarian extends Hero {
 	public static final int ATK = 3; // Attack Points
 	public static final int DEF = 2; // Defense Points
 	public static final int LP = 8; // Life Points
-	public static final int MP = 0; // Mana Points
+	public static final int MP = 2; // Mana Points
 	
 	public Barbarian (int x0, int y0){
-		super(x0,y0,"Barbarian",Barbarian.ATK,Barbarian.DEF,Barbarian.LP,Barbarian.MP);
+		super(x0,y0,"Barbarian",Barbarian.ATK,Barbarian.DEF,Barbarian.LP,Barbarian.MP,false);
 		Weapon longSword = new LongSword();
+		this.bag.putIntoTheBag(longSword);
 		this.equipWeapon(longSword);
 	}
 	
