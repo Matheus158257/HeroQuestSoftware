@@ -13,6 +13,8 @@ public class Bag {
 		this.bagElements = new ArrayList<Collectable>();
 	}
 	
+
+	
 	public void putIntoTheBag(Collectable reward) {
 		this.bagElements.add(reward);
 	}

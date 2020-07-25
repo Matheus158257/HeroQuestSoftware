@@ -27,23 +27,17 @@ public class ChestTrap extends Chest {
 		}
 	}
 	
-//	public void updateChestOnMap(MapElement[][] map) {
-//		int chestX = this.getX();
-//		int chestY = this.getY();
-//		map[chestX][chestY] = this.monster;
-//		
-//	}
 	
 	public void updateChestOnMap(Map map) {
 		map.addMonster(this.monster);
-		
 	}
 
 	
 	
 	@Override
 	public boolean getOpened(Character character) {
-		System.out.println("A MONSTER APPEARED");
+//		System.out.println("A MONSTER APPEARED");
+		System.out.println("It was a trap! Watch out, a " + this.monster.toString(true) + " appeared!");
 		return true;
 	}
 

@@ -12,6 +12,11 @@ public class Coin implements Collectable{
 	public Coin(int moneyPoints){
 		this.moneyPoints = moneyPoints;		
 	}
+	
+	@Override
+	public String toString() {
+		return "Coin";
+	}
 
 	@Override
 	public void report(int i) {
@@ -25,7 +30,7 @@ public class Coin implements Collectable{
 	@Override
 	public void use(Hero hero) {
 		// TODO Auto-generated method stub
-		System.out.println("Coins are only a prize to make you happy, they dont have any function in this game XD");
+		System.out.println("Coins are only a prize to make you happy,\nthey don't have any function in this game.");
 	}
 
 

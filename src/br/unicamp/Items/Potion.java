@@ -15,6 +15,10 @@ public class Potion implements Collectable, Usable {
 		this.healingPoints = healingPoints;
 	}
 
+	@Override
+	public String toString() {
+		return "Potion";
+	}
 	
 	@Override
 	public void report(int i) {

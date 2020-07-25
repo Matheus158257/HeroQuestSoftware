@@ -37,18 +37,31 @@ public class Wizard extends Hero implements  Caster{
 		//heroGetSpell(fireball);
 //		Spell teleport = new Teleport();
 //		heroGetSpell(teleport);
+		
 	}
 	
-//	private void heroGetSpell(Spell newSpell){
-//		heroSpells[actualSpellsNo]= newSpell;
-//		actualSpellsNo++;
-//	}
 
 	@Override
 	public String toString() {
 		return "W";
 	}
+	
+	@Override
+	public String toString(boolean complete) {
+		if(complete) {
+			return("Wizard (ATK:" + this.attackPoints + "|DEF:" + this.defensePoints + "|LP:" + this.lifePoints + "|MP:" + this.mana + ")");
+		} else {
+			return this.toString();
+		}
+	}
 
+	// ----------------- Spell Methods
+	
+//	private void heroGetSpell(Spell newSpell){
+//	heroSpells[actualSpellsNo]= newSpell;
+//	actualSpellsNo++;
+//}
+	
 	@Override
 	public void castSpell(Spell castSpeell, Monster targetMontser, RedDice redDice1, CombatDice combatDice) {
 		/*int result = redDice1.rollDices();

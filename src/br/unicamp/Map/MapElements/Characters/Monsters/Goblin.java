@@ -39,33 +39,25 @@ public class Goblin extends Monster {
 	}
 	
 	@Override
-	public void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
-		int damage =0;
-		if(noDaggers>0){
-			// ataca o herói com punhais
-			//tira um punhal da sacola, o ultimo //faz um downscasting de collectable p/ weapon
-			Collectable bagItem = this.bag.takeItem();
-			Weapon dagger = (Weapon) bagItem;
-			//lança dados nºdados=bonus de ataque+bonus da arma
-			//damage = somaSimbolosAtaque(combatDice, dagger);
-
-
-	}
-		
-		/*
-		public int somaSimbolosAtaque(CombatDice combatDice, Weapon dagger){
-			int totalSkull=0;
-			ArrayList<CombatDiceSymbol> combatResult = combatDice.getRedDicesResult(Goblin.ATK + dagger.getAttackBonus();
-			for(combatResult.size():combatResult){
-				if(combatResult==CombatDiceSymbol.SKULL){
-					totalSkull++;
-				}
-				return totalSkull;
-			}
+	public String toString(boolean complete) {
+		if(complete) {
+			return("Goblin (ATK:" + this.attackPoints + "|DEF:" + this.defensePoints + "|LP:" + this.lifePoints + "|MP:" + this.mana + ")");
+		} else {
+			return this.toString();
 		}
-
-		*/
-		
 	}
+	
+//	@Override
+//	public void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
+//		int damage = 0;
+//		if(noDaggers>0){
+//			// ataca o herï¿½i com punhais
+//			//tira um punhal da sacola, o ultimo //faz um downscasting de collectable p/ weapon
+//			Collectable bagItem = this.bag.takeItem();
+//			Weapon dagger = (Weapon) bagItem;
+//			//damage = somaSimbolosAtaque(combatDice, dagger);
+//
+//		}
+//	}
 	
 }

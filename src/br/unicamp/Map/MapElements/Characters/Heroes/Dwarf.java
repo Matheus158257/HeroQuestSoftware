@@ -20,5 +20,14 @@ public class Dwarf extends Hero{
 	public String toString() {
 		return "D";
 	}
+	
+	@Override
+	public String toString(boolean complete) {
+		if(complete) {
+			return("Dwarf (ATK:" + this.attackPoints + "|DEF:" + this.defensePoints + "|LP:" + this.lifePoints + "|MP:" + this.mana + ")");
+		} else {
+			return this.toString();
+		}
+	}
 
 }

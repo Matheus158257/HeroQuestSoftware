@@ -58,11 +58,19 @@ public class TxtReader {
 	
 	private void readTxtFile() {
 
-
-		String cwd = ("../stages/");
-//		String cwd = ("..\\HeroQuestSoftware\\stages\\");
-		System.out.println("LOG: Checking directory " + cwd);
-		String filePath = cwd + this.stageName +".txt";
+		
+		String filePath = "";
+		String OS = System.getProperty("os.name");
+		if (OS.startsWith("Windows")) {
+			String cwd = "..\\HeroQuestSoftware\\src\\stages\\" ; 
+//			System.out.println("LOG: Checking directory " + cwd);
+			filePath = cwd + this.stageName +".txt";
+		}else {
+			String cwd = ("../stages/");
+//			System.out.println("LOG: Checking directory " + cwd + " in a " + System.getProperty("os.name"));
+			filePath =  cwd + this.stageName +".txt";
+		}
+		
 		
 		 try {
 		      

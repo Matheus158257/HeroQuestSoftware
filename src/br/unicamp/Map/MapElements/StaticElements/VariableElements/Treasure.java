@@ -27,11 +27,6 @@ public class Treasure extends Chest {
 
 	}
 	
-//	public void updateChestOnMap(MapElement[][] map) {
-//		int chestX = this.getX();
-//		int chestY = this.getY();
-//		map[chestX][chestY] = new FloorElement(chestX,chestY, true);
-//	}
 	
 	public void updateChestOnMap(Map map) {
 		int chestX = this.getX();
@@ -43,7 +38,8 @@ public class Treasure extends Chest {
 	@Override
 	public boolean getOpened(Character character) {
 		Hero hero = (Hero)character;
-		hero.collect(this.reward);;
+		hero.collect(this.reward);
+		System.out.println("Found a Treasure! A " + this.reward + " was put into the Bag.");
 		return true;
 	}
 

@@ -22,10 +22,5 @@ public abstract class StaticElement extends MapElement {
 		return false;
 	}
 	
-	@Override
-	public boolean interact(Character character, String interactable) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 }

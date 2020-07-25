@@ -17,6 +17,43 @@ public class CombatDice extends Dice {
 	     hmap.put(6,  CombatDiceSymbol.MONSTER_SHIELD);
 	}
 	
+	
+	public int rollAttackDice(int numberOfDice) {
+		int result=0;
+		ArrayList<CombatDiceSymbol> diceArray = this.getResult(numberOfDice);
+		
+		for (CombatDiceSymbol D : diceArray) {
+			if (D==CombatDiceSymbol.SKULL) {
+				result++;
+			}
+		}
+		return result;
+	}
+	
+	public int rollHeroDefenseDice(int numberOfDice) {
+		int result=0;
+		ArrayList<CombatDiceSymbol> diceArray = this.getResult(numberOfDice);
+		for (CombatDiceSymbol D : diceArray) {
+			if (D==CombatDiceSymbol.HERO_SHIELD) {
+				result++;
+			}			
+		}
+		return result;
+	}
+	
+	public int rollMonsterDefenseDice(int numberOfDice) {
+		int result=0;
+		ArrayList<CombatDiceSymbol> diceArray = this.getResult(numberOfDice);
+		for (CombatDiceSymbol D : diceArray) {
+			if (D==CombatDiceSymbol.MONSTER_SHIELD) {
+				result++;
+			}			
+		}
+		return result;
+	}
+	
+	//-------------
+	
 	//returns a random CombatDiceSymbol for each dice
 	private CombatDiceSymbol rollDice() {
 		Random r = new Random();
@@ -24,13 +61,12 @@ public class CombatDice extends Dice {
 		return hmap.get(n);
 	}
 	
-	public ArrayList<CombatDiceSymbol> getRedDicesResult(int numberOfDice) {
-		ArrayList<CombatDiceSymbol> combatDicesSymbols = new ArrayList<CombatDiceSymbol>();
+	private ArrayList<CombatDiceSymbol> getResult(int numberOfDice) {
+		ArrayList<CombatDiceSymbol> combatDiceSymbols = new ArrayList<CombatDiceSymbol>();
 		for (int i=1;i<=numberOfDice; i++) {
-			combatDicesSymbols.add(rollDice());
+			combatDiceSymbols.add(rollDice());
 		}
-		return combatDicesSymbols;
+		return combatDiceSymbols;
 	}
-	
 	
 }

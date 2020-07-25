@@ -27,6 +27,15 @@ public class SkeletonWizard extends Monster implements Caster {
 			return "-";
 		}
 	}
+	
+	@Override
+	public String toString(boolean complete) {
+		if(complete) {
+			return("Skeleton Wizard (ATK:" + this.attackPoints + "|DEF:" + this.defensePoints + "|LP:" + this.lifePoints + "|MP:" + this.mana + ")");
+		} else {
+			return this.toString();
+		}
+	}
 
 	@Override
 	public void castSpell(Spell castSpell, Monster targetMontser, RedDice redDice1, CombatDice combatDice) {

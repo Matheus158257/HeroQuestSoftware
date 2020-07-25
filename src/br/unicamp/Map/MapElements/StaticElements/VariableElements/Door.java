@@ -41,11 +41,6 @@ public class Door extends VariableElement {
 	}
 	
 
-	
-//	public Door(int x, int y, Room roomA, Room roomB) {
-//		super(x, y);
-//		this.room = room;
-//	}
 
 
 	@Override
@@ -61,14 +56,13 @@ public class Door extends VariableElement {
 		int currX = character.getX();
 		int currY = character.getY();
 		
-		// TODO Open Door
-		System.out.println("LOG: Opening Door");
+//		System.out.println("LOG: Opening Door");
 		if(currX==xA && currY==yA) {
 			character.changePosition(xB, yB);
-			System.out.println("LOG: Moving to " + xB + ", " + yB);
+//			System.out.println("LOG: Moving to " + xB + ", " + yB);
 		} else {
 			character.changePosition(xA, yA);
-			System.out.println("LOG: Moving to " + xA + ", " + yA);
+//			System.out.println("LOG: Moving to " + xA + ", " + yA);
 		}
 	}
 	

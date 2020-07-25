@@ -1,5 +1,7 @@
 package br.unicamp.Map.MapElements.Characters.Monsters;
 
+import br.unicamp.Map.MapElements.Characters.Character;
+
 public class Skeleton extends Monster {
 
 	public static final int ATK = 2;
@@ -20,5 +22,15 @@ public class Skeleton extends Monster {
 			return "-";
 		}
 	}
+	
+	@Override
+	public String toString(boolean complete) {
+		if(complete) {
+			return("Skeleton (ATK:" + this.attackPoints + "|DEF:" + this.defensePoints + "|LP:" + this.lifePoints + "|MP:" + this.mana + ")");
+		} else {
+			return this.toString();
+		}
+	}
+
 	
 }
