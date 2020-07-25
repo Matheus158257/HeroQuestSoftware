@@ -8,7 +8,7 @@ public class Skeleton extends Monster {
 	public static final int MP = 0;
 	
 	public Skeleton(int x0, int y0) {
-		super(x0,y0,"Skeleton", Skeleton.ATK, Skeleton.DEF, Skeleton.LP, Skeleton.MP);
+		super(x0,y0,"Skeleton", Skeleton.ATK, Skeleton.DEF, Skeleton.LP, Skeleton.MP,false);
 		// TODO Auto-generated constructor stub
 	}
 

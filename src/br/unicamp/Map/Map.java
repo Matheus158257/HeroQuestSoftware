@@ -9,6 +9,8 @@ import br.unicamp.Map.MapElements.StaticElements.VariableElements.*;
 
 import java.util.ArrayList;
 
+import br.unicamp.Dices.CombatDice;
+import br.unicamp.Dices.RedDice;
 import br.unicamp.Exceptions.*;
 import br.unicamp.Game.Command;
 import br.unicamp.Interfaces.Collectable;
@@ -533,7 +535,7 @@ public class Map {
 	//----------------------- Methods to treat NPCs movements
 
 	
-	public void excuteNPCsMovements() {
+	public void excuteNPCsMovements(RedDice redDice, CombatDice combatDice) {
 		
 		for (Monster monster: monsters) {
 			
@@ -542,10 +544,11 @@ public class Map {
 		
 	}
 
+	public void spellMagic(Hero player, RedDice redDice, CombatDice combatDice) throws NotSpellerException {
+		if (player.isSpeller()) {
 
-	
-
-
-
-
+		}else {
+			throw new NotSpellerException("This character is not able to spell");
+		}
+	}
 }

@@ -24,8 +24,10 @@ public abstract class Character extends MapElement{
 	
 	protected Weapon weapons[];
 	protected int occupiedHands = 0;
+
+	protected boolean isSpeller;
 	
-	public Character(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
+	public Character(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana,Boolean isSpeller){
 		super(x0,y0);
 		this.name = name;
 		this.attackPoints = attackPoints;
@@ -34,6 +36,7 @@ public abstract class Character extends MapElement{
 		this.maxLifePoints = lifePoints;
 		this.mana = mana;
 		this.bag = new Bag();
+		this.isSpeller = isSpeller;
 	}
 	
 	protected void giveAttackBonus(int bonus) {
@@ -74,6 +77,10 @@ public abstract class Character extends MapElement{
 		return mana;
 	}
 	
+	public Boolean isSpeller(){
+		return this.isSpeller;
+	}
+	
 	public int getAttackRange() {
 		int range=0;
 		for(Weapon w:this.weapons) {
@@ -100,14 +107,14 @@ public abstract class Character extends MapElement{
 		}
 	}
 	
-	protected int defenseAgainstMagic(CombatDice combatDice){
+	public void defenseAgainstMagic(CombatDice combatDice){
 		//TODO
 		int result=0;
 		//combatDice.rollDices();
 		//retonar os pontos de defesa
 		//para se defender podem ser lancados dados de combate
 		//tantos quanto os pontos de mana
-		return result;
+
 	}
 	
 	protected void receiveDamage(int damage, int defense){
@@ -145,7 +152,6 @@ public abstract class Character extends MapElement{
 			} else {
 				unequipWeapon();
 				this.weapons[0]=newWeapon;
-				System.out.println(this.weapons[1]);
 				occupiedHands+=2;
 			}
 			this.giveAttackBonus(newWeapon.getAttackBonus());

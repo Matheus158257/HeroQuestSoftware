@@ -23,8 +23,8 @@ public class Hero extends Character {
 	
 	protected Armor armor;
 	
-	public Hero(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana){
-		super(x0,y0,name,attackPoints,defensePoints,lifePoints,mana);
+	public Hero(int x0, int y0, String name,int attackPoints,int defensePoints, int lifePoints, int mana, Boolean isSpeller){
+		super(x0,y0,name,attackPoints,defensePoints,lifePoints,mana,isSpeller);
 		this.weapons = new Weapon[2];	
 		
 	}

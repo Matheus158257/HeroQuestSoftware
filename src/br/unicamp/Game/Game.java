@@ -3,11 +3,9 @@ package br.unicamp.Game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import br.unicamp.Dices.CombatDice;
+import br.unicamp.Dices.RedDice;
 import br.unicamp.Exceptions.*;
-import br.unicamp.Map.Map;
-import br.unicamp.Map.MapElements.MapElement;
-import br.unicamp.Map.MapElements.Characters.Heroes.*;
-import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.Map;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Heroes.Barbarian;
@@ -26,11 +24,15 @@ public class Game {
 	//	private boolean exitSelected;
 
 	private Map gameMap;
+	private RedDice redDice;
+	private CombatDice combatDice;
 
 	public Game() {
 		//door1 = new Door();
 		
-		gameMap = new Map();
+		this.gameMap = new Map();
+		this.redDice = new RedDice();
+		this.combatDice= new CombatDice();
 
 	}
 
@@ -161,6 +163,14 @@ public class Game {
 				case ATTACK:
 					gameMap.attackMonster(player);
 					break;
+				case MAGIC:
+					try {
+						gameMap.spellMagic(player,redDice,combatDice);
+					}catch(NotSpellerException e) {
+						System.out.println(e.getMessage());
+					}
+					
+					break;
 				case HELP:
 					this.giveHelp();
 					break;
@@ -175,7 +185,7 @@ public class Game {
 
 			gameMap.updateMap(player);
 			gameMap.print();
-//			gameMap.excuteNPCsMovements();
+			//gameMap.excuteNPCsMovements(redDice,combatDice);
 
 		}
 
@@ -213,7 +223,7 @@ public class Game {
 		System.out.println("Press [a] to move lef");
 		System.out.println("Press [d] to move right");
 		System.out.println("Press [u] to open door");
-		System.out.println("Press [c] to open door");
+		System.out.println("Press [c] to open chest");
 		System.out.println("Press [b] to check bag and possibily use items");
 		System.out.println("Press [v] to check your hero status");
 		System.out.println("Press [t] to attack a monster");
@@ -261,6 +271,10 @@ public class Game {
 		}else if ( command.compareTo("t") == 0 ) {
 			System.out.println ("TRY TO ATTACK\n");
 			return Command.ATTACK;
+		}
+		else if ( command.compareTo("t") == 0 ) {
+			System.out.println ("TRY TO SPELL MAGIC\n");
+			return Command.MAGIC;
 		}
 		else if ( command.compareTo("h") == 0 ) {
 			System.out.println ("HELPING WITH COMMANDS \n");
@@ -312,7 +326,7 @@ public class Game {
 		}
 		try{
 			position = Integer.valueOf(command);
-		}catch(Exception e) {
+		}catch(NumberFormatException e) {
 			System.out.println(e.getMessage());
 		}
 		

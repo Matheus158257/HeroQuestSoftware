@@ -4,6 +4,12 @@ import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 public class Fireball extends Spell {
+	
+	public static final int POINTS = 6;
+	public static final int EXTRA_POINTS = 3;
+	public Fireball() {
+		super(POINTS);
+	}
 	//o alvo leva dado de 6 pontos
 	//personagens nas posi��es adjascentes leam 3 pontos de dano
 	/*protected void castFireball(Character goal){

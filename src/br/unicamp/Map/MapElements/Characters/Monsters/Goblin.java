@@ -17,7 +17,7 @@ public class Goblin extends Monster {
 	public static final int noDaggers = 4; //Dagger numbers
 	
 	public Goblin(int x0, int y0){
-		super(x0,y0,"Goblin", Goblin.ATK, Goblin.DEF, Goblin.LP, Goblin.MP);
+		super(x0,y0,"Goblin", Goblin.ATK, Goblin.DEF, Goblin.LP, Goblin.MP,false);
 
 		/*Dagger dagger1 = new Dagger();
 		Dagger dagger2 = new Dagger();
