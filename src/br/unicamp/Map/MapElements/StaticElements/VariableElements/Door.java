@@ -41,66 +41,39 @@ public class Door extends VariableElement {
 	}
 	
 
-
-
 	@Override
 	public String toString() {
 		return "U";
 	}
 
-	private void open(Character character) {
-		int xA = this.coordA.getX();
-		int yA = this.coordA.getY();
-		int xB = this.coordB.getX();
-		int yB = this.coordB.getY();
+	
+	
+	public Coordinate getDestination(Character character) {
 		int currX = character.getX();
 		int currY = character.getY();
-		
-//		System.out.println("LOG: Opening Door");
-		if(currX==xA && currY==yA) {
-			character.changePosition(xB, yB);
-//			System.out.println("LOG: Moving to " + xB + ", " + yB);
+		int xA = coordA.getX();
+		int yA = coordA.getY();
+				
+		if(xA == currX && yA == currY) {
+			return coordB;
 		} else {
-			character.changePosition(xA, yA);
-//			System.out.println("LOG: Moving to " + xA + ", " + yA);
+			return coordA;
 		}
 	}
 	
 	
-	//--------------------
-	
-//	public Coordinate getDestination(Coordinate A, Coordinate B) {
-//		Coordinate coord;
-//		int xA = A.getX();
-//		int yA = A.getY();
-//		int xB = B.getX();
-//		int yB = B.getY();
-//		int currX = character.getX();
-//		int currY = character.getY();
-//		
-//		//		System.out.println("LOG: Opening Door");
-//		if(currX==xA && currY==yA) {
-//			coord = new Coordinate(xB, yB);
-////			System.out.println("LOG: Moving to " + xB + ", " + yB);
-//		} else {
-//			character.changePosition(xA, yA);
-////			System.out.println("LOG: Moving to " + xA + ", " + yA);
-//		}
-//		
-//	}
-	
-	public boolean goThrough2(Character character) {
-		open(character);
+	public Coordinate reposition(Character character) {
+		Coordinate destination = this.getDestination(character);
 		this.roomA.lightsOn();
 		this.roomB.lightsOn();
-		return true;
+		character.changePosition(destination.getX(), destination.getY());
+		
+//		System.out.print("LOG: Repositioning player to destination: " + destination);
+		return destination;
 	}
 	
 	@Override
 	public boolean goThrough(Character character) {
-		open(character);
-		this.roomA.lightsOn();
-		this.roomB.lightsOn();
 		return true;
 	}
 	

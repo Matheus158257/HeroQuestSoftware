@@ -2,6 +2,7 @@ package br.unicamp.Map;
 
 //import br.unicamp.Map.GroupElements.Hall;
 import br.unicamp.Map.GroupElements.Room;
+import br.unicamp.Map.MapElements.Coordinate;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.StaticElements.FloorElement;
 import br.unicamp.Map.MapElements.StaticElements.WallElement;
@@ -44,9 +45,10 @@ public class Map {
 	private Room[] rooms;
 	private int roomIndex;
 	private ArrayList<Monster> monsters;
+	private ArrayList<Trap> traps;
 
-//	private RedDice redDice;
-//	private CombatDice combatDice;
+	//	private RedDice redDice;
+	//	private CombatDice combatDice;
 
 
 	//----------------------- CONSTRUCTOR
@@ -57,13 +59,14 @@ public class Map {
 		this.map = new MapElement[this.sizeX][this.sizeY];
 
 		// Foram passados para Game
-//		this.redDice= new RedDice();
-//		this.combatDice= new CombatDice();
+		//		this.redDice= new RedDice();
+		//		this.combatDice= new CombatDice();
 
 		this.rooms = new Room[Map.ROOMS];
 		this.roomIndex = 0;
 
 		this.monsters = new ArrayList<Monster>();
+		this.traps = new ArrayList<Trap>();
 
 		// sets FloorElement in entire map
 		for(int i=0; i<sizeX; i++) {
@@ -115,6 +118,11 @@ public class Map {
 
 			if (isFree(destX,destY)) {
 
+				// TODO Checking for Trap
+//				if(hasTrap(destX,destY)) {
+//					
+//				}
+				
 				character.changePosition(direction);
 
 				//map[currX][currY] = new FloorElement(currX,currY,true);
@@ -130,6 +138,10 @@ public class Map {
 			throw new OutOfBoundsException(message);
 		}
 	}
+	
+//	private boolean hasTrap() {
+//		
+//	}
 
 	private void updatePlayerPosition(int oldX, int oldY, Character character) {
 		this.clearTile(oldX, oldY, true);
@@ -138,7 +150,7 @@ public class Map {
 		int newY = character.getY();
 		this.map[newX][newY] = character;
 	}
-	
+
 	public int oneAxeMaxAbsoluteDistanceBetweenCharacters(Character c1, Character c2) {
 		int c1X = c1.getX();
 		int c1Y = c1.getY();
@@ -146,24 +158,24 @@ public class Map {
 		int c2Y = c2.getY();
 		int xD = Math.abs(c1X-c2X);
 		int yD = Math.abs(c1Y-c2Y);
-		
+
 		return Math.max(xD, yD);
 	}
-	
+
 	public void telePortCharacter(Character character, int newX, int newY) {
 		int oldX = character.getX();
 		int oldY = character.getY();
 		this.clearTile(oldX, oldY, true);
 		character.changeCoordinates(newX, newY);
 		this.map[newX][newY] = character;
-		
+
 	}
 
 	private boolean isMoveSafe(Character reference, MoveCommand direction) {
 		int X = reference.getX();
 		int Y = reference.getY();
 		int incrX, incrY;
-		
+
 		switch (direction) {
 		case UP:
 			incrX=0;
@@ -184,7 +196,7 @@ public class Map {
 		default:
 			return true;
 		}
-		
+
 		if(this.map[X+incrX][Y+incrY].isFree()) {
 			return true;
 		} else {
@@ -203,17 +215,18 @@ public class Map {
 			System.out.println(e.getMessage());
 		}
 	}
-	
 
 
-	
+
+
 	public Monster checkMonsterTargets(int range, Character reference) {
 		int Xh = reference.getX();
 		int Yh = reference.getY();
 		int Xm,Ym,Xdif,Ydif;
-		
+		//		System.out.println("LOG: Got into checkMonsterTargets() with range = " + range);
 		for (Monster m : this.monsters) {
 			if(m!=null && m.isVisible()) {
+				//				System.out.println("LOG: Checking monster " + m.toString(true));
 				Xm = m.getX();
 				Ym = m.getY();
 
@@ -230,15 +243,18 @@ public class Map {
 				}
 
 				if(Xdif<=range && Ydif<=range ) {
-//					 System.out.println("Monster in range: " + m.toString(true));
+					System.out.println("Monster in range: " + m.toString(true));
 					// Checks if the path between Hero and Monster is actually free
 					if (this.checkVisibility(reference, m)) {
+
+						//						System.out.println("LOG: Returned " + m.toString(true));
 						return m;
+
 					}
 				}
 			}
 		}
-
+		System.out.println("LOG: returned null");
 		return null;
 	}
 
@@ -275,40 +291,57 @@ public class Map {
 	public void searchDoors(Character player) throws OccupiedTileException, OutOfBoundsException {
 		int X = player.getX();
 		int Y = player.getY();
+		String msg = "Opened the door and saw the room, but couldn't enter because it is blocked.";
 
 
 		// Checking NORTH
-		if(isInMap(X,Y-1) && map[X][Y-1].goThrough(player)) {
-			// Update player position
-			this.updatePlayerPosition(X,Y,player);
-		}
-
+		if (isInMap(X,Y-1) && map[X][Y-1].goThrough(player)) {
+			if(isFree(map[X][Y-1].reposition(player))) {
+				this.updatePlayerPosition(X,Y,player);
+			} else {
+				throw new OccupiedTileException(msg);
+			}
+		} 
 		// Checking EAST
 		else if (isInMap(X+1,Y) && map[X+1][Y].goThrough(player)) {
-			// Update player position
-			this.updatePlayerPosition(X,Y,player);
+			if(isFree(map[X+1][Y].reposition(player))) {
+				this.updatePlayerPosition(X,Y,player);
+			} else {
+				throw new OccupiedTileException(msg);
+			}
 		} 
 
 		// Checking SOUTH
 		else if (isInMap(X,Y+1) && map[X][Y+1].goThrough(player)) {
-			// Update player position
-			this.updatePlayerPosition(X,Y,player);
+			if(isFree(map[X][Y+1].reposition(player))) {
+				this.updatePlayerPosition(X,Y,player);
+			} else {
+				throw new OccupiedTileException(msg);
+			}
 		} 
-
 		// Checking WEST
 		else if (isInMap(X-1,Y) && map[X-1][Y].goThrough(player)) {
-			// Update player position
-			this.updatePlayerPosition(X,Y,player);
-		}
+			if(isFree(map[X-1][Y].reposition(player))) {
+				this.updatePlayerPosition(X,Y,player);
+			} else {
+				throw new OccupiedTileException(msg);
+			}
+		} 
 
 	}
 
-	
+	private boolean isFree(Coordinate coord) {
+		int x = coord.getX();
+		int y = coord.getY();
+
+		return this.map[x][y].isFree();
+	}
+
 	public void attackMonster(CombatDice combatDice, Hero player) {
 		//		System.out.println("LOG: Checking " + range + " tiles around " + player);
 		int range = player.getWeaponRange();
 		if(range==0) {
-			// If no weapon is equipped, attack will be with fists
+			// If no weapon is equipped, attack will be made with fists, with range = 1
 			range = 1;
 		}
 		Monster target = this.checkMonsterTargets(range, player);
@@ -324,6 +357,9 @@ public class Map {
 			int shields = combatDice.rollMonsterDefenseDice(defensePoints);
 
 			int damage = skulls - shields;
+			if(damage<0) {
+				damage=0;
+			}
 
 			System.out.println(player.toString(true) + " rolled " + skulls + " SKULLS");
 			System.out.println(target.toString(true) + " rolled " + shields + " MONSTER SHIELDS");
@@ -331,8 +367,8 @@ public class Map {
 
 			//TODO
 			// Destroy weapon if it gets destroyed after attack 
-//			player.attack();
-			
+			//			player.attack();
+
 			if(target.takeDamage(damage)) {
 				System.out.println("Killed " + target.toString(true));
 				this.killMonster(target);
@@ -348,7 +384,7 @@ public class Map {
 		for (Monster m : monsters) {
 
 			if(m.isVisible()) {
-				
+
 				this.dummyWalk(redDice, m, player);	
 
 				if(hasHeroInRange(m, player)) {
@@ -356,14 +392,14 @@ public class Map {
 					this.attackHero(combatDice, m,player);
 				}
 			}
-			
+
 		}	
 	}
-	
+
 	public ArrayList<Monster> getMonsters() {
 		return this.monsters;
 	}
-	
+
 	public ArrayList<Monster> getMonstersAround(int range, Monster reference) {
 		ArrayList<Monster> monstersAround = new ArrayList<Monster>();
 		for(Monster monster: monsters){
@@ -371,42 +407,43 @@ public class Map {
 				monstersAround.add(monster);
 			}
 		}
-		
+
 		return monstersAround;
-		
 	}
 
 	public void dummyWalk(RedDice redDice, Monster monster, Hero player)  {
 		int steps = redDice.getResult(2);
-		
-		System.out.println("LOG: Monster rolled dices! It can move up to " + steps + " steps.\n");
+
+		//		System.out.println("LOG: Monster rolled dices! It can move up to " + steps + " steps.\n");
 
 		this.print();
-		
+
 		for(int i=steps; i>0;i--) {
 			MoveCommand nextCommand= monster.nextStep(player);
-			
+
 			switch (nextCommand) {
 			case STOP:
 				return;
 			default:
-				if(isMoveSafe(monster, nextCommand)) {
-					System.out.println("LOG: " + monster + " tried to move " + nextCommand);
+				//				if(isMoveSafe(monster, nextCommand)) {
+//				System.out.println("LOG: " + monster + " tried to move " + nextCommand);
 
-					try {
-						this.moveCharacter(nextCommand, monster);
-					} catch (OccupiedTileException | OutOfBoundsException e) {
-						System.out.println("LOG: " + monster + " tried to move to an invalid position.");
-					}					
-				}
+				try {
+					this.moveCharacter(nextCommand, monster);
+				} catch (OccupiedTileException | OutOfBoundsException e) {
+//					System.out.println("LOG: " + monster + " tried to move to an invalid position.");
+					System.out.println(e.getMessage());
+					
+				}					
+				//				}
 			}
-			
+
 		}
 	}
-		
 
-	
-	
+
+
+
 	private boolean hasHeroInRange(Monster reference, Hero target) {
 		int range = reference.getWeaponRange();
 		if(range==0) {
@@ -420,7 +457,7 @@ public class Map {
 		int Yh = target.getY();
 		int Xdif,Ydif;
 
-		
+
 		if(Xm>=Xh) {
 			Xdif = Xm-Xh;
 		} else {
@@ -446,7 +483,7 @@ public class Map {
 	public void attackHero(CombatDice combatDice, Monster monster, Hero target) {
 		//		System.out.println("LOG: Checking " + range + " tiles around " + monster);
 		monster.updateWeapon();
-		
+
 		int range = monster.getWeaponRange();
 		if(range==0) {
 			// If no weapon is equipped, attack will be with fists
@@ -463,17 +500,20 @@ public class Map {
 			int shields = combatDice.rollHeroDefenseDice(defensePoints);
 
 			int damage = skulls - shields;
+			if(damage<0) {
+				damage=0;
+			}
 
 			System.out.println(monster.toString(true) + " rolled " + skulls + " SKULLS");
 			System.out.println(target.toString(true) + " rolled " + shields + " HERO SHIELDS");
 			System.out.println("Damage inflicted: " + damage);
-			
+
 			//TODO
 			// Destroy weapon if it gets destroyed after attack 
-//			monster.attack();
-			
+			//			monster.attack();
+
 			if(target.takeDamage(damage)) {
-				System.out.println("----------/nGAME OVER/n---------- ");
+				System.out.println("----------\nGAME OVER\n---------- ");
 				// TODO
 				//				this.endGame();
 			}
@@ -484,7 +524,7 @@ public class Map {
 		this.monsters.remove(m);
 		this.clearTile(m.getX(), m.getY(), true);
 	}
-	
+
 
 
 	//----------------------- MAP METHODS
@@ -515,7 +555,7 @@ public class Map {
 		int aux;
 		
 		int xDif,yDif;
-		boolean blocked=false;
+		boolean free=true;
 		
 		if(x1<x2) {
 			aux=x2;
@@ -534,20 +574,25 @@ public class Map {
 		
 		// Checking the path between elements A and B in x
 		for(int i=0;i<xDif;i++) {
-			if(!map[x2+i][y2].isFree()) {
-				blocked=true;
-			}
-		}
-		// Checking the path between elements A and B in y
-		for(int i=0;i<yDif;i++) {
-			if(!map[x2][y2+i].isFree()) {
-				blocked=true;
+//			System.out.println(!map[x2+i][y2].isFree());
+			if(!map[x2+i][y2].allowAtack()) {
+				free=false;
+				break;
 			}
 		}
 		
-		return !blocked;
+		// Checking the path between elements A and B in y
+		for(int i=0;i<yDif;i++) {
+//			System.out.println(!map[x2][y2+i].isFree());
+			if(!map[x2][y2+i].allowAtack()) {
+				free=false;
+				break;
+			}
+		}
+
+		return free;
 	}
-	
+
 	private void updateVisibility(Character reference) {
 		// Updates map's visibility in four directions according to a Character Reference
 		int currX = reference.getX();
@@ -645,7 +690,7 @@ public class Map {
 		}
 
 	}
-	
+
 	// Method to check is a Tile is visible	
 	public boolean isVisible(int X, int Y) {
 
@@ -677,6 +722,11 @@ public class Map {
 	public void addMonster(Monster monster) {
 		this.addElement(monster);
 		this.monsters.add(monster);
+	}
+	
+	public void addTrap(Trap trap) {
+		this.addElement(trap);
+		this.traps.add(trap);
 	}
 
 	private void addRoom(int x0, int y0, int dimX, int dimY) {

@@ -1,5 +1,6 @@
 package br.unicamp.Map.MapElements.StaticElements;
 
+import br.unicamp.Map.MapElements.Coordinate;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 
@@ -22,5 +23,10 @@ public abstract class StaticElement extends MapElement {
 		return false;
 	}
 	
+	@Override
+	public Coordinate reposition(Character character) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
