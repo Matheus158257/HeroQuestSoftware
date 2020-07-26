@@ -295,7 +295,7 @@ public class Map {
 
 			//TODO
 			// Destroy weapon if it gets destroyed after attack 
-			player.attack();
+//			player.attack();
 			
 			if(target.takeDamage(damage)) {
 				System.out.println("Killed " + target.toString(true));
@@ -418,7 +418,7 @@ public class Map {
 			
 			//TODO
 			// Destroy weapon if it gets destroyed after attack 
-			monster.attack();
+//			monster.attack();
 			
 			if(target.takeDamage(damage)) {
 				System.out.println("----------/nGAME OVER/n---------- ");
