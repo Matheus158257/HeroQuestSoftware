@@ -69,6 +69,32 @@ public class Door extends VariableElement {
 	
 	//--------------------
 	
+//	public Coordinate getDestination(Coordinate A, Coordinate B) {
+//		Coordinate coord;
+//		int xA = A.getX();
+//		int yA = A.getY();
+//		int xB = B.getX();
+//		int yB = B.getY();
+//		int currX = character.getX();
+//		int currY = character.getY();
+//		
+//		//		System.out.println("LOG: Opening Door");
+//		if(currX==xA && currY==yA) {
+//			coord = new Coordinate(xB, yB);
+////			System.out.println("LOG: Moving to " + xB + ", " + yB);
+//		} else {
+//			character.changePosition(xA, yA);
+////			System.out.println("LOG: Moving to " + xA + ", " + yA);
+//		}
+//		
+//	}
+	
+	public boolean goThrough2(Character character) {
+		open(character);
+		this.roomA.lightsOn();
+		this.roomB.lightsOn();
+		return true;
+	}
 	
 	@Override
 	public boolean goThrough(Character character) {
