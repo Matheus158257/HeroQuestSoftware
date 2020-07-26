@@ -2,10 +2,14 @@ package br.unicamp.Items.Spells;
 
 import java.util.Scanner;
 
+import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.Dice;
+import br.unicamp.Dices.RedDice;
 import br.unicamp.Exceptions.OutOfBoundsException;
+import br.unicamp.Interfaces.Castable;
+import br.unicamp.Map.Map;
 
-public abstract class Spell {
+public abstract class Spell implements Castable {
 	
 	protected int points;
 	
@@ -13,8 +17,10 @@ public abstract class Spell {
 	public Spell(int points){
 		this.points = points;
 	}
+	
+
+
 		
-	protected void cast(Character target, Dice dice){}
 	
 	/*
 	protected int readNumber(String coordinate) throws OutOfBoundsException{

@@ -16,12 +16,16 @@ import br.unicamp.Interfaces.Collectable;
 import br.unicamp.Items.Coin;
 import br.unicamp.Items.Potion;
 import br.unicamp.Items.Armor.Armor;
+import br.unicamp.Items.Weapons.Dagger;
+import br.unicamp.Items.Weapons.LongSword;
+import br.unicamp.Items.Weapons.ShortSword;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.Barbarian;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 import br.unicamp.Map.MapElements.Characters.Monsters.Goblin;
 import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
 import br.unicamp.Map.MapElements.Characters.Monsters.Skeleton;
+import br.unicamp.Map.MapElements.Characters.Monsters.SkeletonWizard;
 
 
 public class Map {
@@ -133,11 +137,43 @@ public class Map {
 		int newY = character.getY();
 		this.map[newX][newY] = character;
 	}
+	
+	public int oneAxeMaxAbsoluteDistanceBetweenCharacters(Character c1, Character c2) {
+		int c1X = c1.getX();
+		int c1Y = c1.getY();
+		int c2X = c2.getX();
+		int c2Y = c2.getY();
+		int xD = Math.abs(c1X-c2X);
+		int yD = Math.abs(c1Y-c2Y);
+		
+		return Math.max(xD, yD);
+	}
+	
+	public void telePortCharacter(Character character, int newX, int newY) {
+		int oldX = character.getX();
+		int oldY = character.getY();
+		this.clearTile(oldX, oldY, true);
+		character.changeCoordinates(newX, newY);
+		this.map[newX][newY] = character;
+		
+	}
 
 
 
 	//----------------------- HERO (PLAYER) METHODS
 
+
+	public void spellMagic(Hero player, RedDice redDice, CombatDice combatDice) throws NotSpellerException {
+		try{
+			player.castSpell(this, redDice, combatDice);
+		}catch(NotSpellerException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+
+
+	
 	public Monster checkMonsterTargets(int range, Character reference) {
 		int Xh = reference.getX();
 		int Yh = reference.getY();
@@ -146,7 +182,7 @@ public class Map {
 		// TODO checar se o caminho entre o player e o Monster esta realmente livre
 
 		for (Monster m : this.monsters) {
-			if(m!=null) {
+			if(m!=null && m.isVisible()) {
 				Xm = m.getX();
 				Ym = m.getY();
 
@@ -302,6 +338,22 @@ public class Map {
 			}
 		}	
 	}
+	
+	public ArrayList<Monster> getMonsters() {
+		return this.monsters;
+	}
+	
+	public ArrayList<Monster> getMonstersAround(int range, Monster reference) {
+		ArrayList<Monster> monstersAround = new ArrayList<Monster>();
+		for(Monster monster: monsters){
+			if (this.oneAxeMaxAbsoluteDistanceBetweenCharacters(monster, reference) <= range && this.oneAxeMaxAbsoluteDistanceBetweenCharacters(monster, reference) !=0){
+				monstersAround.add(monster);
+			}
+		}
+		
+		return monstersAround;
+		
+	}
 
 	public void dummyWalk(Monster monster) throws OccupiedTileException, OutOfBoundsException {
 //		int steps = redDice.getResult(1);
@@ -388,11 +440,11 @@ public class Map {
 		}
 	}
 
-	private void killMonster(Monster m) {
-		//TODO remover do array monsters
+	public void killMonster(Monster m) {
 		this.monsters.remove(m);
 		this.clearTile(m.getX(), m.getY(), true);
 	}
+	
 
 
 	//----------------------- MAP METHODS
@@ -497,7 +549,7 @@ public class Map {
 
 
 	// Method to check is a Tile is empty (free)	
-	private boolean isFree(int X, int Y) {
+	public boolean isFree(int X, int Y) {
 
 		if(isInMap(X,Y)) {
 
@@ -659,25 +711,32 @@ public class Map {
 
 	}
 
+
 	public void makeStandardChest() {
 		addTreasure(2,2, new Coin(10));
-		addTreasure(2,10, new Potion(10));
+		addTreasure(2,9, new Potion(10));
 		addTreasure(2,16, new Armor(10));
-
-		addChestTrap(5,4, new Skeleton(5,4));
-		addChestTrap(4,6, new Goblin(4,6));
-
+		addTreasure(7,2, new Armor(10));
+		addTreasure(12,2, new LongSword());
+		addTreasure(13,20, new ShortSword());
+		addTreasure(17,14, new Potion(4));
+		addTreasure(23,5, new Potion(4));
+		addTreasure(26,14, new LongSword());
+		addTreasure(28,21, new Dagger());
+		addChestTrap(2,10, new Goblin(2,10));
+		addChestTrap(2,14, new Skeleton(2,14));
+		addChestTrap(2,21, new SkeletonWizard(2,21));
+		addChestTrap(10,21, new Goblin(10,21));
+		addChestTrap(14,14, new Skeleton(14,14));
+		addChestTrap(20,4, new SkeletonWizard(20,4));
+		addChestTrap(23,16, new Goblin(23,16));
+		addChestTrap(24,20, new Skeleton(24,20));
+		addChestTrap(29,3, new SkeletonWizard(29,3));
+		addChestTrap(29,8, new Goblin(29,8));
 	}
 
 
 
 
-	public void spellMagic(Hero player, RedDice redDice, CombatDice combatDice) throws NotSpellerException {
-		if (player.isSpeller()) {
-
-		}else {
-			throw new NotSpellerException("This character is not able to spell");
-		}
-	}
 
 }

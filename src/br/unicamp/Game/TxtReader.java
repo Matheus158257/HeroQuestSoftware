@@ -32,7 +32,6 @@ public class TxtReader {
 	private ArrayList<DoorMask> doorMaskElements = new ArrayList<DoorMask>();
 	private ArrayList<Monster> monstersElements = new ArrayList<Monster>();
 	private String stageName;
-	private Hero myhero;
 	
 	public TxtReader(String stageName){
 		this.stageName = stageName;
@@ -51,11 +50,7 @@ public class TxtReader {
 		return this.doorMaskElements;
 	}
 	
-	public Hero getMyHero() {
 
-		return this.myhero;
-	}
-	
 	private void readTxtFile() {
 
 
@@ -94,6 +89,7 @@ public class TxtReader {
 		// My Hero
 //		System.out.println(data);
 		
+		/*
 		if (parts[0].equals("HB")) {
 			myhero = new Barbarian(x0,y0);
 			
@@ -120,8 +116,9 @@ public class TxtReader {
 		else if (parts[0].equals( "W")) {
 			stageElements.add(new Wizard(x0,y0));
 		}
+		*/
 		//Monsters
-		else if (parts[0].equals("G")) {
+		if (parts[0].equals("G")) {
 			Monster monster = new Goblin(x0,y0);
 			stageElements.add(monster);
 			monstersElements.add(monster);

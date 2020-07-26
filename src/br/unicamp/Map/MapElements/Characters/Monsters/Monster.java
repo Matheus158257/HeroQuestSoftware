@@ -3,6 +3,7 @@ package br.unicamp.Map.MapElements.Characters.Monsters;
 
 import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.RedDice;
+import br.unicamp.Exceptions.NotSpellerException;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Items.Bag;
@@ -66,5 +67,6 @@ public abstract class Monster extends Character {
 	public boolean goThrough(Character character) {
 		return false;
 	}
+	
 
 }

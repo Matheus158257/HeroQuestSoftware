@@ -51,9 +51,6 @@ public class Game {
 				TxtReader stage = new TxtReader(command);
 				
 				
-				//Player
-				player = stage.getMyHero();
-				gameMap.addElement(player);
 				
 				//All other map elements except doors
 				ArrayList<MapElement> mapElements = stage.getArrayStageElements();
@@ -76,6 +73,9 @@ public class Game {
 					gameMap.addMonster(monster);
 				}
 				
+				//Player
+				player = chooseHero();
+				gameMap.addElement(player);
 				running1 = false;
 				break;
 			case PREGAME:
@@ -146,7 +146,6 @@ public class Game {
 						try{
 							player.useBagItem(position);						
 						}catch(ItemNotInBagException e) {
-							// TODO consertar interacao com o usuario nesse ponto, falar que a entrada foi invalida
 								System.out.println (e.getMessage());
 						}
 					}
@@ -160,11 +159,7 @@ public class Game {
 					gameMap.attackMonster(this.combatDice, player);
 					break;
 				case MAGIC:
-					try {
-						gameMap.spellMagic(player,redDice,combatDice);
-					}catch(NotSpellerException e) {
-						System.out.println(e.getMessage());
-					}
+					gameMap.spellMagic(player,redDice,combatDice);
 					break;
 				case HELP:
 					this.giveHelp();
@@ -179,10 +174,11 @@ public class Game {
 				}
 			} catch (OccupiedTileException | OutOfBoundsException e) {
 				System.out.println (e.getMessage());
+			} catch (NotSpellerException e) {
+				System.out.println (e.getMessage());
 			}
 
 			gameMap.updateMap(player);
-			gameMap.print();
 
 			try {
 				gameMap.runMonsterActions(combatDice, player);
@@ -194,10 +190,6 @@ public class Game {
 
 		}
 
-	}
-
-	private void makeMove() {
-		
 	}
 	
 	private Command readGameType() {
@@ -232,6 +224,7 @@ public class Game {
 		System.out.println("Press [b] to check Bag and possibily use/equip Items");
 		System.out.println("Press [v] to check your Hero's current status");
 		System.out.println("Press [t] to attack a Monster with a Weapon\n");
+		System.out.println("Press [n] to spell magic\n");
 		
 		System.out.println("While in move phase:");
 		System.out.println("Press [w] to move Up");
@@ -311,7 +304,7 @@ public class Game {
 		} else if ( command.compareTo("t") == 0 ) {
 			return Command.ATTACK;
 		}
-		else if ( command.compareTo("t") == 0 ) {
+		else if ( command.compareTo("z") == 0 ) {
 			System.out.println ("TRY TO SPELL MAGIC\n");
 			return Command.MAGIC;
 		}

@@ -1,6 +1,7 @@
 package br.unicamp.Map.MapElements.Characters.Monsters;
 
 import br.unicamp.Dices.CombatDice;
+import br.unicamp.Dices.RedDice;
 import br.unicamp.Interfaces.Collectable;
 import br.unicamp.Items.Weapons.Dagger;
 import br.unicamp.Items.Weapons.Weapon;
@@ -46,6 +47,7 @@ public class Goblin extends Monster {
 			return this.toString();
 		}
 	}
+
 	
 //	@Override
 //	public void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {

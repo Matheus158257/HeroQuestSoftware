@@ -2,13 +2,18 @@ package br.unicamp.Map.MapElements.Characters.Heroes;
 
 import java.util.ArrayList;
 
+
+import java.util.Scanner;
 import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.RedDice;
+import br.unicamp.Exceptions.OutOfBoundsException;
+import br.unicamp.Exceptions.SpellNotCastedException;
 import br.unicamp.Interfaces.Caster;
 import br.unicamp.Items.Spells.SimpleHeal;
 import br.unicamp.Items.Spells.Spell;
 import br.unicamp.Items.Weapons.ShortSword;
 import br.unicamp.Items.Weapons.Weapon;
+import br.unicamp.Map.Map;
 
 public class Elf extends Hero implements Caster{
 	
@@ -17,7 +22,6 @@ public class Elf extends Hero implements Caster{
 	public static final int LP = 6; // Life Points
 	public static final int MP = 4; // Mana Points
 	
-	private ArrayList<Spell> spells = new ArrayList<Spell>();
 	
 	public Elf (int x0, int y0){
 		super(x0,y0,"Elf",Elf.ATK,Elf.DEF,Elf.LP,Elf.MP,true);
@@ -48,25 +52,31 @@ public class Elf extends Hero implements Caster{
 	
 	// ----------------- Spell Methods
 	
-//	private void elfGetSpell(Spell newSpell){
-//	elfSpells[actualSpellsNo]= newSpell;
-//	actualSpellsNo++;
-//}
-
-	
 	@Override
-
-	public void castSpell(Spell castSpell, Character target, RedDice redDice1, CombatDice combatDice) {
-		// TODO Auto-generated method stub
-		//int result = redDice1.getResults();
-		//if(result<this.getMana()){
-			// verifica os pontos de dano da spell lan�ada
-			// int damage = castSpeell.getDamage();
-			// verifica se o alvo tem defesa e retona quantos pontos ele tem de defesa
-			// int targetDefensePoints = targetMontser.defenseAgainstMagic(combatDice);
-			// targetMontser.receiveDamage(damage,targetDefensePoints);
-		//}	
+	public void castSpell(Map map, RedDice redDice, CombatDice combatDice) {
+		showSpellOptions();
+		try {
+			int spellNumber = readSpellsNumber();
+			if (spellNumber>-1) {
+				try {
+					this.spells.get(spellNumber).beCasted(this,map,redDice,combatDice,"Hero");
+				} catch (SpellNotCastedException e) {
+					System.out.println(e.getMessage());
+				}
+				this.spells.remove(spellNumber);
+			}
+			} catch (IndexOutOfBoundsException e) {
+				System.out.println(e.getMessage());
+			}
 	}
+
+
+	@Override
+	public Boolean castSpell(Map map, Hero hero, RedDice redDice, CombatDice combatDice) {
+		return false;
+	}
+	
+		
 	
 }
 
