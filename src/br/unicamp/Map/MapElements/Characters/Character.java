@@ -1,17 +1,26 @@
 package br.unicamp.Map.MapElements.Characters;
 
 import br.unicamp.Items.Bag;
-import br.unicamp.Items.Armor.Armor;
+
+import br.unicamp.Items.Spells.Spell;
 import br.unicamp.Items.Weapons.*;
+import br.unicamp.Map.Map;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
+import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import br.unicamp.Dices.*;
 import br.unicamp.Exceptions.ItemNotInBagException;
-import br.unicamp.Game.Command;
+import br.unicamp.Exceptions.LifeOnMaximumException;
+import br.unicamp.Exceptions.NotSpellerException;
 import br.unicamp.Game.MoveCommand;
 
 public abstract class Character extends MapElement{
+
 
 	public final static int HANDS = 2;
 
@@ -25,6 +34,7 @@ public abstract class Character extends MapElement{
 
 	protected Weapon weapons[];
 	protected int occupiedHands = 0;
+	protected ArrayList<Spell> spells = new ArrayList<Spell>();
 
 	protected boolean isSpeller;
 
@@ -48,6 +58,15 @@ public abstract class Character extends MapElement{
 	protected void giveDefenseBonus(int bonus) {
 		this.defensePoints+=bonus;
 	}
+	
+	public void beHealed(int heallingPoints) throws LifeOnMaximumException {
+		if (this.lifePoints == this.maxLifePoints) {
+			throw new LifeOnMaximumException("When your life is on maximum you can't be healed.");
+		} else {
+			this.lifePoints+=heallingPoints;
+		}
+	}
+	
 
 
 	public void changePosition(MoveCommand direction) {
@@ -79,6 +98,7 @@ public abstract class Character extends MapElement{
 	public int getMana(){
 		return mana;
 	}
+
 
 	public Boolean isSpeller(){
 		return this.isSpeller;
@@ -114,14 +134,33 @@ public abstract class Character extends MapElement{
 		}
 	}
 
-	public void defenseAgainstMagic(CombatDice combatDice){
-		//TODO
-		int result=0;
-		//combatDice.rollDices();
-		//retonar os pontos de defesa
-		//para se defender podem ser lancados dados de combate
-		//tantos quanto os pontos de mana
-
+	
+	public void defenseAgainstMagic(CombatDice combatDice, int damage, String speller,Map map){
+		int defenceResult = 0;
+		String message="";
+		if (speller =="Hero") {
+			defenceResult+=combatDice.rollMonsterDefenseDice(this.mana);
+			message+="The monster got " + String.valueOf(defenceResult) + " monster shields";
+		}
+		if (speller =="Monster") {
+			defenceResult+=combatDice.rollHeroDefenseDice(this.mana);
+			message+="The hero got " + String.valueOf(defenceResult) + " hero shields";
+		}
+		
+		System.out.println(this.toString(true));
+		System.out.println(message);
+		
+		if(damage>=defenceResult) {//necessario para nao dar vida ao Character na defeas
+			receiveDamage(damage,defenceResult);
+		}//se for menor não acontece nada
+		
+		
+		if(this.lifePoints<=0) {
+			if (speller =="Hero") {
+				Monster monster = (Monster) this;
+				map.killMonster(monster);
+			}
+		}
 	}
 
 	protected void receiveDamage(int damage, int defense){
@@ -263,9 +302,33 @@ public abstract class Character extends MapElement{
 	 */
 
 	//-------------------- NPCs actions
-	//	protected abstract void dummyWalk(Character character, RedDice redDice, MapElement map[][]);
-	//	protected abstract void dummyAction(Character character, CombatDice combatDice,MapElement map[][]);
 
+	protected void showSpellOptions() {
+		int i =0;
+		for(Spell spell: this.spells) {
+			System.out.print(String.valueOf(i) + " - ");
+			System.out.println(spell);
+			i+=1;
+		}
+	}
+	
+	protected int readSpellsNumber()  {
+
+		@SuppressWarnings("resource")
+		Scanner keyboard = new Scanner(System.in);
+		System.out.print ("Type a number from spells") ;
+		String command = keyboard.nextLine();
+		int position;
+		try {
+			position = Integer.valueOf(command);
+		}catch(NumberFormatException e) {
+			System.out.println("Please write a number");
+			position = -1;
+		}
+		
+		return position;
+	}
+	
 
 	@Override
 	public boolean getOpened(Character character) {
@@ -277,5 +340,14 @@ public abstract class Character extends MapElement{
 	}
 
 
-
+	public void castSpell(Map map, RedDice redDice1, CombatDice combatDice) throws NotSpellerException {
+		throw new NotSpellerException();
+	}
+	
+	public void castSpell(Character target,Hero hero, RedDice redDice1, CombatDice combatDice) throws NotSpellerException {
+		throw new NotSpellerException();
+		
+	}
+	
+	
 }

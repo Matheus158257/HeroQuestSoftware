@@ -1,7 +1,6 @@
 package br.unicamp.Items;
 
 import br.unicamp.Interfaces.Collectable;
-import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 public class Coin implements Collectable{

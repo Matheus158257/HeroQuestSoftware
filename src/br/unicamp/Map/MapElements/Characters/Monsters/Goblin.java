@@ -1,14 +1,7 @@
 package br.unicamp.Map.MapElements.Characters.Monsters;
 
-import java.lang.Math;
-import br.unicamp.Dices.CombatDice;
 import br.unicamp.Game.MoveCommand;
-import br.unicamp.Interfaces.Collectable;
 import br.unicamp.Items.Weapons.Dagger;
-import br.unicamp.Items.Weapons.LongSword;
-import br.unicamp.Items.Weapons.Weapon;
-import br.unicamp.Map.MapElements.MapElement;
-import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 
@@ -89,6 +82,4 @@ public class Goblin extends Monster {
 		}
 				
 	}
-
-
 }

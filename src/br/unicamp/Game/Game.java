@@ -41,7 +41,9 @@ public class Game {
 		Command input1;
 
 		// Loading the Map
+
 		while (makingMapDecision) {
+
 			
 			input1 = readGameType();
 			
@@ -52,14 +54,8 @@ public class Game {
 					Scanner keyboard = new Scanner(System.in);
 					System.out.print ("Name from .txt file: ");
 					String command = keyboard.nextLine();
-
-
 					TxtReader stage = new TxtReader(command);
 
-
-					//Player
-					player = stage.getMyHero();
-					gameMap.addElement(player);
 
 					//All other map elements except doors
 					ArrayList<MapElement> mapElements = stage.getArrayStageElements();
@@ -81,7 +77,11 @@ public class Game {
 					for(Monster monster: monsterElements){
 						gameMap.addMonster(monster);
 					}
-
+					
+					//Player
+					player = chooseHero();
+					gameMap.addElement(player);
+					
 					makingMapDecision = false;
 					break;
 				case PREGAME:
@@ -215,11 +215,11 @@ public class Game {
 				} catch (OccupiedTileException | OutOfBoundsException e) {
 					System.out.println (e.getMessage());
 					//					e.printStackTrace();
-				}
-
+				} 
 				gameMap.updateMap(player);
 				gameMap.print();
 			}
+
 
 			System.out.println ("MONSTERS' TURN");
 			try {
@@ -281,6 +281,7 @@ public class Game {
 		}
 	}
 
+
 	private Command readGameType() {
 
 		Command retorno = Command.NONE;
@@ -310,12 +311,13 @@ public class Game {
 
 	private void giveHelp() {
 		System.out.println("COMMANDS");
-		System.out.println("> Allowed only once per turn, before or after moving:");
+		System.out.println("> Allowed only once per turn:");
 		System.out.println("Press [c] to open Chest");
 		System.out.println("Press [t] to attack a Monster");
 		System.out.println("Press [n] to pass your turn");
 		System.out.println("Press [XXX] to look for a hidden Trap around you.");
-		System.out.println("Press [XXX] to launch a Spell (only Wizard or Elf)");
+		System.out.println("Press [z] to launch a Spell (only Wizard or Elf)");
+		System.out.println("Press [n] to roll dice and move");
 
 		System.out.println("\n> Allways allowed, except while moving:");
 		System.out.println("Press [b] to check Bag and possibily use/equip Items");
@@ -383,11 +385,11 @@ public class Game {
 		} else if ( command.compareTo("v") == 0 ) {
 			return Command.PLAYER_STATUS;
 		} else if ( command.compareTo("b") == 0 ) {
-			System.out.println ("ITEMS ON THE BAG:\n");
 			return Command.BAG_REPORT;
 		} else if ( command.compareTo("t") == 0 ) {
 			return Command.ATTACK;
-		} else if ( command.compareTo("t") == 0 ) {
+		}
+		else if ( command.compareTo("z") == 0 ) {
 			return Command.MAGIC;
 		} else if ( command.compareTo("h") == 0 ) {
 			return Command.HELP;

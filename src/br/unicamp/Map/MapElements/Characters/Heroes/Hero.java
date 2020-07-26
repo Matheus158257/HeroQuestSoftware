@@ -10,6 +10,8 @@ import br.unicamp.Dices.Dice;
 import br.unicamp.Dices.RedDice;
 import br.unicamp.Exceptions.ItemNotInBagException;
 import br.unicamp.Exceptions.LifeOnMaximumException;
+import br.unicamp.Exceptions.NotSpellerException;
+import br.unicamp.Interfaces.Caster;
 import br.unicamp.Interfaces.Collectable;
 import br.unicamp.Items.Bag;
 import br.unicamp.Items.Potion;
@@ -172,6 +174,7 @@ public abstract class Hero extends Character{
 			}
 		}
 	}
+	
 
 
 

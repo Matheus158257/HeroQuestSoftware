@@ -1,6 +1,9 @@
 package br.unicamp.Exceptions;
 
+@SuppressWarnings("serial")
 public class ItemNotInBagException extends Exception {
+
+
 
 	public ItemNotInBagException() {
 		super();

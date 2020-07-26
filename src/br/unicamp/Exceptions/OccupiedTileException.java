@@ -1,5 +1,6 @@
 package br.unicamp.Exceptions;
 
+@SuppressWarnings("serial")
 public class OccupiedTileException extends Exception {
 
 	public OccupiedTileException() {

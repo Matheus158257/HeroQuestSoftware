@@ -1,5 +1,7 @@
 package br.unicamp.Map.MapElements.Characters.Heroes;
 
+import br.unicamp.Dices.CombatDice;
+import br.unicamp.Dices.RedDice;
 import br.unicamp.Items.Weapons.LongSword;
 import br.unicamp.Items.Weapons.Weapon;
 
@@ -31,6 +33,9 @@ public class Barbarian extends Hero {
 			return this.toString();
 		}
 	}
+
+
+
 
 	 
 }

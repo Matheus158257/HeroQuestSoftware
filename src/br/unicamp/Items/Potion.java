@@ -2,8 +2,6 @@ package br.unicamp.Items;
 
 import br.unicamp.Exceptions.LifeOnMaximumException;
 import br.unicamp.Interfaces.Collectable;
-
-import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 public class Potion implements Collectable {

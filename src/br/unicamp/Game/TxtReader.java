@@ -12,11 +12,6 @@ import br.unicamp.Items.Weapons.Dagger;
 import br.unicamp.Items.Weapons.LongSword;
 import br.unicamp.Items.Weapons.ShortSword;
 import br.unicamp.Map.MapElements.MapElement;
-import br.unicamp.Map.MapElements.Characters.Heroes.Barbarian;
-import br.unicamp.Map.MapElements.Characters.Heroes.Dwarf;
-import br.unicamp.Map.MapElements.Characters.Heroes.Elf;
-import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
-import br.unicamp.Map.MapElements.Characters.Heroes.Wizard;
 import br.unicamp.Map.MapElements.Characters.Monsters.Goblin;
 import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
 import br.unicamp.Map.MapElements.Characters.Monsters.Skeleton;
@@ -32,7 +27,6 @@ public class TxtReader {
 	private ArrayList<DoorMask> doorMaskElements = new ArrayList<DoorMask>();
 	private ArrayList<Monster> monstersElements = new ArrayList<Monster>();
 	private String stageName;
-	private Hero myhero;
 	
 	public TxtReader(String stageName) throws FileNotFoundException{
 		this.stageName = stageName;
@@ -51,12 +45,9 @@ public class TxtReader {
 		return this.doorMaskElements;
 	}
 	
-	public Hero getMyHero() {
-
-		return this.myhero;
-	}
 	
 	private void readTxtFile() throws FileNotFoundException {
+
 
 
 		String filePath = "";
@@ -89,37 +80,8 @@ public class TxtReader {
 		String[] parts = data.split(" ");
 		int x0 = Integer.valueOf(parts[1]);
 		int y0 = Integer.valueOf(parts[2]);
-		// My Hero
-//		System.out.println(data);
-		
-		if (parts[0].equals("HB")) {
-			myhero = new Barbarian(x0,y0);
-			
-		} else if (parts[0].equals("HD")) {
-			myhero = new Dwarf(x0,y0);
-			
-		}else if (parts[0].equals("HE")) {
-			myhero = new Elf(x0,y0);
-			
-		}else if (parts[0].equals("HW")) {
-			myhero = new Wizard(x0,y0);
-		}
-		
-		//Heros
-		else if (parts[0].equals("B")) {
-			stageElements.add(new Barbarian(x0,y0));
-			
-		} else if (parts[0].equals("D")) {
-			stageElements.add(new Dwarf(x0,y0));
-		}
-		 else if (parts[0].equals("E")) {
-			 stageElements.add(new Elf(x0,y0));
-		}
-		else if (parts[0].equals( "W")) {
-			stageElements.add(new Wizard(x0,y0));
-		}
 		//Monsters
-		else if (parts[0].equals("G")) {
+		if (parts[0].equals("G")) {
 			Monster monster = new Goblin(x0,y0);
 			stageElements.add(monster);
 			monstersElements.add(monster);

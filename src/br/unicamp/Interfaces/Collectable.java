@@ -1,6 +1,5 @@
 package br.unicamp.Interfaces;
 
-import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 public interface Collectable{

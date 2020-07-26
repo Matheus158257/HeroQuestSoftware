@@ -1,5 +1,6 @@
 package br.unicamp.Exceptions;
 
+@SuppressWarnings("serial")
 public class NotAllowedToPlaceOnWallException extends Exception {
 
 	public NotAllowedToPlaceOnWallException() {
