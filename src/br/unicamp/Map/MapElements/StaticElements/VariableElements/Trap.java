@@ -23,6 +23,16 @@ public class Trap extends VariableElement {
 		return true;
 	}
 	
+//	protected void trapCatchesHero(Hero hero){
+//		if(hero.getX() == this.getX() && hero.getY()==this.getY()){
+//			//significa que o heroi pisou na armadilha
+//			hero.takeDamage(1);
+//		}
+//	}
+//	
+//	protected void trapDetected(){
+//		this.changeVisibility();
+//	}
 
 
 }

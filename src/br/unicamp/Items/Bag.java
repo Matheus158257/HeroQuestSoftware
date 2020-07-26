@@ -12,20 +12,28 @@ public class Bag {
 	public Bag() {
 		this.bagElements = new ArrayList<Collectable>();
 	}
-	
 
-	
-	public void putIntoTheBag(Collectable reward) {
-		this.bagElements.add(reward);
+	public boolean isEmpty() {
+		boolean empty = true;
+		for(Collectable item : bagElements) {
+			if(item!=null) {
+				empty=false;
+			}
+		}
+		return empty;
 	}
-	
+
+	public void putIntoTheBag(Collectable item) {
+		this.bagElements.add(item);
+	}
+
 	public void reportItemsOnBag() {
 		int i = 0;
 		for (Collectable collectable: this.bagElements) {
 			collectable.report(i);
 			i+=1;
 		}
-			
+
 	}
 
 	public void removeItem(Collectable item) throws ItemNotInBagException {
@@ -34,25 +42,25 @@ public class Bag {
 		}else {
 			throw new ItemNotInBagException();
 		}
-		
-		
+
+
 	}
 	public int getSize() {
 		return bagElements.size();
-		
+
 	}
-	
+
 
 	public Collectable getItem(int position) {
 		return bagElements.get(position);
-		
+
 	}
 
-	
+
 	public Collectable takeItem() {
 		Collectable caughtItem = bagElements.remove(bagElements.size()-1);
 		return caughtItem;
 	}
 
-	
+
 }

@@ -1,34 +1,41 @@
 package br.unicamp.Map.MapElements.Characters.Monsters;
 
+import java.lang.Math;
 import br.unicamp.Dices.CombatDice;
+import br.unicamp.Game.MoveCommand;
 import br.unicamp.Interfaces.Collectable;
 import br.unicamp.Items.Weapons.Dagger;
+import br.unicamp.Items.Weapons.LongSword;
 import br.unicamp.Items.Weapons.Weapon;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
+import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 
 public class Goblin extends Monster {
 
-	public static final int ATK = 0; // Attack Points
+	public static final int ATK = 1; // Attack Points
 	public static final int DEF = 2; // Defense Points
 	public static final int LP = 4; // Life Points
 	public static final int MP = 0; // Mana Points
 	public static final int noDaggers = 4; //Dagger numbers
-	
+
 	public Goblin(int x0, int y0){
 		super(x0,y0,"Goblin", Goblin.ATK, Goblin.DEF, Goblin.LP, Goblin.MP,false);
 
-		/*Dagger dagger1 = new Dagger();
+		Dagger dagger1 = new Dagger();
 		Dagger dagger2 = new Dagger();
 		Dagger dagger3 = new Dagger();
 		Dagger dagger4 = new Dagger();
+		this.bag.putIntoTheBag(dagger1);
+		this.bag.putIntoTheBag(dagger2);
+		this.bag.putIntoTheBag(dagger3);
+		this.bag.putIntoTheBag(dagger4);
 		this.equipWeapon(dagger1);
 		this.equipWeapon(dagger2);
-		this.equipWeapon(dagger3);
-		this.equipWeapon(dagger4);*/
+
 	}
-	
+
 	@Override
 	public String toString() {
 		if(this.isVisible()) {
@@ -37,7 +44,7 @@ public class Goblin extends Monster {
 			return "-";
 		}
 	}
-	
+
 	@Override
 	public String toString(boolean complete) {
 		if(complete) {
@@ -46,18 +53,42 @@ public class Goblin extends Monster {
 			return this.toString();
 		}
 	}
-	
-//	@Override
-//	public void dummyAction(Character character, CombatDice combatDice, MapElement map[][]) {
-//		int damage = 0;
-//		if(noDaggers>0){
-//			// ataca o her�i com punhais
-//			//tira um punhal da sacola, o ultimo //faz um downscasting de collectable p/ weapon
-//			Collectable bagItem = this.bag.takeItem();
-//			Weapon dagger = (Weapon) bagItem;
-//			//damage = somaSimbolosAtaque(combatDice, dagger);
-//
-//		}
-//	}
-	
+
+	@Override
+	public MoveCommand nextStep(Hero player) {
+		int xP = player.getX();
+		int yP = player.getY();
+		int xG = this.getX();
+		int yG = this.getY();
+		int xDif, yDif;
+		
+		if(xP > xG){
+			xDif=xP-xG;
+		} else {
+			xDif=xG-xP;
+		}
+		
+		if(yP > yG){
+			yDif=yP-yG;
+		} else {
+			yDif=yG-yP;
+		}
+		
+		if(xDif>yDif) {
+			if(xP > xG){
+				return MoveCommand.RIGHT;
+			} else {
+				return MoveCommand.LEFT;
+			}
+		} else {
+			if(yP > yG){
+				return MoveCommand.DOWN;
+			} else {
+				return MoveCommand.UP;
+			}
+		}
+				
+	}
+
+
 }

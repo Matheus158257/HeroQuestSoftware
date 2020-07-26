@@ -1,0 +1,64 @@
+HW 0 0
+C1 12 18 G
+C1 29 8 G
+C1 9 15 S
+C2 8 2 A 2
+C2 20 4 A 3
+C2 28 5 L
+C2 2 14 L
+C2 7 14 L
+C2 3 8 P 2
+C2 25 16 P 2
+C2 29 22 P 2
+C2 25 9 Z
+C2 19 10 Z
+C2 16 14 Z
+C2 5 15 V
+C2 8 20 V
+C2 3 22 Q 10
+C2 14 22 Q 10
+C2 20 22 Q 10
+G 3 20
+G 25 3
+G 17 12
+S 4 3
+S 9 8
+S 3 9
+K 14 12
+K 17 16
+K 20 20
+T 13 3
+T 4 4
+T 25 4
+T 28 4
+T 3 17
+T 10 18
+T 17 18
+O 16 16
+O 24 21
+U 6 15 false 10 11
+U 15 15 true 20
+U 4 18 true 10 12
+U 17 9 true 20
+U 11 20 false 14 13
+U 20 12 false 20
+U 4 13 true 10
+U 25 13 true 15
+U 29 13 true 16
+U 6 8 false 4 3
+U 9 17 true 11 13
+U 20 17 true 17
+U 27 8 false 8 9
+U 9 11 true 4
+U 25 11 true 8
+U 32 8 false 9
+U 15 19 false 14
+U 27 20 false 18 19
+U 22 21 false 17 18
+U 18 4 false 5
+U 15 3 false 2
+U 22 3 false 5 6
+U 11 3 false 2 1
+U 4 1 true 0
+U 30 1 true 7
+U 4 23 true 12

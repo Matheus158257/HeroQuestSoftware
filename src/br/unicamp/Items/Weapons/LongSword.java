@@ -3,8 +3,11 @@ package br.unicamp.Items.Weapons;
 
 public class LongSword extends Weapon {
 	
+	public final static int RANGE = 2;
+	public final static int ATK_BONUS = 3;
+	
 	public LongSword(){
-		super(2,3,false,false);
+		super(LongSword.RANGE,LongSword.ATK_BONUS,false,false);
 		
 	}
 	

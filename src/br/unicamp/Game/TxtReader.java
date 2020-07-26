@@ -34,7 +34,7 @@ public class TxtReader {
 	private String stageName;
 	private Hero myhero;
 	
-	public TxtReader(String stageName){
+	public TxtReader(String stageName) throws FileNotFoundException{
 		this.stageName = stageName;
 		readTxtFile();
 	}
@@ -56,23 +56,24 @@ public class TxtReader {
 		return this.myhero;
 	}
 	
-	private void readTxtFile() {
+	private void readTxtFile() throws FileNotFoundException {
 
 
 		String filePath = "";
 		String OS = System.getProperty("os.name");
 		if (OS.startsWith("Windows")) {
-			String cwd = "..\\HeroQuestSoftware\\src\\stages\\" ; 
+			String cwd = "..\\HeroQuestSoftware\\stages\\" ; 
 //			System.out.println("LOG: Checking directory " + cwd);
 			filePath = cwd + this.stageName +".txt";
 
 		}else {
 			String cwd = ("../stages/");
-			filePath =  cwd + this.stageName +".txt";
+
+			System.out.println("LOG: Checking directory " + cwd);
+			filePath =  cwd + this.stageName + ".txt";
 		}
 		
 		
-		 try {
 		      File myObj = new File(filePath);
 		      Scanner myReader = new Scanner(myObj);
 		      while (myReader.hasNextLine()) {
@@ -81,10 +82,7 @@ public class TxtReader {
 	
 		      }
 		      myReader.close();
-		    } catch (FileNotFoundException e) {
-		      System.out.println("An error has occurred. Please respect the map file pattern.");
-		      e.printStackTrace();
-		    }
+
 	}
 	
 	private void addToMapElementsArrayList(String data) {
