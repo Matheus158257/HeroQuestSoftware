@@ -2,12 +2,12 @@ package br.unicamp.Items.Weapons;
 
 
 public class Dagger extends Weapon {
-	// usa 1 m�o
-	// perdido ap�s o uso
 
+	public final static int RANGE = 3;
+	public final static int ATK_BONUS = 1;
 	
 	public Dagger(){
-		super(1,1,true,true);
+		super(Dagger.RANGE,Dagger.ATK_BONUS,true,true);
 	}
 	
 	@Override

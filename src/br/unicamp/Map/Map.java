@@ -12,6 +12,7 @@ import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.RedDice;
 import br.unicamp.Exceptions.*;
 import br.unicamp.Game.Command;
+import br.unicamp.Game.MoveCommand;
 import br.unicamp.Interfaces.Collectable;
 import br.unicamp.Items.Coin;
 import br.unicamp.Items.Potion;
@@ -74,7 +75,7 @@ public class Map {
 
 	//----------------------- GENERIC CHARACTER METHODS
 
-	public void moveCharacter(Command direction, Character character) throws OccupiedTileException, OutOfBoundsException {
+	public void moveCharacter(MoveCommand direction, Character character) throws OccupiedTileException, OutOfBoundsException {
 		int currX = character.getX();
 		int currY = character.getY();
 		int incrX=0;
@@ -98,7 +99,7 @@ public class Map {
 			incrY=0;
 			break;
 		default:
-			break;
+			return;
 		}
 
 
@@ -134,6 +135,38 @@ public class Map {
 		this.map[newX][newY] = character;
 	}
 
+	private boolean isMoveSafe(Character reference, MoveCommand direction) {
+		int X = reference.getX();
+		int Y = reference.getY();
+		int incrX, incrY;
+		
+		switch (direction) {
+		case UP:
+			incrX=0;
+			incrY=-1;
+			break;
+		case RIGHT:
+			incrX=1;
+			incrY=0;
+			break;
+		case DOWN:
+			incrX=0;
+			incrY=1;
+			break;
+		case LEFT:
+			incrX=-1;
+			incrY=0;
+			break;
+		default:
+			return true;
+		}
+		
+		if(this.map[X+incrX][Y+incrY].isFree()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 
 	//----------------------- HERO (PLAYER) METHODS
@@ -142,9 +175,7 @@ public class Map {
 		int Xh = reference.getX();
 		int Yh = reference.getY();
 		int Xm,Ym,Xdif,Ydif;
-
-		// TODO checar se o caminho entre o player e o Monster esta realmente livre
-
+		
 		for (Monster m : this.monsters) {
 			if(m!=null) {
 				Xm = m.getX();
@@ -163,8 +194,11 @@ public class Map {
 				}
 
 				if(Xdif<=range && Ydif<=range ) {
-					//					System.out.println("LOG: Monster found: " + m.toString(true));
-					return m;
+//					 System.out.println("Monster in range: " + m.toString(true));
+					// Checks if the path between Hero and Monster is actually free
+					if (this.checkVisibility(reference, m)) {
+						return m;
+					}
 				}
 			}
 		}
@@ -233,37 +267,14 @@ public class Map {
 
 	}
 
-//	public void attackMonster(Hero player) {
-//		//		System.out.println("LOG: Checking " + range + " tiles around " + player);
-//		int range = player.getAttackRange();
-//		Monster target = this.checkMonsterTargets(range, player);
-//
-//		if(target !=null) {
-//			System.out.println("Target is " + target.toString(true));
-//			int attackPoints = player.getAttackPoints();
-//			//			System.out.println("LOG: Player ATK: " + attackPoints);
-//			int defensePoints = target.getDefensePoints();
-//			//			System.out.println("LOG: Monster DEF: " + defensePoints);
-//
-//			int skulls = this.combatDice.rollAttackDice(attackPoints);
-//			int shields = this.combatDice.rollMonsterDefenseDice(defensePoints);
-//
-//			int damage = skulls - shields;
-//
-//			System.out.println(player.toString(true) + " rolled " + skulls + " SKULLS");
-//			System.out.println(target.toString(true) + " rolled " + shields + " MONSTER SHIELDS");
-//			System.out.println("Damage inflicted: " + damage);
-//
-//			if(target.takeDamage(damage)) {
-//				System.out.println("Killed " + target.toString(true));
-//				this.killMonster(target);
-//			}
-//		}
-//	}
 	
 	public void attackMonster(CombatDice combatDice, Hero player) {
 		//		System.out.println("LOG: Checking " + range + " tiles around " + player);
-		int range = player.getAttackRange();
+		int range = player.getWeaponRange();
+		if(range==0) {
+			// If no weapon is equipped, attack will be with fists
+			range = 1;
+		}
 		Monster target = this.checkMonsterTargets(range, player);
 
 		if(target !=null) {
@@ -282,6 +293,10 @@ public class Map {
 			System.out.println(target.toString(true) + " rolled " + shields + " MONSTER SHIELDS");
 			System.out.println("Damage inflicted: " + damage);
 
+			//TODO
+			// Destroy weapon if it gets destroyed after attack 
+			player.attack();
+			
 			if(target.takeDamage(damage)) {
 				System.out.println("Killed " + target.toString(true));
 				this.killMonster(target);
@@ -292,47 +307,60 @@ public class Map {
 	//----------------------- MONSTER METHODS
 
 
-	public void runMonsterActions(CombatDice combatDice, Hero player)  throws OccupiedTileException, OutOfBoundsException  {
+	public void runMonsterActions(RedDice redDice, CombatDice combatDice, Hero player)  throws OccupiedTileException, OutOfBoundsException  {
 		// TODO
 		for (Monster m : monsters) {
-			this.dummyWalk(m);
-			if(hasHeroInRange(m, player)) {
-				System.out.println(m.toString(true) + " has " + player.toString(true) + " in range.");
-				this.attackHero(combatDice, m,player);
+
+			if(m.isVisible()) {
+				
+				this.dummyWalk(redDice, m, player);	
+
+				if(hasHeroInRange(m, player)) {
+					System.out.println(m.toString(true) + " has " + player.toString(true) + " in range.");
+					this.attackHero(combatDice, m,player);
+				}
 			}
+			
 		}	
 	}
 
-	public void dummyWalk(Monster monster) throws OccupiedTileException, OutOfBoundsException {
-//		int steps = redDice.getResult(1);
-		// TODO voltar a linha anterior e comentar a proxima
-		int steps = 1;
-		if (monster.isVisible()) {
-			do{
-				while(map[monster.getX()][monster.getY()+1].isFree() && steps>0){
-					this.moveCharacter(Command.DOWN, monster);
-					steps--;
+	public void dummyWalk(RedDice redDice, Monster monster, Hero player)  {
+		int steps = redDice.getResult(2);
+		
+		System.out.println("LOG: Monster rolled dices! It can move up to " + steps + " steps.\n");
+
+		this.print();
+		
+		for(int i=steps; i>0;i--) {
+			MoveCommand nextCommand= monster.nextStep(player);
+			
+			switch (nextCommand) {
+			case STOP:
+				return;
+			default:
+				if(isMoveSafe(monster, nextCommand)) {
+					System.out.println("LOG: " + monster + " tried to move " + nextCommand);
+
+					try {
+						this.moveCharacter(nextCommand, monster);
+					} catch (OccupiedTileException | OutOfBoundsException e) {
+						System.out.println("LOG: " + monster + " tried to move to an invalid position.");
+					}					
 				}
-				while(map[monster.getX()][monster.getY()-1].isFree() && steps>0){
-					this.moveCharacter(Command.UP, monster);
-					steps--;
-				}
-				while(map[monster.getX()][monster.getY()+1].isFree() && steps>0){
-					this.moveCharacter(Command.RIGHT, monster);
-					steps--;
-				}
-				while(map[monster.getX()][monster.getY()+1].isFree() && steps>0){
-					this.moveCharacter(Command.LEFT, monster);
-					steps--;
-				}
-			}while(steps>0);
+			}
+			
 		}
 	}
+		
 
 	
 	
 	private boolean hasHeroInRange(Monster reference, Hero target) {
-		int range = reference.getAttackRange();
+		int range = reference.getWeaponRange();
+		if(range==0) {
+			// If no weapon is equipped, attack will be with fists
+			range = 1;
+		}
 		int Xm = reference.getX();
 		int Ym = reference.getY();
 
@@ -340,8 +368,7 @@ public class Map {
 		int Yh = target.getY();
 		int Xdif,Ydif;
 
-		// TODO checar se o caminho entre o player e o Monster esta realmente livre
-
+		
 		if(Xm>=Xh) {
 			Xdif = Xm-Xh;
 		} else {
@@ -355,15 +382,24 @@ public class Map {
 		}
 
 		if(Xdif<=range && Ydif<=range ) {
-			System.out.println("LOG: Hero is within found range to " + reference.toString(true));
-			return true;
+			// Checks if the path between Hero and Monster is actually free
+			if(this.checkVisibility(reference, target)) {
+				System.out.println("LOG: Hero is within found range to " + reference.toString(true));
+				return true;	
+			}
 		}
 		return false;
 	}
 
 	public void attackHero(CombatDice combatDice, Monster monster, Hero target) {
 		//		System.out.println("LOG: Checking " + range + " tiles around " + monster);
-		int range = monster.getAttackRange();
+		monster.updateWeapon();
+		
+		int range = monster.getWeaponRange();
+		if(range==0) {
+			// If no weapon is equipped, attack will be with fists
+			range = 1;
+		}
 
 		if(target !=null) {
 			int attackPoints = monster.getAttackPoints();
@@ -379,7 +415,11 @@ public class Map {
 			System.out.println(monster.toString(true) + " rolled " + skulls + " SKULLS");
 			System.out.println(target.toString(true) + " rolled " + shields + " HERO SHIELDS");
 			System.out.println("Damage inflicted: " + damage);
-
+			
+			//TODO
+			// Destroy weapon if it gets destroyed after attack 
+			monster.attack();
+			
 			if(target.takeDamage(damage)) {
 				System.out.println("----------/nGAME OVER/n---------- ");
 				// TODO
@@ -415,6 +455,47 @@ public class Map {
 		this.checkLights();
 	}
 
+	private boolean checkVisibility(MapElement A, MapElement B) {
+		int x1 = A.getX();
+		int y1 = A.getY();
+		int x2 = B.getX();
+		int y2 = B.getY();
+		int aux;
+		
+		int xDif,yDif;
+		boolean blocked=false;
+		
+		if(x1<x2) {
+			aux=x2;
+			x2=x1;
+			x1=aux;
+		} 
+		xDif = x1-x2;					
+		
+
+		if(y1<y2) {
+			aux=y2;
+			y2=y1;
+			y1=aux;
+		}
+		yDif = y1-y2;
+		
+		// Checking the path between elements A and B in x
+		for(int i=0;i<xDif;i++) {
+			if(!map[x2+i][y2].isFree()) {
+				blocked=true;
+			}
+		}
+		// Checking the path between elements A and B in y
+		for(int i=0;i<yDif;i++) {
+			if(!map[x2][y2+i].isFree()) {
+				blocked=true;
+			}
+		}
+		
+		return !blocked;
+	}
+	
 	private void updateVisibility(Character reference) {
 		// Updates map's visibility in four directions according to a Character Reference
 		int currX = reference.getX();

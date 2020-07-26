@@ -2,8 +2,10 @@ package br.unicamp.Map.MapElements.Characters.Monsters;
 
 import br.unicamp.Dices.CombatDice;
 import br.unicamp.Dices.RedDice;
+import br.unicamp.Game.MoveCommand;
 import br.unicamp.Interfaces.Caster;
 import br.unicamp.Items.Spells.Spell;
+import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 
 public class SkeletonWizard extends Monster implements Caster {
@@ -16,6 +18,7 @@ public class SkeletonWizard extends Monster implements Caster {
 	
 	public SkeletonWizard(int x0, int y0) {
 		super(x0,y0,"Skeleton", SkeletonWizard.ATK, SkeletonWizard.DEF, SkeletonWizard.LP, SkeletonWizard.MP,true);
+		
 	}
 
 	@Override
@@ -48,5 +51,6 @@ public class SkeletonWizard extends Monster implements Caster {
 			// targetMontser.receiveDamage(damage,targetDefensePoints);
 		}*/	
 	}
+
 	
 }

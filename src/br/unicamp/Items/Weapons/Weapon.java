@@ -21,6 +21,10 @@ public class Weapon implements Collectable{
 		return this.isShort;
 	}
 	
+	public boolean getDestroys(){
+		return this.destroys;
+	}
+	
 	public int getAttackBonus(){
 		return this.attackBonus;
 	}

@@ -1,5 +1,6 @@
 package br.unicamp.Game;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -33,181 +34,264 @@ public class Game {
 	}
 
 	public void start() {
-		
+
 
 		Hero player = null;
-		boolean running1 = true;
+		boolean makingMapDecision = true;
 		Command input1;
-		
-		// Loading the Map
-		while (running1) {
-			input1 = readGameType();
-			switch(input1) {
-			case FROM_TXT:
-				@SuppressWarnings("resource")
-				Scanner keyboard = new Scanner(System.in);
-				System.out.print ("Name from .txt file: ");
-				String command = keyboard.nextLine();
-				TxtReader stage = new TxtReader(command);
-				
-				
-				//Player
-				player = stage.getMyHero();
-				gameMap.addElement(player);
-				
-				//All other map elements except doors
-				ArrayList<MapElement> mapElements = stage.getArrayStageElements();
-				for(MapElement mapElement: mapElements){
-					gameMap.addElement(mapElement);
-				}
-				//All Doors
-				ArrayList<DoorMask> doorMaskElements = stage.getArraydoorMaskElements();
-				for(DoorMask doorMaskElement: doorMaskElements){
-					int x = doorMaskElement.getX();
-					int y= doorMaskElement.getY();
-					int roomA= doorMaskElement.getRoomA();
-					int roomB= doorMaskElement.getRoomB();
-					boolean vert= doorMaskElement.getVericability();
-					gameMap.addDoor(x,y,roomA,roomB,vert);
-				}
-				// All monsters
-				ArrayList<Monster> monsterElements = stage.getArrayMonsterElements();
-				for(Monster monster: monsterElements){
-					gameMap.addMonster(monster);
-				}
-				
-				running1 = false;
-				break;
-			case PREGAME:
-				// Hero addition
-				player = chooseHero();
-				gameMap.addElement(player);
 
-				// TODO gameMap.makeStandardMonsters()
-				// Test Monster additions
-				Monster m1 = new Goblin(3,4);
-				gameMap.addMonster(m1);
-				
-				Monster m2 = new Skeleton(5,10);
-				gameMap.addMonster(m2);
-				
-				Monster m3 = new SkeletonWizard(8,8);
-				gameMap.addMonster(m3);
-				
-				
-				// Making Doors
-				gameMap.makeStandardDoors();
-				
-				// Making Chests
-				gameMap.makeStandardChest();
+		// Loading the Map
+		while (makingMapDecision) {
 			
-				running1 = false;
-				break;
-				
-			case NONE:
-				break;
+			input1 = readGameType();
 			
-			
+			try {
+				switch(input1) {
+				case FROM_TXT:
+					@SuppressWarnings("resource")
+					Scanner keyboard = new Scanner(System.in);
+					System.out.print ("Name from .txt file: ");
+					String command = keyboard.nextLine();
+
+
+					TxtReader stage = new TxtReader(command);
+
+
+					//Player
+					player = stage.getMyHero();
+					gameMap.addElement(player);
+
+					//All other map elements except doors
+					ArrayList<MapElement> mapElements = stage.getArrayStageElements();
+					for(MapElement mapElement: mapElements){
+						gameMap.addElement(mapElement);
+					}
+					//All Doors
+					ArrayList<DoorMask> doorMaskElements = stage.getArraydoorMaskElements();
+					for(DoorMask doorMaskElement: doorMaskElements){
+						int x = doorMaskElement.getX();
+						int y= doorMaskElement.getY();
+						int roomA= doorMaskElement.getRoomA();
+						int roomB= doorMaskElement.getRoomB();
+						boolean vert= doorMaskElement.getVericability();
+						gameMap.addDoor(x,y,roomA,roomB,vert);
+					}
+					// All monsters
+					ArrayList<Monster> monsterElements = stage.getArrayMonsterElements();
+					for(Monster monster: monsterElements){
+						gameMap.addMonster(monster);
+					}
+
+					makingMapDecision = false;
+					break;
+				case PREGAME:
+					// Hero addition
+					player = chooseHero();
+					gameMap.addElement(player);
+
+					// TODO gameMap.makeStandardMonsters()
+					// Test Monster additions
+					Monster m1 = new Goblin(3,4);
+					gameMap.addMonster(m1);
+
+					Monster m2 = new Skeleton(5,10);
+					gameMap.addMonster(m2);
+
+					Monster m3 = new SkeletonWizard(8,8);
+					gameMap.addMonster(m3);
+
+
+					// Making Doors
+					gameMap.makeStandardDoors();
+
+					// Making Chests
+					gameMap.makeStandardChest();
+
+					makingMapDecision = false;
+					break;
+
+				case NONE:
+					break;
+				}
 			}
+			catch (FileNotFoundException e) {
+				System.out.println("File not found. Try again.\n");
+				makingMapDecision = true;
+//				e.printStackTrace();
+			}
+
 		}
 
-			
+
+
 		// Starting the game
 
 		System.out.println("Game started!\n");
 
-		boolean running2 = true;
+		boolean gameRunning = true;
+		boolean noAction = true;
+		boolean moveMade = false;
 		Command input2;
 
-		
+
 		gameMap.updateMap(player);
 		gameMap.print();
 
-		while (running2) {
-			
-			input2 = readInput();
-			try {
-				switch(input2) {
-				case QUIT:
-					running2 = false;
-					break;
-				case OPEN_DOOR:
-					gameMap.searchDoors(player);
-					break;
-					
-				case OPEN_CHEST:
-					gameMap.searchChests(player);
-					break;
-					
-				case BAG_REPORT:
-					player.reportBagElements();
-					int position = choosePosition();
-					if (position != -1) {
-						try{
-							player.useBagItem(position);						
-						}catch(ItemNotInBagException e) {
-							// TODO consertar interacao com o usuario nesse ponto, falar que a entrada foi invalida
+		while (gameRunning) {
+
+			while(noAction) {
+
+				System.out.println ("YOUR TURN");
+				input2 = readInput();
+				try {
+					switch(input2) {
+					case QUIT:
+						gameRunning = false;
+						break;
+
+					case SEARCH_TRAP:
+						// TODO
+						// gameMap.searchTrap(player);
+						noAction = false;
+						break;
+
+					case OPEN_DOOR:
+						gameMap.searchDoors(player);
+						break;
+
+					case OPEN_CHEST:
+						gameMap.searchChests(player);
+						noAction = false;
+						break;
+
+					case BAG_REPORT:
+						player.reportBagElements();
+						int position = choosePosition();
+						if (position != -1) {
+							try{
+								player.useBagItem(position);						
+							}catch(ItemNotInBagException e) {
+								// TODO consertar interacao com o usuario nesse ponto, falar que a entrada foi invalida
 								System.out.println (e.getMessage());
+							}
 						}
+						break;
+
+					case PLAYER_STATUS:
+						player.status();
+						break;
+
+					case ATTACK:
+						gameMap.attackMonster(this.combatDice, player);
+						noAction = false;
+						break;
+					case MAGIC:
+						try {
+							gameMap.spellMagic(player,this.redDice,this.combatDice);
+						}catch(NotSpellerException e) {
+							System.out.println(e.getMessage());
+						}
+						noAction = false;
+						break;
+					case HELP:
+						this.giveHelp();
+						break;
+						//TODO
+					case MOVE:
+						if(moveMade) {
+							System.out.println ("Already made a move. Please take an action or pass your turn pressing [n].\n");
+						} else {
+							this.makeMove(player);
+							moveMade=true;
+						}
+						break;
+					case END_TURN:
+						System.out.println ("ENDING YOUR TURN");
+						noAction = false;
+						break;
+					default:
+						break;
 					}
-					break;
-				
-				case PLAYER_STATUS:
-					player.status();
-					break;
-					
-				case ATTACK:
-					gameMap.attackMonster(this.combatDice, player);
-					break;
-				case MAGIC:
-					try {
-						gameMap.spellMagic(player,redDice,combatDice);
-					}catch(NotSpellerException e) {
-						System.out.println(e.getMessage());
-					}
-					break;
-				case HELP:
-					this.giveHelp();
-					break;
-					//TODO
-//				case MOVE:
-//					this.makeMove();
-//					break;
-				default:
-					gameMap.moveCharacter(input2, player);
-					break;
+				} catch (OccupiedTileException | OutOfBoundsException e) {
+					System.out.println (e.getMessage());
+					//					e.printStackTrace();
 				}
-			} catch (OccupiedTileException | OutOfBoundsException e) {
-				System.out.println (e.getMessage());
+
+				gameMap.updateMap(player);
+				gameMap.print();
 			}
 
-			gameMap.updateMap(player);
-			gameMap.print();
-
+			System.out.println ("MONSTERS' TURN");
 			try {
-				gameMap.runMonsterActions(combatDice, player);
+				gameMap.runMonsterActions(redDice, combatDice, player);
 			} catch (OccupiedTileException | OutOfBoundsException e) {
 				System.out.println (e.getMessage());
 			}
-			
-			gameMap.print();
 
+			gameMap.print();
+			noAction=true;
+			moveMade=false;
 		}
 
 	}
 
-	private void makeMove() {
-		
+	private void makeMove(Hero player) {
+		int steps = this.redDice.getResult(2);
+		System.out.println ("MOVE PHASE");
+		System.out.println("Dices rolled! You can move up to " + steps + " steps.\nPress [p] to stop moving.\n");
+		MoveCommand moveCommand;
+		gameMap.print();
+		for(int i=steps; i>0;i--) {
+			moveCommand = this.readMovement();
+			switch (moveCommand) {
+			case STOP:
+				return;
+			case HELP:
+				this.giveHelp();
+				i++;
+				break;
+			case OPEN_DOOR:
+				try {
+					gameMap.searchDoors(player);
+				} catch (OccupiedTileException e1) {
+					System.out.println(e1.getMessage());
+				} catch (OutOfBoundsException e1) {
+					System.out.println(e1.getMessage());
+				}
+				i++;
+				break;
+			case NONE:
+				i++;
+				break;
+			default:
+				try {
+					gameMap.moveCharacter(moveCommand, player);
+				} catch (OccupiedTileException e) {
+					System.out.println(e.getMessage());
+//					e.printStackTrace();
+				} catch (OutOfBoundsException e) {
+					System.out.println(e.getMessage());
+//					e.printStackTrace();
+				}
+
+			}
+			System.out.println((i-1) + " steps left.\nPress [p] to stop moving if you wish to take another action.\n");
+			gameMap.updateMap(player);
+			gameMap.print();
+		}
 	}
-	
+
 	private Command readGameType() {
-		
+
 		Command retorno = Command.NONE;
+
+		System.out.println("To read default map press '0'.\nFor configuration file, press '1':");
+
 		@SuppressWarnings("resource")
 		Scanner keyboard = new Scanner(System.in);
-		System.out.println("To read default map press '0'.\nFor configuration file, press '1':");
+
 		String command = keyboard.nextLine();
-	
+
 		if ( command.compareTo("1") == 0) {
 			System.out.println("Reading game form file...");
 			retorno = Command.FROM_TXT;
@@ -217,61 +301,67 @@ public class Game {
 			retorno =  Command.PREGAME;
 
 		} else {
-			System.out.print ("To read default map press '0'.\nFor configuration file, press '1':");
+			System.out.print ("Input not recognized.\n");
 		}
-		
+
 		return retorno;
 	}
-	
-	
-	private void giveHelp() {
 
-		System.out.println("Write [quit] to Quit the game");
-		System.out.println("Press [u] to open Door");
+
+	private void giveHelp() {
+		System.out.println("COMMANDS");
+		System.out.println("> Allowed only once per turn, before or after moving:");
 		System.out.println("Press [c] to open Chest");
+		System.out.println("Press [t] to attack a Monster");
+		System.out.println("Press [n] to pass your turn");
+		System.out.println("Press [XXX] to look for a hidden Trap around you.");
+		System.out.println("Press [XXX] to launch a Spell (only Wizard or Elf)");
+
+		System.out.println("\n> Allways allowed, except while moving:");
 		System.out.println("Press [b] to check Bag and possibily use/equip Items");
 		System.out.println("Press [v] to check your Hero's current status");
-		System.out.println("Press [t] to attack a Monster with a Weapon\n");
-		
-		System.out.println("While in move phase:");
+		System.out.println("Write [quit] to Quit the game");
+
+		System.out.println("\n> While in move phase:");
 		System.out.println("Press [w] to move Up");
 		System.out.println("Press [s] to move Down");
 		System.out.println("Press [a] to move Left");
 		System.out.println("Press [d] to move Right");
-		System.out.println("Press [p] to stop moving");
+		System.out.println("Press [u] to open Door");
+		System.out.println("Press [p] to stop moving\n");
 
 	}
-		
-	
-//	private Command readMovement(int steps) {
-//
-//		@SuppressWarnings("resource")
-//		Scanner keyboard = new Scanner(System.in);
-//		System.out.print ("Enter the next direction:") ;
-//		String command = keyboard.nextLine();
-//
-//		System.out.println("If you need to check commands, press [h] for help\n");
-//		
-//		if ( command.compareTo("quit") == 0) {
-//			System.out.println("Game terminated. Bye!");
-//			return Command.QUIT;
-//		} else if ( command.compareTo("w") == 0 ) {
-//			return Command.UP;
-//		} else if ( command.compareTo("a") == 0 ) {
-//			return Command.LEFT;
-//		} else if ( command.compareTo("s") == 0 ) {
-//			return Command.DOWN;
-//		} else if ( command.compareTo("d") == 0 ) {
-//			return Command.RIGHT;
-//		} else if ( command.compareTo("h") == 0 ) {
-//			return Command.HELP;
-//		} else if ( command.compareTo("p") == 0 ) {
-//			return Command.QUIT;
-//		} else {
-//			return Command.NONE;	
-//		}
-//	}
-	
+
+
+	private MoveCommand readMovement() {
+
+		@SuppressWarnings("resource")
+		Scanner keyboard = new Scanner(System.in);
+		System.out.print ("Enter the next direction:") ;
+		String command = keyboard.nextLine();
+
+		System.out.println("If you need to check commands, press [h] for help\n");
+
+		if ( command.compareTo("p") == 0) {
+			System.out.println("Stop walking.\n");
+			return MoveCommand.STOP;
+		} else if ( command.compareTo("w") == 0 ) {
+			return MoveCommand.UP;
+		} else if ( command.compareTo("a") == 0 ) {
+			return MoveCommand.LEFT;
+		} else if ( command.compareTo("s") == 0 ) {
+			return MoveCommand.DOWN;
+		} else if ( command.compareTo("d") == 0 ) {
+			return MoveCommand.RIGHT;
+		} else if ( command.compareTo("h") == 0 ) {
+			return MoveCommand.HELP;
+		} else if ( command.compareTo("u") == 0 ) {
+			return MoveCommand.OPEN_DOOR;
+		} else {
+			return MoveCommand.NONE;	
+		}
+	}
+
 	private Command readInput() {
 
 		@SuppressWarnings("resource")
@@ -280,24 +370,11 @@ public class Game {
 		String command = keyboard.nextLine();
 
 		System.out.println("If you need to check commands, press [h] for help\n");
-		
+
 		if ( command.compareTo("quit") == 0) {
 			System.out.println("Game terminated. Bye!");
 			return Command.QUIT;
-		} else if ( command.compareTo("w") == 0 ) {
-//			System.out.println ("Moving UP \n");
-			return Command.UP;
-		} else if ( command.compareTo("a") == 0 ) {
-//			System.out.println ("Moving LEFT \n");	
-			return Command.LEFT;
-		} else if ( command.compareTo("s") == 0 ) {
-//			System.out.println ("Moving DOWN \n");
-			return Command.DOWN;
-		} else if ( command.compareTo("d") == 0 ) {
-//			System.out.println ("Moving RIGHT \n");
-			return Command.RIGHT;
 		} else if ( command.compareTo("u") == 0 ) {
-//			System.out.println ("INTERACTING WITH DOOR\n");
 			return Command.OPEN_DOOR;
 		} else if ( command.compareTo("m") == 0 ) {
 			return Command.MOVE;
@@ -310,21 +387,19 @@ public class Game {
 			return Command.BAG_REPORT;
 		} else if ( command.compareTo("t") == 0 ) {
 			return Command.ATTACK;
-		}
-		else if ( command.compareTo("t") == 0 ) {
-			System.out.println ("TRY TO SPELL MAGIC\n");
+		} else if ( command.compareTo("t") == 0 ) {
 			return Command.MAGIC;
-		}
-		else if ( command.compareTo("h") == 0 ) {
-//			System.out.println ("HELPING WITH COMMANDS \n");
+		} else if ( command.compareTo("h") == 0 ) {
 			return Command.HELP;
+		} else if ( command.compareTo("n") == 0 ) {
+			return Command.END_TURN;
 		} else {
 			return Command.NONE;	
 		}
 
 	}
-	
-	
+
+
 	private Hero chooseHero() {
 
 		@SuppressWarnings("resource")
@@ -351,8 +426,8 @@ public class Game {
 			return new Barbarian(0,0);
 		}
 	}
-	
-	
+
+
 	private int choosePosition() {
 
 		@SuppressWarnings("resource")
@@ -369,8 +444,8 @@ public class Game {
 		}catch(NumberFormatException e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		return position;
 	}
-	
+
 }

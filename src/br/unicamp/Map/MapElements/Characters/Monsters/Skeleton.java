@@ -1,6 +1,11 @@
 package br.unicamp.Map.MapElements.Characters.Monsters;
 
+import br.unicamp.Game.MoveCommand;
+import br.unicamp.Items.Bag;
+import br.unicamp.Items.Weapons.LongSword;
+import br.unicamp.Items.Weapons.Weapon;
 import br.unicamp.Map.MapElements.Characters.Character;
+import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 public class Skeleton extends Monster {
 
@@ -11,7 +16,10 @@ public class Skeleton extends Monster {
 	
 	public Skeleton(int x0, int y0) {
 		super(x0,y0,"Skeleton", Skeleton.ATK, Skeleton.DEF, Skeleton.LP, Skeleton.MP,false);
-		// TODO Auto-generated constructor stub
+		// TODO Randomize Weapon
+		Weapon longSword = new LongSword();
+		this.bag.putIntoTheBag(longSword);
+		this.equipWeapon(longSword);
 	}
 
 	@Override
