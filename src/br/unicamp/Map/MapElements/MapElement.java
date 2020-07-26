@@ -36,6 +36,10 @@ public abstract class MapElement implements Openable,Repositions{
 		this.visible = true;
 	}
 	
+	public boolean allowAtack() {
+		return true;
+	}
+	
 	public void incrementCoordinates(int x, int y) {
 		int newX = this.getX()+x;
 		int newY = this.getY()+y;
@@ -50,7 +54,9 @@ public abstract class MapElement implements Openable,Repositions{
 		return this.coord.getY();
 	}
 	
-
+	public Coordinate getThrough2(Character character) {
+		return null;
+	}
 	
 	
 }

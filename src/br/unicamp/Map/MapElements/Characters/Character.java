@@ -152,7 +152,7 @@ public abstract class Character extends MapElement{
 		
 		if(damage>=defenceResult) {//necessario para nao dar vida ao Character na defeas
 			receiveDamage(damage,defenceResult);
-		}//se for menor não acontece nada
+		}//se for menor nï¿½o acontece nada
 		
 		
 		if(this.lifePoints<=0) {
@@ -268,38 +268,7 @@ public abstract class Character extends MapElement{
 
 	public abstract String toString(boolean complete);
 
-	/*
-	protected void equipWeapon(Weapon newWeapon) {
-		if (this.occupiedHands < Character.HANDS) {
-				this.bag.removeItem(newWeapon); //tira a arma da sacola e pï¿½es nas mï¿½os do hï¿½roi
-				if(newWeapon.getIsShort()){
-					weapons[this.occupiedHands]=newWeapon;
-					this.occupiedHands++;
-				}else{
-					weapons[this.occupiedHands]=newWeapon;
-					this.occupiedHands+=2;
-				}
-		}else {
-			System.out.println("LOG: Both hands are occupied.");
-		}
-	}
-
-
-	protected void unequipWeapon(Weapon removWeapon){
-		this.bag.putIntoTheBag(removWeapon);
-		if(removWeapon.getIsShort()){
-			weapons[occupiedHands]=null;
-			occupiedHands--;
-		}else{
-			for(Weapon w:weapons) {
-				w = null;
-			}
-			occupiedHands=0;
-		}
-		this.giveAttackBonus(-1*removWeapon.getAttackBonus());
-
-	}
-	 */
+	
 
 	//-------------------- NPCs actions
 
