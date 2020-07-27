@@ -54,11 +54,13 @@ public class Game {
 					@SuppressWarnings("resource")
 					Scanner keyboard = new Scanner(System.in);
 					System.out.print ("Name from .txt file: ");
+					System.out.println("\nTIP: try typing 'stage3'. You can create new levels and put them in the 'HeroQuestSoftware/stages' folder!");
+
 					String command = keyboard.nextLine();
 					TxtReader stage = new TxtReader(command);
 
 
-					//All other map elements except doors
+					//All other map elements except Doors and Traps
 					ArrayList<MapElement> mapElements = stage.getArrayStageElements();
 					for(MapElement mapElement: mapElements){
 						gameMap.addElement(mapElement);
@@ -73,12 +75,12 @@ public class Game {
 						boolean vert= doorMaskElement.getVericability();
 						gameMap.addDoor(x,y,roomA,roomB,vert);
 					}
-					// All monsters
+					// All Monsters
 					ArrayList<Monster> monsterElements = stage.getArrayMonsterElements();
 					for(Monster monster: monsterElements){
 						gameMap.addMonster(monster);
 					}
-					// All traps
+					// All Traps
 					ArrayList<Trap> trapElements = stage.getArrayTrapElements();
 					for(Trap trap: trapElements){
 						gameMap.addTrap(trap);
@@ -102,7 +104,7 @@ public class Game {
 					gameMap.makeStandardDoors();
 
 					// Making Chests
-					gameMap.makeStandardChest();
+					gameMap.makeStandardChests();
 
 					makingMapDecision = false;
 					break;
@@ -124,6 +126,7 @@ public class Game {
 		// Starting the game
 
 		System.out.println("Game started!\n");
+		this.giveHelp();
 
 		boolean gameRunning = true;
 		boolean noAction = true;
@@ -138,6 +141,8 @@ public class Game {
 			while(noAction) {
 
 				System.out.println ("\nYOUR TURN\n");
+				System.out.println ("Press [m] to move. You can press [n] to pass your turn at any time.\nPress [h] to get help on other commands.\n");
+				
 				gameMap.print();
 				input2 = readInput();
 				try {
@@ -147,10 +152,10 @@ public class Game {
 						break;
 
 					case SEARCH_TRAP:
-						// TODO
-						// gameMap.searchTrap(player);
+						gameMap.searchTraps(player);
 						noAction = false;
 						break;
+
 
 					case OPEN_DOOR:
 						gameMap.searchDoors(player);
@@ -163,13 +168,13 @@ public class Game {
 
 					case BAG_REPORT:
 						player.reportBagElements();
-						int position = choosePosition();
+						int position = chooseItem();
 						if (position != -1) {
 							try{
 								player.useBagItem(position);						
 							}catch(ItemNotInBagException e) {
-								// TODO consertar interacao com o usuario nesse ponto, falar que a entrada foi invalida
-								System.out.println (e.getMessage());
+								String msg = "Invalid input, please try again.";
+								System.out.println (msg);
 							}
 						}
 						break;
@@ -177,7 +182,9 @@ public class Game {
 					case PLAYER_STATUS:
 						player.status();
 						break;
+						
 
+						
 					case ATTACK:
 						gameMap.attackMonster(this.combatDice, player);
 //						System.out.println ("LOG: Attacked");
@@ -218,7 +225,7 @@ public class Game {
 					//					e.printStackTrace();
 				} 
 				gameMap.updateMap(player);
-				gameMap.print();
+//				gameMap.print();
 			}
 
 
@@ -229,9 +236,11 @@ public class Game {
 				System.out.println (e.getMessage());
 			}
 
-//			gameMap.print();
 			noAction=true;
 			moveMade=false;
+			if(gameMap.gameOver()) {
+				gameRunning=false;
+			}
 		}
 
 	}
@@ -241,7 +250,9 @@ public class Game {
 		System.out.println ("MOVE PHASE");
 		System.out.println("Dices rolled! You can move up to " + steps + " steps.\nPress [p] to stop moving.\n");
 		MoveCommand moveCommand;
+		
 		gameMap.print();
+		
 		for(int i=steps; i>0;i--) {
 			moveCommand = this.readMovement();
 			switch (moveCommand) {
@@ -269,9 +280,11 @@ public class Game {
 					gameMap.moveCharacter(moveCommand, player);
 				} catch (OccupiedTileException e) {
 					System.out.println(e.getMessage());
+					i++;
 //					e.printStackTrace();
 				} catch (OutOfBoundsException e) {
 					System.out.println(e.getMessage());
+					i++;
 //					e.printStackTrace();
 				}
 
@@ -318,7 +331,7 @@ public class Game {
 		System.out.println("Press [t] to look for a hidden Trap around you.");
 		System.out.println("Press [z] to launch a Spell (only Wizard or Elf)");
 		
-		System.out.println("> Allowed only once per turn:");
+		System.out.println("\n> Allowed only once per turn:");
 		System.out.println("Press [m] to roll dice and move");
 
 		System.out.println("\n> Allways allowed, except while moving:");
@@ -380,6 +393,8 @@ public class Game {
 			return Command.QUIT;
 		} else if ( command.compareTo("u") == 0 ) {
 			return Command.OPEN_DOOR;
+		} else if ( command.compareTo("t") == 0 ) {
+			return Command.SEARCH_TRAP;
 		} else if ( command.compareTo("m") == 0 ) {
 			return Command.MOVE;
 		} else if ( command.compareTo("c") == 0 ) {
@@ -431,7 +446,7 @@ public class Game {
 	}
 
 
-	private int choosePosition() {
+	private int chooseItem() {
 
 		@SuppressWarnings("resource")
 		Scanner keyboard = new Scanner(System.in);
@@ -445,7 +460,7 @@ public class Game {
 		try{
 			position = Integer.valueOf(command);
 		}catch(NumberFormatException e) {
-			System.out.println(e.getMessage());
+			System.out.println("Invalid input. Please try again.\n");
 		}
 
 		return position;

@@ -307,6 +307,8 @@ public abstract class Character extends MapElement{
 	public boolean goThrough(Character character) {
 		return false;
 	}
+	
+	
 
 
 	public void castSpell(Map map, RedDice redDice1, CombatDice combatDice) throws NotSpellerException {

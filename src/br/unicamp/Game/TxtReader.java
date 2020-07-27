@@ -54,18 +54,17 @@ public class TxtReader {
 	private void readTxtFile() throws FileNotFoundException {
 
 
-
 		String filePath = "";
 		String OS = System.getProperty("os.name");
 		if (OS.startsWith("Windows")) {
 			String cwd = "..\\HeroQuestSoftware\\stages\\" ; 
 //			System.out.println("LOG: Checking directory " + cwd);
+			
 			filePath = cwd + this.stageName +".txt";
 
 		}else {
 			String cwd = ("../stages/");
-
-			System.out.println("LOG: Checking directory " + cwd);
+//			System.out.println("LOG: Checking directory " + cwd);
 			filePath =  cwd + this.stageName + ".txt";
 		}
 		

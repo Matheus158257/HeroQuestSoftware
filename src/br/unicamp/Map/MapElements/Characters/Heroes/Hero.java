@@ -143,6 +143,7 @@ public abstract class Hero extends Character{
 	}
 
 
+
 	@Override
 	public Coordinate reposition(Character character) {
 		// TODO Auto-generated method stub

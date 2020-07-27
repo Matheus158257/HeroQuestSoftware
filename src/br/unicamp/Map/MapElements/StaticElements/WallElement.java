@@ -25,7 +25,10 @@ public class WallElement extends StaticElement {
 	@Override
 	public boolean allowAtack() {
 		return false;
-	};
+	}
+
+
+
 	
 
 }
