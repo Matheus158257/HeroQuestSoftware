@@ -49,11 +49,13 @@ public class SkeletonWizard extends Monster implements Caster {
 		if (this.spells.size()>0){
 			try {
 				this.spells.get(0).beCasted(this,hero,map,redDice,combatDice, "Monster");
+				this.spells.remove(0);
+				result = true;
+				System.out.println("The Skeleton Wizard casted a spell");
 			} catch (SpellNotCastedException e) {
 				System.out.println(e.getMessage());
 			}
-			this.spells.remove(0);
-			result = true;
+
 		}
 		return result;
 	}

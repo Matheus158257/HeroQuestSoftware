@@ -24,6 +24,10 @@ public abstract class MapElement implements Openable,Repositions{
 		return this.visible;
 	};
 	
+	public boolean allowAtack() {
+		return true;
+	};
+	
 	public void changeVisibility() {
 		if(visible) {
 			this.visible = false;

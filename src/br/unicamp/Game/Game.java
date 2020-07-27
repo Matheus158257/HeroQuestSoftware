@@ -88,18 +88,9 @@ public class Game {
 					// Hero addition
 					player = chooseHero();
 					gameMap.addElement(player);
-
-					// TODO gameMap.makeStandardMonsters()
-					// Test Monster additions
-					Monster m1 = new Goblin(3,4);
-					gameMap.addMonster(m1);
-
-					Monster m2 = new Skeleton(5,10);
-					gameMap.addMonster(m2);
-
-					Monster m3 = new SkeletonWizard(8,8);
-					gameMap.addMonster(m3);
-
+					
+					// Making Monsters
+					gameMap.makeStandardMonsters();
 
 					// Making Doors
 					gameMap.makeStandardDoors();

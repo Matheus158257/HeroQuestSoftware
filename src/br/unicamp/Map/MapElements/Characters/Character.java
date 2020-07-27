@@ -344,7 +344,7 @@ public abstract class Character extends MapElement{
 		throw new NotSpellerException();
 	}
 	
-	public void castSpell(Character target,Hero hero, RedDice redDice1, CombatDice combatDice) throws NotSpellerException {
+	public Boolean castSpell(Map map,Hero hero, RedDice redDice1, CombatDice combatDice) throws NotSpellerException {
 		throw new NotSpellerException();
 		
 	}
