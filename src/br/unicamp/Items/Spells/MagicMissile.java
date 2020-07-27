@@ -40,7 +40,7 @@ public class MagicMissile extends Spell {
 	
 	@Override
 	public void beCasted(Monster attacker,Hero defensor, Map map, RedDice redDice, CombatDice combatDice, String speller) throws SpellNotCastedException {
-		int distance = map.oneAxeMaxAbsoluteDistanceBetweenCharacters(attacker, defensor);
+		int distance = map.maxAbsDistanceOneDimension(attacker, defensor);
 		if (distance<=RANGE) {
 			for (int i=0; i<3; i++) {
 				defensor.defenseAgainstMagic(combatDice, this.points, speller, map);

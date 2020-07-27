@@ -13,7 +13,7 @@ import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
 public class Teleport extends Spell {
 
 	public static final int POINTS = 0;
-	public static final int RANGE = 33;//MÁXIMO DO MAPA
+	public static final int RANGE = 33;//Mï¿½XIMO DO MAPA
 	public Teleport() {
 		super(POINTS);
 	}
@@ -48,7 +48,7 @@ public class Teleport extends Spell {
 			newX = getRandomNumberBetweenLimits(0,33);
 			newY = getRandomNumberBetweenLimits(0,24);
 			if (map.isFree(newX,newY) && map.isVisible(newX,newY)) {
-				map.telePortCharacter(attacker,newX,newY);
+				map.teleportCharacter(attacker,newX,newY);
 				running = false;
 			}
 		}

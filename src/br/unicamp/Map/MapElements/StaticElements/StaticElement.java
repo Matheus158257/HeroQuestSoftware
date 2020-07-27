@@ -25,8 +25,9 @@ public abstract class StaticElement extends MapElement {
 	
 	@Override
 	public Coordinate reposition(Character character) {
-		// TODO Auto-generated method stub
 		return null;
 	}
+	
+
 	
 }

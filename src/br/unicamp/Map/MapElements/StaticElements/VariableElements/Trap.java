@@ -1,18 +1,29 @@
 package br.unicamp.Map.MapElements.StaticElements.VariableElements;
 
 import br.unicamp.Map.MapElements.Characters.Character;
+import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
 public class Trap extends VariableElement {
 
+	public final static int DAMAGE = 1;
+	
+	private boolean discovered;
+	
 	public Trap(int x, int y) {
 		super(x, y);
-		// TODO Auto-generated constructor stub
+		this.discovered = false;
 	}
 
 	@Override
 	public String toString() {
+		
 		if(this.isVisible()) {
-			return "T";
+			if(discovered) {
+				return "T";
+			} else {
+				return " ";
+
+			}
 		} else {
 			return "-";
 		}
@@ -20,19 +31,28 @@ public class Trap extends VariableElement {
 	
 	@Override
 	public boolean isFree() {
-		return true;
+		if(discovered) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
-//	protected void trapCatchesHero(Hero hero){
-//		if(hero.getX() == this.getX() && hero.getY()==this.getY()){
-//			//significa que o heroi pisou na armadilha
-//			hero.takeDamage(1);
-//		}
-//	}
-//	
-//	protected void trapDetected(){
-//		this.changeVisibility();
-//	}
+	@Override
+	public boolean trapsHero(Character character) {
+		if(discovered) {
+			return false;
+		} else {
+			return true;
+		}
+	};
+
+	@Override
+	public boolean getDetected(Character character){
+		this.discovered=true;
+		
+		return true;
+	}
 
 
 }

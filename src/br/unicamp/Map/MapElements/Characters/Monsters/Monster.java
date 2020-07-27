@@ -52,6 +52,8 @@ public abstract class Monster extends Character {
 		return false;
 	}
 	
+
+	
 	@Override
 	public Coordinate reposition(Character character) {
 		// TODO Auto-generated method stub

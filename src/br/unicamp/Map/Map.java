@@ -41,6 +41,7 @@ public class Map {
 	private int sizeY;
 
 	private MapElement map[][];
+	private boolean gameOver;
 
 	private Room[] rooms;
 	private int roomIndex;
@@ -58,9 +59,7 @@ public class Map {
 		this.sizeY = Map.SIZE_Y;
 		this.map = new MapElement[this.sizeX][this.sizeY];
 
-		// Foram passados para Game
-		//		this.redDice= new RedDice();
-		//		this.combatDice= new CombatDice();
+		this.gameOver=false;
 
 		this.rooms = new Room[Map.ROOMS];
 		this.roomIndex = 0;
@@ -80,6 +79,29 @@ public class Map {
 
 	}
 
+	//----------------------- GAME METHODS
+
+	public boolean gameOver() {
+		int monsterCount = 0;
+		for (Monster m : this.monsters) {
+			if(m!=null) {
+				monsterCount++;
+			}
+		}
+		
+		if(monsterCount==0) {
+			this.gameOver = true;
+			System.out.println("--------------------\nGAME OVER, YOU WON!\n-------------------- ");
+		}
+		
+		return this.gameOver;
+	}
+	
+	private void endGame() {
+		this.gameOver=true;
+	}
+
+	
 	//----------------------- GENERIC CHARACTER METHODS
 
 	public void moveCharacter(MoveCommand direction, Character character) throws OccupiedTileException, OutOfBoundsException {
@@ -116,13 +138,19 @@ public class Map {
 
 		if (isInMap(destX,destY)) {
 
-			if (isFree(destX,destY)) {
+			// Checking for Trap
+			if(hasTrap(character,destX,destY)) {
 
-				// TODO Checking for Trap
-//				if(hasTrap(destX,destY)) {
-//					
-//				}
-				
+				System.out.println("Oh no! " + character.toString(true) + " Got caught in a Trap and took 1 damage.");
+				character.takeDamage(Trap.DAMAGE);
+
+				character.changePosition(direction);
+
+				this.clearTile(currX, currY, true);
+				map[destX][destY] = character;
+
+			} else if (isFree(destX,destY)) {
+
 				character.changePosition(direction);
 
 				//map[currX][currY] = new FloorElement(currX,currY,true);
@@ -133,15 +161,17 @@ public class Map {
 				String message = ("Tried to move to an occupied tile.");
 				throw new OccupiedTileException(message);
 			}
+
+
 		} else {
 			String message = ("Tried to move out of bounds.");
 			throw new OutOfBoundsException(message);
 		}
 	}
-	
-//	private boolean hasTrap() {
-//		
-//	}
+
+	private boolean hasTrap(Character character, int x, int y) {
+		return map[x][y].trapsHero(character);
+	}
 
 	private void updatePlayerPosition(int oldX, int oldY, Character character) {
 		this.clearTile(oldX, oldY, true);
@@ -151,7 +181,7 @@ public class Map {
 		this.map[newX][newY] = character;
 	}
 
-	public int oneAxeMaxAbsoluteDistanceBetweenCharacters(Character c1, Character c2) {
+	public int maxAbsDistanceOneDimension(Character c1, Character c2) {
 		int c1X = c1.getX();
 		int c1Y = c1.getY();
 		int c2X = c2.getX();
@@ -162,13 +192,12 @@ public class Map {
 		return Math.max(xD, yD);
 	}
 
-	public void telePortCharacter(Character character, int newX, int newY) {
+	public void teleportCharacter(Character character, int newX, int newY) {
 		int oldX = character.getX();
 		int oldY = character.getY();
 		this.clearTile(oldX, oldY, true);
 		character.changeCoordinates(newX, newY);
 		this.map[newX][newY] = character;
-
 	}
 
 	private boolean isMoveSafe(Character reference, MoveCommand direction) {
@@ -194,10 +223,10 @@ public class Map {
 			incrY=0;
 			break;
 		default:
-			return true;
+			return false;
 		}
 
-		if(this.map[X+incrX][Y+incrY].isFree()) {
+		if(isInMap(X+incrX, Y+incrY) && isFree(X+incrX, Y+incrY)) {
 			return true;
 		} else {
 			return false;
@@ -254,8 +283,37 @@ public class Map {
 				}
 			}
 		}
-		System.out.println("LOG: returned null");
 		return null;
+	}
+
+	public void searchTraps(Character player) {
+		int X = player.getX();
+		int Y = player.getY();
+		String success = "Trap was found!\n";
+		String failure = "No Traps were found...\n";
+
+		// Checking NORTH
+		if(isInMap(X,Y-1) && map[X][Y-1].getDetected(player)) {
+			System.out.println(success);
+		}
+
+		// Checking EAST
+		else if (isInMap(X+1,Y) && map[X+1][Y].getDetected(player)) {
+			System.out.println(success);
+		} 
+
+		// Checking SOUTH
+		else if (isInMap(X,Y+1) && map[X][Y+1].getDetected(player)) {
+			System.out.println(success);
+		} 
+
+		// Checking WEST
+		else if (isInMap(X-1,Y) && map[X-1][Y].getDetected(player)) {
+			System.out.println(success);
+		} else {
+			System.out.println(failure);
+		}
+
 	}
 
 	public void searchChests(Character player) {
@@ -403,7 +461,7 @@ public class Map {
 	public ArrayList<Monster> getMonstersAround(int range, Monster reference) {
 		ArrayList<Monster> monstersAround = new ArrayList<Monster>();
 		for(Monster monster: monsters){
-			if (this.oneAxeMaxAbsoluteDistanceBetweenCharacters(monster, reference) <= range && this.oneAxeMaxAbsoluteDistanceBetweenCharacters(monster, reference) !=0){
+			if (this.maxAbsDistanceOneDimension(monster, reference) <= range && this.maxAbsDistanceOneDimension(monster, reference) !=0){
 				monstersAround.add(monster);
 			}
 		}
@@ -425,17 +483,18 @@ public class Map {
 			case STOP:
 				return;
 			default:
-				//				if(isMoveSafe(monster, nextCommand)) {
-//				System.out.println("LOG: " + monster + " tried to move " + nextCommand);
+				if(isMoveSafe(monster, nextCommand)) {
+					//					System.out.println("LOG: " + monster + " tried to move " + nextCommand);
 
-				try {
-					this.moveCharacter(nextCommand, monster);
-				} catch (OccupiedTileException | OutOfBoundsException e) {
-//					System.out.println("LOG: " + monster + " tried to move to an invalid position.");
-					System.out.println(e.getMessage());
-					
-				}					
-				//				}
+					try {
+						this.moveCharacter(nextCommand, monster);
+					} catch (OccupiedTileException | OutOfBoundsException e) {
+						//					System.out.println("LOG: " + monster + " tried to move to an invalid position.");
+						System.out.println(e.getMessage());
+
+
+					}					
+				}
 			}
 
 		}
@@ -473,7 +532,7 @@ public class Map {
 		if(Xdif<=range && Ydif<=range ) {
 			// Checks if the path between Hero and Monster is actually free
 			if(this.checkVisibility(reference, target)) {
-				System.out.println("LOG: Hero is within found range to " + reference.toString(true));
+//				System.out.println("LOG: Hero is within found range to " + reference.toString(true));
 				return true;	
 			}
 		}
@@ -513,9 +572,8 @@ public class Map {
 			//			monster.attack();
 
 			if(target.takeDamage(damage)) {
-				System.out.println("----------\nGAME OVER\n---------- ");
-				// TODO
-				//				this.endGame();
+				System.out.println("--------------------\nGAME OVER, YOU DIED\n-------------------- ");
+				this.endGame();
 			}
 		}
 	}
@@ -524,7 +582,6 @@ public class Map {
 		this.monsters.remove(m);
 		this.clearTile(m.getX(), m.getY(), true);
 	}
-
 
 
 	//----------------------- MAP METHODS
@@ -553,17 +610,17 @@ public class Map {
 		int x2 = B.getX();
 		int y2 = B.getY();
 		int aux;
-		
+
 		int xDif,yDif;
 		boolean free=true;
-		
+
 		if(x1<x2) {
 			aux=x2;
 			x2=x1;
 			x1=aux;
 		} 
 		xDif = x1-x2;					
-		
+
 
 		if(y1<y2) {
 			aux=y2;
@@ -571,19 +628,19 @@ public class Map {
 			y1=aux;
 		}
 		yDif = y1-y2;
-		
+
 		// Checking the path between elements A and B in x
 		for(int i=0;i<xDif;i++) {
-//			System.out.println(!map[x2+i][y2].isFree());
+			//			System.out.println(!map[x2+i][y2].isFree());
 			if(!map[x2+i][y2].allowAtack()) {
 				free=false;
 				break;
 			}
 		}
-		
+
 		// Checking the path between elements A and B in y
 		for(int i=0;i<yDif;i++) {
-//			System.out.println(!map[x2][y2+i].isFree());
+			//			System.out.println(!map[x2][y2+i].isFree());
 			if(!map[x2][y2+i].allowAtack()) {
 				free=false;
 				break;
@@ -723,7 +780,7 @@ public class Map {
 		this.addElement(monster);
 		this.monsters.add(monster);
 	}
-	
+
 	public void addTrap(Trap trap) {
 		this.addElement(trap);
 		this.traps.add(trap);
@@ -860,7 +917,7 @@ public class Map {
 	}
 
 
-	public void makeStandardChest() {
+	public void makeStandardChests() {
 		addTreasure(2,2, new Coin(10));
 		addTreasure(2,9, new Potion(10));
 		addTreasure(2,16, new Armor(10));
@@ -883,6 +940,22 @@ public class Map {
 		addChestTrap(29,8, new Goblin(29,8));
 	}
 
+	public void makeStandardMonsters() {
+		this.addMonster(new Goblin(3,4));
+		this.addMonster(new Skeleton(13,4));
+		this.addMonster(new Skeleton(5,10));
+		this.addMonster(new SkeletonWizard(8,9));
+		this.addMonster(new Goblin(9,9));
+		this.addMonster(new Skeleton(24,3));
+		this.addMonster(new SkeletonWizard(24,9));
+		this.addMonster(new SkeletonWizard(19,8));
+		this.addMonster(new Goblin(3,16));
+		this.addMonster(new Goblin(16,13));
+		this.addMonster(new Goblin(9,20));
+		this.addMonster(new Skeleton(19,20));
+		this.addMonster(new SkeletonWizard(28,19));
+
+	}
 
 
 

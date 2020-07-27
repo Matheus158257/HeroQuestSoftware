@@ -47,7 +47,7 @@ public class Fireball extends Spell {
 	@Override
 	public void beCasted(Monster attacker, Hero defensor, Map map, RedDice redDice, CombatDice combatDice,
 			String speller) throws SpellNotCastedException {
-		int distance = map.oneAxeMaxAbsoluteDistanceBetweenCharacters(attacker, defensor);
+		int distance = map.maxAbsDistanceOneDimension(attacker, defensor);
 		if (distance<=RANGE) {
 				defensor.defenseAgainstMagic(combatDice, this.points, speller, map);
 		}else {
