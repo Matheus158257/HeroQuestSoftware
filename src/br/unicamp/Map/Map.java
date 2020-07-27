@@ -442,13 +442,23 @@ public class Map {
 		for (Monster m : monsters) {
 
 			if(m.isVisible()) {
-
-				this.dummyWalk(redDice, m, player);	
-
-				if(hasHeroInRange(m, player)) {
-					System.out.println(m.toString(true) + " has " + player.toString(true) + " in range.");
-					this.attackHero(combatDice, m,player);
+				
+				this.dummyWalk(redDice, m, player);
+				boolean spellCasted = false;
+				try {
+					spellCasted = m.castSpell(this,player,redDice,combatDice);
+				} catch (NotSpellerException e) {
+					System.out.println(e.getMessage());
 				}
+				System.out.println(spellCasted);
+				if (!spellCasted) {
+					if(hasHeroInRange(m, player)) {
+						System.out.println(m.toString(true) + " has " + player.toString(true) + " in range.");
+						this.attackHero(combatDice, m,player);
+					}
+
+				}
+
 			}
 
 		}	
@@ -631,7 +641,6 @@ public class Map {
 
 		// Checking the path between elements A and B in x
 		for(int i=0;i<xDif;i++) {
-			//			System.out.println(!map[x2+i][y2].isFree());
 			if(!map[x2+i][y2].allowAtack()) {
 				free=false;
 				break;
@@ -640,7 +649,6 @@ public class Map {
 
 		// Checking the path between elements A and B in y
 		for(int i=0;i<yDif;i++) {
-			//			System.out.println(!map[x2][y2+i].isFree());
 			if(!map[x2][y2+i].allowAtack()) {
 				free=false;
 				break;
@@ -938,6 +946,24 @@ public class Map {
 		addChestTrap(24,20, new Skeleton(24,20));
 		addChestTrap(29,3, new SkeletonWizard(29,3));
 		addChestTrap(29,8, new Goblin(29,8));
+	}
+	
+	
+	public void makeStandardMonsters() {
+		this.addMonster(new Goblin(3,4));
+		this.addMonster(new Skeleton(13,4));
+		this.addMonster(new Skeleton(5,10));
+		this.addMonster(new SkeletonWizard(8,9));
+		this.addMonster(new Goblin(9,9));
+		this.addMonster(new Skeleton(24,3));
+		this.addMonster(new SkeletonWizard(24,9));
+		this.addMonster(new SkeletonWizard(19,8));
+		this.addMonster(new Goblin(3,16));
+		this.addMonster(new Goblin(16,13));
+		this.addMonster(new Goblin(9,20));
+		this.addMonster(new Skeleton(19,20));
+		this.addMonster(new SkeletonWizard(28,19));
+
 	}
 
 	public void makeStandardMonsters() {

@@ -26,6 +26,10 @@ public abstract class MapElement implements Openable,Repositions, Detectable{
 		return this.visible;
 	};
 	
+	public boolean allowAtack() {
+		return true;
+	};
+	
 	public void changeVisibility() {
 		if(visible) {
 			this.visible = false;
@@ -38,9 +42,6 @@ public abstract class MapElement implements Openable,Repositions, Detectable{
 		this.visible = true;
 	}
 	
-	public boolean allowAtack() {
-		return true;
-	}
 	
 	public void incrementCoordinates(int x, int y) {
 		int newX = this.getX()+x;
