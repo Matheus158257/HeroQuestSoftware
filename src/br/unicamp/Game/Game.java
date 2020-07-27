@@ -18,6 +18,7 @@ import br.unicamp.Map.MapElements.Characters.Monsters.Goblin;
 import br.unicamp.Map.MapElements.Characters.Monsters.Monster;
 import br.unicamp.Map.MapElements.Characters.Monsters.Skeleton;
 import br.unicamp.Map.MapElements.Characters.Monsters.SkeletonWizard;
+import br.unicamp.Map.MapElements.StaticElements.VariableElements.Trap;
 
 
 public class Game {
@@ -77,6 +78,11 @@ public class Game {
 					for(Monster monster: monsterElements){
 						gameMap.addMonster(monster);
 					}
+					// All traps
+					ArrayList<Trap> trapElements = stage.getArrayTrapElements();
+					for(Trap trap: trapElements){
+						gameMap.addTrap(trap);
+					}
 					
 					//Player
 					player = chooseHero();
@@ -126,13 +132,13 @@ public class Game {
 
 
 		gameMap.updateMap(player);
-		gameMap.print();
 
 		while (gameRunning) {
 
 			while(noAction) {
 
-				System.out.println ("YOUR TURN");
+				System.out.println ("\nYOUR TURN\n");
+				gameMap.print();
 				input2 = readInput();
 				try {
 					switch(input2) {
@@ -174,11 +180,15 @@ public class Game {
 
 					case ATTACK:
 						gameMap.attackMonster(this.combatDice, player);
+//						System.out.println ("LOG: Attacked");
 						noAction = false;
 						break;
 					case MAGIC:
 						try {
+
 							gameMap.spellMagic(player,this.redDice,this.combatDice);
+//							System.out.println ("LOG: Launched magic");
+							
 						}catch(NotSpellerException e) {
 							System.out.println(e.getMessage());
 						}
@@ -212,14 +222,14 @@ public class Game {
 			}
 
 
-			System.out.println ("MONSTERS' TURN");
+			System.out.println ("MORCAR'S TURN");
 			try {
 				gameMap.runMonsterActions(redDice, combatDice, player);
 			} catch (OccupiedTileException | OutOfBoundsException e) {
 				System.out.println (e.getMessage());
 			}
 
-			gameMap.print();
+//			gameMap.print();
 			noAction=true;
 			moveMade=false;
 		}
@@ -302,13 +312,14 @@ public class Game {
 
 	private void giveHelp() {
 		System.out.println("COMMANDS");
-		System.out.println("> Allowed only once per turn:");
+		System.out.println("> Allowed only once per turn (before or after moving):");
 		System.out.println("Press [c] to open Chest");
-		System.out.println("Press [t] to attack a Monster");
-		System.out.println("Press [n] to pass your turn");
-		System.out.println("Press [XXX] to look for a hidden Trap around you.");
+		System.out.println("Press [r] to attack a Monster");
+		System.out.println("Press [t] to look for a hidden Trap around you.");
 		System.out.println("Press [z] to launch a Spell (only Wizard or Elf)");
-		System.out.println("Press [n] to roll dice and move");
+		
+		System.out.println("> Allowed only once per turn:");
+		System.out.println("Press [m] to roll dice and move");
 
 		System.out.println("\n> Allways allowed, except while moving:");
 		System.out.println("Press [b] to check Bag and possibily use/equip Items");
@@ -377,10 +388,9 @@ public class Game {
 			return Command.PLAYER_STATUS;
 		} else if ( command.compareTo("b") == 0 ) {
 			return Command.BAG_REPORT;
-		} else if ( command.compareTo("t") == 0 ) {
+		} else if ( command.compareTo("r") == 0 ) {
 			return Command.ATTACK;
-		}
-		else if ( command.compareTo("z") == 0 ) {
+		} else if ( command.compareTo("z") == 0 ) {
 			return Command.MAGIC;
 		} else if ( command.compareTo("h") == 0 ) {
 			return Command.HELP;

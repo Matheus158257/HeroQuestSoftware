@@ -24,6 +24,7 @@ import br.unicamp.Map.MapElements.StaticElements.VariableElements.Treasure;
 public class TxtReader {
   
 	private ArrayList<MapElement> stageElements = new ArrayList<MapElement>();
+	private ArrayList<Trap> trapElements = new ArrayList<Trap>();
 	private ArrayList<DoorMask> doorMaskElements = new ArrayList<DoorMask>();
 	private ArrayList<Monster> monstersElements = new ArrayList<Monster>();
 	private String stageName;
@@ -34,6 +35,10 @@ public class TxtReader {
 	}
 	public ArrayList<MapElement>  getArrayStageElements() {
 		return this.stageElements;
+	}
+	
+	public ArrayList<Trap>  getArrayTrapElements() {
+		return this.trapElements;
 	}
 	
 	public ArrayList<Monster>  getArrayMonsterElements() {
@@ -100,7 +105,8 @@ public class TxtReader {
 			stageElements.add(new Obstacle(x0,y0));
 		}
 		 else if (parts[0].equals("T")) {
-			 stageElements.add(new Trap(x0,y0));
+//			 stageElements.add(new Trap(x0,y0));
+			 trapElements.add(new Trap(x0,y0));
 		}
 		else if (parts[0].equals("U")) {
 			boolean vert = Boolean.valueOf(parts[3]);// "true" para ser true

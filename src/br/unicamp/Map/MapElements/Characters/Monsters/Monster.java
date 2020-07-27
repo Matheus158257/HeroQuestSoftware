@@ -6,6 +6,7 @@ import java.util.Random;
 
 
 import br.unicamp.Game.MoveCommand;
+import br.unicamp.Map.MapElements.Coordinate;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.Characters.Heroes.Hero;
 
@@ -51,6 +52,11 @@ public abstract class Monster extends Character {
 		return false;
 	}
 	
+	@Override
+	public Coordinate reposition(Character character) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	public void updateWeapon() {
 		if (this.occupiedHands<Character.HANDS) {

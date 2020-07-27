@@ -1,6 +1,7 @@
 package br.unicamp.Map.MapElements.Characters.Heroes;
 
 import br.unicamp.Map.*;
+import br.unicamp.Map.MapElements.Coordinate;
 import br.unicamp.Map.MapElements.MapElement;
 import br.unicamp.Map.MapElements.Characters.Character;
 import br.unicamp.Map.MapElements.StaticElements.VariableElements.Trap;
@@ -142,7 +143,11 @@ public abstract class Hero extends Character{
 	}
 
 
-
+	@Override
+	public Coordinate reposition(Character character) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	//--------------------
 

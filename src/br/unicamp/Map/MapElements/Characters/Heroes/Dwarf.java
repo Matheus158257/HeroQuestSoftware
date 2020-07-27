@@ -2,6 +2,8 @@ package br.unicamp.Map.MapElements.Characters.Heroes;
 
 import br.unicamp.Items.Weapons.ShortSword;
 import br.unicamp.Items.Weapons.Weapon;
+import br.unicamp.Map.MapElements.Coordinate;
+import br.unicamp.Map.MapElements.Characters.Character;
 
 public class Dwarf extends Hero{
 	
@@ -30,5 +32,6 @@ public class Dwarf extends Hero{
 			return this.toString();
 		}
 	}
+
 
 }

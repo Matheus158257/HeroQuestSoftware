@@ -23,6 +23,11 @@ public class Coordinate {
 		this.y = y;
 	}
 	
+	@Override
+	public String toString() {
+		return ("[ " + this.x + " ; " + this.y + " ]");
+	}
+	
 	
 	public boolean isSameCoordinates(int x, int y) {
 		if (this.x != x) {
